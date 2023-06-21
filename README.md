@@ -6,7 +6,8 @@ R package to simulate multiplex immunofluorescence (mIF) data to benchmark spati
 
 To install `mIFsim`, it is required to have `devtools` or `remotes` installed for their `install_github()` function:
 
-```{if (!require("devtools", quietly = TRUE))}
+```{r}
+if (!require("devtools", quietly = TRUE))
   install.packages("devtools")
 
 devtools::install_github("FridleyLab/mIFsim")
