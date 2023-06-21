@@ -1,0 +1,109 @@
+---
+title: "Simulation mIF Data"
+author: "Moffitt, Anschutz"
+date: "2022-08-29"
+output: html_notebook
+---
+
+## Function Descriptions
+
+This document will describe what the pre-build functions can do for simulating multiplex immunofluorescence data.
+
+## Running Code
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = F}
+#| echo: false 
+library(mIFsim)
+library(tidyverse)
+```
+
+Firstly, the way that I have made it is that we have to create an "object" that will be the home for all of the simulation data as we go so that it stays organized. Let's create that object with `create_simObject`.
+
+Right now, I have a function that produces an object called `wm` which is our window. A window is a place where we will be simulating the cell locations and `wm` is a circle window like you would get from the punch of a core needle. We also have to give `sims` to the function which will be the number of cores to simulate.
+
+```{r}
+sim_list = create_simObject(window = wm,
+                            sims = 10)
+```
+
+With the base object for the simulations created with `sim_list`, we can simulate some TMA cores with `generateUnivariateTMA`. the options that we will need are:
+
+```{r}
+sim_list = generateUnivariateTMA(simDat = sim_list, 
+                                 background_cells = T, 
+                                 background_lamda = 1000, 
+                                 num_phenotypes = 2, 
+                                 phenotype_names = c("phenotype1", "phenotype2"),
+                                 phenotype_kappa = c(10), 
+                                 phenotype_scale = c(0.1), 
+                                 phenotype_mu = c(10), 
+                                 check = F)
+```
+
+Now we can look at one of the TMAs that we have simulated.
+
+```{r}
+sim_list = plotSpatial(simDat = sim_list,
+                       whichSim = 1,
+                       overwrite = T)
+sim_list$Plots$Simulation_1
+```
+
+Lets simulate a hole in the TMA cores that we simulated above.
+
+```{r}
+set.seed(419)
+sim_list = simulateHoles(simDat = sim_list,
+                         whichVar = "uni",
+                         nverts = c(25, 8),
+                         xscale = c(5, 2),
+                         yscale = c(5, 2))
+sim_list = plotSpatial(simDat = sim_list,
+                       slot = "UnivarHoleSpatial",
+                       whichSim = 1,
+                       overwrite = T)
+sim_list$Plots$Simulation_1
+```
+
+Now we can simulate bivariate clustering which uses rNeymanScott behind the scenes. With generating bivariate clustering there are less parameters than with univariate. Here we can either simulate the background cells or not, and then simulate the clustered cell pairs. In the case below, we are simulating 10 random parent point locations, then around them in a radius of 0.1 we are simulating clusters of 10 points so these will be tight clusters. This is being done internally with a simulation function (`runifdisc`), but another function can be supplied that takes the parent point and returns a point pattern with marks.
+
+```{r}
+sim_list = generateBivariateTMA(simDat = sim_list,
+                                background_cells = T,
+                                background_lamda = 1000,
+                                nParents = 10,
+                                radius = 0.1, 
+                                simFunction = NULL,
+                                clusterPoints = 10,
+                                phenotype_names = c("phenotype1", "phenotype2"))
+```
+
+With the data simulated, we can plot it to see the clustered pointed on the background cells.
+
+```{r}
+sim_list = plotSpatial(simDat = sim_list,
+                       slot = "BivarSpatial",
+                       whichSim = 1,
+                       overwrite = T)
+sim_list$Plots$Simulation_1
+```
+
+Similarly to the univariate point process, we can add holes (or remove points in a hole) using the same `simulateHoles` function and changing it from univariate to bivariate variable.
+
+```{r}
+set.seed(1059)
+sim_list = simulateHoles(simDat = sim_list,
+                         whichVar = "bi",
+                         nverts = c(25, 8),
+                         xscale = c(5, 2),
+                         yscale = c(5, 2))
+sim_list = plotSpatial(simDat = sim_list,
+                       slot = "BivarHoleSpatial",
+                       whichSim = 1,
+                       overwrite = T)
+sim_list$Plots$Simulation_1
+```

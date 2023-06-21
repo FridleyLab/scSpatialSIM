@@ -1,0 +1,73 @@
+---
+title: "Getting Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Background
+
+The development of novel clustering algorithms require the ability to create many samples in a controlled manner. Previously, we have used existing methods such as Ripley's K to classify multiple immunofluorescence (mIF) samples
+
+## Libraries
+
+In order to get started simulating multiple immunofluorescence (mIF) samples, we need to import tha package.
+
+```{r setup}
+library(mIFsim)
+```
+
+```{r}
+sim_object = create_simObject(sims = 9, cell_types = 2)
+```
+
+```{r}
+summary(sim_object)
+```
+
+```{r}
+sim_object = GenerateSpatialProcess(sim_object)
+summary(sim_object)
+plot(sim_object)
+```
+
+```{r}
+sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 0.1, cores = 5)
+summary(sim_object)
+```
+
+```{r, fig.height = 10, fig.width = 9, eval = F}
+PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "tissue heatmap")
+```
+
+```{r, fig.height = 10, fig.width = 9}
+sim_object = GenerateHoles(sim_object, density_heatmap = T, step_size = 0.1, cores = 5)
+summary(sim_object)
+
+```
+
+
+```{r, fig.height = 10, fig.width = 9, eval = F}
+PlotSimulation(sim_object, which = 1:8, ncol = 2, nrow = 2, what = "hole heatmap")
+```
+
+```{r}
+sim_object = GenerateCellPositivity(sim_object, k = 4,
+                                    sdmin = 3, sdmax = 5,
+                                    density_heatmap = T, step_size = 0.1, cores = 5, probs = c(0.0, 0.1))
+summary(sim_object)
+```
+
+```{r, fig.height=6, fig.width=10}
+PlotSimulation(sim_object, which = 1, what = "whole core")
+```
+

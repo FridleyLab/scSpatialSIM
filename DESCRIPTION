@@ -1,0 +1,48 @@
+Package: mIFsim
+Title: Simulation of Multiplex Immunofluorescence (mIF) Data
+Version: 0.0.0.9000
+Authors@R: 
+    c(
+      person(given = "Samantha",
+             family = "Bothwell",
+             email = "samantha.bothwell@cuanschutz.edu",
+             role = c("aut"), 
+             comment = c(ORCID = "")),
+      person(given = "Alex",
+             family =  "Soupir", 
+             email = "alex.soupir@moffitt.org", 
+             role = c("aut"),  
+             comment = c(ORCID = "")),
+      person(given = "Julia", 
+             family = "Wrobel", 
+             email = "julia.wrobel@cuanschutz.edu", 
+             role = c("aut"), 
+             comment = c(ORCID = "")),
+      person(given = "Brooke", 
+             family = "Fridley", 
+             email = "brooke.fridley.moffitt.org", 
+             role = c("aut"), 
+             comment = c(ORCID = "")),
+      person(given = "Fridley",
+             family = "Lab", 
+             email = "fridley.lab@moffitt.org",
+             role = c("cre"))
+    )
+Description: mIFsim is an easy-to-use wrapper package for spatstat that allows users to simulate mulitplex immunofluorescence (mIF) data. The simulation of this data comes in a could different functions whether since cell clustering (univariate) or multiple cell clustering/colocalization (bivariate) is wanting to be explored. The main audience for this package is those wanting to validate or test hypotheses or methods on controllable abundance/clustering of cells within mIF data.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    ggplot2,
+    magrittr,
+    spatstat,
+    tune
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
