@@ -14,10 +14,11 @@ GenerateCellPositivity(
   sdmin = 1/2,
   sdmax = 2,
   probs = c(0, 1),
-  force = FALSE,
+  Force = FALSE,
   density_heatmap = FALSE,
   step_size = 1,
-  cores = 1
+  cores = 1,
+  correlation = 0
 )
 }
 \arguments{
@@ -39,13 +40,15 @@ GenerateCellPositivity(
 
 \item{probs}{A numeric vector of length 2 specifying the minimum and maximum probability values for scaling the kernel values.}
 
-\item{force}{A logical value indicating whether to force simulation parameters to be within the simulation window limits.}
+\item{Force}{A logical value indicating whether to force simulation parameters to be within the simulation window limits.}
 
 \item{density_heatmap}{A logical value indicating whether to compute a density heatmap for each cell.}
 
 \item{step_size}{A numeric value specifying the step size for the grid of points within the window.}
 
 \item{cores}{An integer value specifying the number of cores to use for parallel computation.}
+
+\item{correlation}{A value between -1 and 1 for how related a second or more cell type is to the first}
 }
 \value{
 Returns the original \code{\link{mIFSim}} object with additional generated data added to each cell object.

@@ -73,6 +73,8 @@ GenerateTissue = function(sim_object, k = NA,
              sdmin = sdmin, sdmax = sdmax)
   #if no parameters are input then use the initialized
   params = mapply(replace_na, sim_object@Tissue@Parameters, params, SIMPLIFY = FALSE)
+  #update initialized paramters with custom input from user
+  sim_object@Tissue@Parameters <<- params
   #get the window size
   win_limits = c(sim_object@Window$xrange, sim_object@Window$yrange)
   #check whether the parameters would simulate outside window

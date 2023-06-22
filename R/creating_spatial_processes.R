@@ -23,7 +23,7 @@ GenerateSpatialProcess = function(sim_object, lambda = 25, ...){
   window = sim_object@Window
   sims = sim_object@Sims
   spatial_dfs = lapply(seq(sims), function(hld){
-    rpoispp(lambda, win = window, nsim = 1, ...)
+    spatstat.random::rpoispp(lambda, win = window, nsim = 1, ...)
   })
 
   sim_object@Processes = spatial_dfs
