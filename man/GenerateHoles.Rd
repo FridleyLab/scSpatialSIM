@@ -72,6 +72,12 @@ scaled probability value, and returns the modified simulation object.
 \examples{
 sim_object <- CreateSimulationObject()
 
+#simulate points
+sim_object <- GenerateSpatialProcess(sim_object, lambda = 20)
+
+# Generate tissue with default parameters
+sim_object <- GenerateTissue(sim_object)
+
 # Generate holes in the simulation object
 sim_object <- GenerateHoles(sim_object, hole_prob = c(0.1, 0.3), force = TRUE)
 

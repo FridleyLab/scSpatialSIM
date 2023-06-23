@@ -81,14 +81,12 @@ probability proportional to the probability of belonging to stroma tissue.
 }
 \examples{
 # Create a simulation object with a window and point process
-sim_object <- CreateSpatialSimulationObject()
+sim_object <- CreateSimulationObject()
+
+#simulate points
 sim_object <- GenerateSpatialProcess(sim_object, lambda = 20)
 
 # Generate tissue with default parameters
 sim_object <- GenerateTissue(sim_object)
-
-# Generate tissue with custom parameters and density heatmap
-sim_object <- GenerateTissue(sim_object, k = 3, xmin = 0.2, xmax = 0.8,
-                             ymin = 0.2, ymax = 0.8, density_heatmap = TRUE)
 
 }
