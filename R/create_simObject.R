@@ -47,8 +47,8 @@
 #' @export
 #'
 #' @examples
-#' create_simObject()
-create_simObject = function(window = NULL,
+#' CreateSimulationObject()
+CreateSimulationObject = function(window = NULL,
                             sims = NULL,
                             cell_types = 1){
   require(spatstat)
