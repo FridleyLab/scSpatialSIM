@@ -58,7 +58,7 @@ Next we will generate some regions of the tumor an stroma. There are some parame
 After simulating the tissues we can look at the summary of the spatial simulation object to see the newly filled slot.
 
 ```{r}
-sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 0.1, cores = 5)
+sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 0.1, cores = 1)
 summary(sim_object)
 ```
 
@@ -77,7 +77,7 @@ Generating holes can help assess the need for correcting metrics derived spatial
 The parameters that go into `GenerateHoles` is similar to that of `GenerateTissue` with one addition: `hole_prob` or the proportion range of the point processes that could become holes. All of these parameters had defaults set when the spatial simulation object was created, but can be overridden here is a particular area of the process is wanted to have the holes and not the rest. The number of holes is random as long as the sum of the area is within the proportions above. 
 
 ```{r, fig.height = 10, fig.width = 9}
-sim_object = GenerateHoles(sim_object, density_heatmap = T, step_size = 0.1, cores = 5)
+sim_object = GenerateHoles(sim_object, density_heatmap = T, step_size = 0.1, cores = 1)
 summary(sim_object)
 ```
 
@@ -98,12 +98,20 @@ Play around with positive or negative correlations and see what happens.
 ```{r}
 sim_object = GenerateCellPositivity(sim_object, k = 4,
                                     sdmin = 3, sdmax = 5,
-                                    density_heatmap = T, step_size = 0.1, cores = 5, probs = c(0.0, 0.1),
-                                    correlation = -0.5)
+                                    density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
+                                    correlation = -1)
 summary(sim_object)
 ```
+When there are multiple cells to be simulated, we can see the heatmap for cell type 2 be copied and adjusted by the correltation which is much faster than calculating the density heatmap from the kernel. Lets look at how the new cells are distributed in the mIF with a correlation of -1. This means that the cell types are segregated so Cell 1 is closer to Cell 1 and Cell 2 is closer to Cell 2. Again, because each cell has a probability of being positive there will always be some 'noise' but the trend is there. 
 
 ```{r, fig.height=6, fig.width=10}
 PlotSimulation(sim_object, which = 1, what = "whole core")
 ```
 
+Lastly, the data is likely wanted in tabular format. Since there are multiple simulated point processes, the function `CreateSpatialList` returns a list of data frames containing cell x and y locations, the tissue that the cell belongs to, whether the cell falls in a hole, and the positivity of the different cell types.
+
+```{r}
+spatial_list = CreateSpatialList(sim_object = sim_object)
+```
+
+The spatial list can now be used with packages like `spatialTIME` to compute spatial statistics on all of the simulated data frames. 
