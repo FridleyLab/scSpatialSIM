@@ -80,18 +80,19 @@ returns the updated <code>Spatial Simulation Object</code> object.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="create_simObject.html">create_simObject</a></code></p></div>
+    <div class="dont-index"><p><code>create_simObject</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create a simulation object</span></span></span>
-<span class="r-in"><span><span class="va">sim_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_simObject.html">create_simObject</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> No `window` specified - defaulting to x (0, 10); y (0, 10)</span>
+<span class="r-in"><span><span class="va">sim_obj</span> <span class="op">&lt;-</span> <span class="fu">create_simObject</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in create_simObject():</span> could not find function "create_simObject"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Update the simulation window</span></span></span>
 <span class="r-in"><span><span class="va">new_window</span> <span class="op">&lt;-</span> <span class="fu">owin</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">updated_sim_obj</span> <span class="op">&lt;-</span> <span class="fu">UpdateSimulationWindow</span><span class="op">(</span><span class="va">sim_obj</span>, window <span class="op">=</span> <span class="va">new_window</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'sim_obj' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -19,6 +19,9 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/CreateSimulationObject.html</loc>
+  </url>
+  <url>
     <loc>/reference/CreateSpatialList.html</loc>
   </url>
   <url>
@@ -41,9 +44,6 @@
   </url>
   <url>
     <loc>/reference/UpdateSimulationWindow.html</loc>
-  </url>
-  <url>
-    <loc>/reference/create_simObject.html</loc>
   </url>
   <url>
     <loc>/reference/hello.html</loc>

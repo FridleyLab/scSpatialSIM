@@ -116,7 +116,7 @@ to simulate, here we are only going to do a single cell type</li>
 <p>If a window isn’t specified a built in 10x10 will be used. Let’s
 create our simulation object.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="../reference/create_simObject.html">create_simObject</a></span><span class="op">(</span>sims <span class="op">=</span> <span class="fl">9</span>, cell_types <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSimulationObject.html">CreateSimulationObject</a></span><span class="op">(</span>sims <span class="op">=</span> <span class="fl">9</span>, cell_types <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: spatstat</span></span>
 <span><span class="co">#&gt; Loading required package: spatstat.data</span></span>
 <span><span class="co">#&gt; Loading required package: spatstat.geom</span></span>
@@ -317,23 +317,23 @@ types.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2510 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; provided 2492 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2463 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2488 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2448 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2496 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2507 variables to replace 1 variables</span></span>
 <span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
 <span><span class="co">#&gt; provided 2498 variables to replace 1 variables</span></span>
 <span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2489 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2458 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2479 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2559 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2508 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2459 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2534 variables to replace 1 variables</span></span></code></pre></div>
+<span><span class="co">#&gt; provided 2450 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(1, :</span></span>
+<span><span class="co">#&gt; provided 2461 variables to replace 1 variables</span></span></code></pre></div>
 <p>The spatial list can now be used with packages like
 <code>spatialTIME</code> to compute spatial statistics on all of the
 simulated data frames.</p>

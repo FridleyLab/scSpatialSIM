@@ -70,7 +70,7 @@ for each simulated process, assigns each point to be dropped or kept based on a
 scaled probability value, and returns the modified simulation object.
 }
 \examples{
-sim_object <- create_simObject()
+sim_object <- CreateSimulationObject()
 
 # Generate holes in the simulation object
 sim_object <- GenerateHoles(sim_object, hole_prob = c(0.1, 0.3), force = TRUE)

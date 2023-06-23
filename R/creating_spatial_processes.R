@@ -14,7 +14,7 @@
 #'
 #' @export
 #' @examples
-#' sim_object <- create_simObject()
+#' sim_object <- CreateSimulationObject()
 #' sim_object <- GenerateSpatialProcess(sim_object, lambda = 30)
 GenerateSpatialProcess = function(sim_object, lambda = 25, ...){
   if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_object` must be of class 'Spatial Simulation Object'")

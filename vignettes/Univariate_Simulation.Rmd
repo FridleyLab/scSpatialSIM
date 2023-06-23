@@ -37,7 +37,7 @@ To create a simulation object, we can call `create_simObject`, which takes in 3 
 If a window isn't specified a built in 10x10 will be used. Let's create our simulation object.
 
 ```{r}
-sim_object = create_simObject(sims = 9, cell_types = 1)
+sim_object = CreateSimulationObject(sims = 9, cell_types = 1)
 ```
 
 The simulation object has some attribute that are gradually filled in as we progress. Using the `summary` method, we can see what our simulation object has inside and what we need to do next. Here, we have 9 simulations with the default window and are wanting to perform this for a single cell type. This method is really useful for when fine tuning parameters to get the desired output because it shows you exactly what has already been done when loading in the base object from an RDS file.

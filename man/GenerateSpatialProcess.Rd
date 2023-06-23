@@ -25,6 +25,6 @@ using a Poisson point process with intensity 'lambda'. The simulated point proce
 to the 'Processes' slot of the 'sim_object'. Additional arguments can be passed to the 'rpoispp' function.
 }
 \examples{
-sim_object <- create_simObject()
+sim_object <- CreateSimulationObject()
 sim_object <- GenerateSpatialProcess(sim_object, lambda = 30)
 }

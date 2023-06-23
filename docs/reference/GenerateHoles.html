@@ -154,13 +154,12 @@ scaled probability value, and returns the modified simulation object.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_simObject.html">create_simObject</a></span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="CreateSimulationObject.html">CreateSimulationObject</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No `window` specified - defaulting to x (0, 10); y (0, 10)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate holes in the simulation object</span></span></span>
 <span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu">GenerateHoles</span><span class="op">(</span><span class="va">sim_object</span>, hole_prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.3</span><span class="op">)</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing hole probability</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in (function (cl, name, valueClass) {    ClassDef &lt;- getClass(cl)    slotClass &lt;- ClassDef@slots[[name]]    if (is.null(slotClass))         stop(gettextf("%s is not a slot in class %s", sQuote(name),             dQuote(cl)), domain = NA)    if (.identC(slotClass, valueClass))         return(TRUE)    ok &lt;- possibleExtends(valueClass, slotClass, ClassDef2 = getClassDef(slotClass,         where = .classEnv(ClassDef)))    if (isFALSE(ok))         stop(gettextf("assignment of an object of class %s is not valid for @%s in an object of class %s; is(value, \"%s\") is not TRUE",             dQuote(valueClass), sQuote(name), dQuote(cl), slotClass),             domain = NA)    TRUE})(structure("Spatial Simulation Object", package = "mIFsim"),     "Spatial Files", "integer"):</span> assignment of an object of class “integer” is not valid for @‘Spatial Files’ in an object of class “Spatial Simulation Object”; is(value, "list") is not TRUE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'sim_object' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
