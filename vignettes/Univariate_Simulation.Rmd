@@ -1,8 +1,8 @@
 ---
-title: "Getting Started"
+title: "Simulating Univariate Cells"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started}
+  %\VignetteIndexEntry{Univariate Simulation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -32,15 +32,15 @@ To create a simulation object, we can call `create_simObject`, which takes in 3 
 
 1. `window` - a `spatstat` window object which is the boundary for which to simulate our points
 2. `sims` - an integer value that is the number of samples that is wanting to be simulated
-3. `cell_types` - this is the number of different phenotypes to simulate, i.e. 2 for CD3+ and CD19+
+3. `cell_types` - this is the number of different phenotypes to simulate, here we are only going to do a single cell type
 
 If a window isn't specified a built in 10x10 will be used. Let's create our simulation object.
 
 ```{r}
-sim_object = create_simObject(sims = 9, cell_types = 2)
+sim_object = create_simObject(sims = 9, cell_types = 1)
 ```
 
-The simulation object has some attribute that are gradually filled in as we progress. Using the `summary` method, we can see what our simulation object has inside and what we need to do next. Here, we have 9 simulations with the default window and are wanting to perform this for 2 cell types. This method is really useful for when fine tuning parameters to get the desired output because it shows you exactly what has already been done when loading in the base object from an RDS file.
+The simulation object has some attribute that are gradually filled in as we progress. Using the `summary` method, we can see what our simulation object has inside and what we need to do next. Here, we have 9 simulations with the default window and are wanting to perform this for a single cell type. This method is really useful for when fine tuning parameters to get the desired output because it shows you exactly what has already been done when loading in the base object from an RDS file.
 
 ```{r}
 summary(sim_object)
@@ -53,6 +53,7 @@ sim_object = GenerateSpatialProcess(sim_object)
 summary(sim_object)
 plot(sim_object)
 ```
+
 Next we will generate some regions of the tumor an stroma. There are some parameters that are initialized when building the spatial simulation that tells downstream functions how to simulate things on a Gaussian kernel - `GenerateTissue` is one of those. If there is nothing supplied to the function when calling, it will default to these values. Alternatively, can specify them in the function call. These include regions within your window that you would like tissue regions to be simulated, the number of regions, the standard deviation range for how the probability falls off around the region centers, etc. Something here is whether the ending kernel should be converted to a heatmap and at what resolution. **NOTE: the smaller the `step_size` used for the heatmap the longer it takes to run so be mindful.** 
 
 After simulating the tissues we can look at the summary of the spatial simulation object to see the newly filled slot.
@@ -91,9 +92,7 @@ Next thing for us to do is to simulate the positivity of cells for a phenotype. 
 
 The `probs` parameter is used to scale the probabilities for the cell type where the first number is away from kernel peaks and the second is the maximum probability for a cell. For higher abundance, the maximum probability can be set higher and even increase the minimum probability. An issue with doing this on point processes that have multiple cell types is that they are not entirely informed of one another when assigning cell types. B cells and T cells are distinct phenotypes and therefore one cell *shouldn't* be positive for both. What we do, is use the probability with the Bernoulli distribution so there's a chance a single cell will be positive for 2 cell types, even if the max probability is 0.1.
 
-Sometimes we want to study the clustering or dispersion of different cell types. In this case, we want to make them either very alike (positive correlation) or very different (negative correlation). What we do in the background is take same probability as the first cell simulated and adjust it according to the `correlation` parameter. The kernels in the spatial simulation object will be the same for all cell types, but at the time of creating the density heatmap or assigning a cell positive/negative, the probabilities are adjusted.
-
-Play around with positive or negative correlations and see what happens.
+For univariate clustering, smaller standard deviations and higher probability range will increase the amount of clustering. Large standard deviations and low probabilities will make the clustering metrics low. For univariate cell simulation, the correlation metric does nothing.
 
 ```{r}
 sim_object = GenerateCellPositivity(sim_object, k = 4,
@@ -102,7 +101,8 @@ sim_object = GenerateCellPositivity(sim_object, k = 4,
                                     correlation = -1)
 summary(sim_object)
 ```
-When there are multiple cells to be simulated, we can see the heatmap for cell type 2 be copied and adjusted by the correltation which is much faster than calculating the density heatmap from the kernel. Lets look at how the new cells are distributed in the mIF with a correlation of -1. This means that the cell types are segregated so Cell 1 is closer to Cell 1 and Cell 2 is closer to Cell 2. Again, because each cell has a probability of being positive there will always be some 'noise' but the trend is there. 
+
+If we plot the simulation object now specifying we want to see the whole core, we can see our cells. There are little pockets of positive cells also with some noise.
 
 ```{r, fig.height=6, fig.width=10}
 PlotSimulation(sim_object, which = 1, what = "whole core")
