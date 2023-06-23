@@ -2,7 +2,7 @@
 title: "Simulating Bivariate Cells"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Bivariate Simulation}
+  %\VignetteIndexEntry{Simulating Bivariate Cells}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -65,7 +65,7 @@ summary(sim_object)
 
 The tissue kernel slot is now filled the number of kernels matching number of spatial processes we have. Let's take a look at the simulated tissue kernels with `PlotSimulation` and `what` as the tissue heatmap.
 
-```{r, fig.height = 10, fig.width = 9, eval = F}
+```{r, fig.height = 10, fig.width = 9, eval = T}
 PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "tissue heatmap")
 ```
 
@@ -75,15 +75,15 @@ Generating holes can help assess the need for correcting spatial statistic metri
 
 The parameters that go into `GenerateHoles` is similar to that of `GenerateTissue` with one addition: `hole_prob` or the proportion range of the point processes that could become holes. All of these parameters had defaults set when the spatial simulation object was created, but can be overridden here if a particular area of the process is wanted to have the holes and not the rest (x and y min and max ranges). The number of holes is random as long as the sum of the area is within the proportions above. 
 
-```{r, fig.height = 10, fig.width = 9}
+```{r}
 sim_object = GenerateHoles(sim_object, density_heatmap = T, step_size = 0.1, cores = 1)
 summary(sim_object)
 ```
 
 Let's see how the kernels for holes look. The center of the holes have the highest probability of being removed with a Bernoulli distribution of 'hole' or 'not a hole'. The `what` parameter is now "hole heatmap".
 
-```{r, fig.height = 10, fig.width = 9, eval = F}
-PlotSimulation(sim_object, which = 1:8, ncol = 2, nrow = 2, what = "hole heatmap")
+```{r, fig.height = 10, fig.width = 9, eval = T}
+PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "hole heatmap")
 ```
 
 Next thing for us to do is to simulate the positivity of cells for a phenotype. Just like holes and the tissue, there are boundaries which the simulated positive cells will fall in which are stored in the parameters. This is helpful for going back and seeing what was done. However here, there are 2 different parameters that help set the abundance (`probs`) and, in the case of multiple cell types, how related those cell types are (`correlation`). 

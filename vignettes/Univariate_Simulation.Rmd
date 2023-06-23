@@ -2,7 +2,7 @@
 title: "Simulating Univariate Cells"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Univariate Simulation}
+  %\VignetteIndexEntry{Simulating Univariate Cells}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -65,7 +65,7 @@ summary(sim_object)
 
 The tissue kernel slot is now filled the number of kernels matching number of spatial processes we have. Let's take a look at the simulated tissue kernels with `PlotSimulation`.
 
-```{r, fig.height = 10, fig.width = 9, eval = F}
+```{r, fig.height = 10, fig.width = 9, eval = T}
 PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "tissue heatmap")
 ```
 
@@ -84,7 +84,7 @@ summary(sim_object)
 
 Let's see how the kernels for holes look. The center of the holes have the highest probability of being removed with a Bernoulli distribution of 'hole' or 'not a hole'. 
 
-```{r, fig.height = 10, fig.width = 9, eval = F}
+```{r, fig.height = 10, fig.width = 9, eval = T}
 PlotSimulation(sim_object, which = 1:8, ncol = 2, nrow = 2, what = "hole heatmap")
 ```
 
