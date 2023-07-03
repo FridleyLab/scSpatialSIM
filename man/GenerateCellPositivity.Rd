@@ -22,7 +22,7 @@ GenerateCellPositivity(
 )
 }
 \arguments{
-\item{sim_object}{A \code{\link{mIFSim}} object containing the simulated data.}
+\item{sim_object}{A \code{mIFSim} object containing the simulated data.}
 
 \item{k}{An integer specifying the number of clusters for each simulated process.}
 
@@ -51,14 +51,14 @@ GenerateCellPositivity(
 \item{correlation}{A value between -1 and 1 for how related a second or more cell type is to the first}
 }
 \value{
-Returns the original \code{\link{mIFSim}} object with additional generated data added to each cell object.
+Returns the original \code{mIFsim} object with additional generated data added to each cell object.
 }
 \description{
 Generate the probability of a cell being positive given a set of simulation parameters for each file in a spatial simulation object.
 }
 \details{
 The function generates the probability of a cell being positive given a set of simulation parameters f
-or each file in a \code{\link{mIFSim}} object. It creates a kernel parameter list for \code{k} clusters
+or each file in a \code{mIFsim} object. It creates a kernel parameter list for \code{k} clusters
 in each simulated process and computes the probability of each point in the grid of points within the
 window for each cell. The function also computes a density heatmap for each cell if \code{density_heatmap} is set to \code{TRUE}.
 }

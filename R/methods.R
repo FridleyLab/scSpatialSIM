@@ -1,3 +1,13 @@
+#' Method `summary` for objects in the `mIFsim` package
+#'
+#' This provides an easy summary of what has already been executed in the Spatial Simulation Object.
+#' Things like the number of simulations, number of cell types desired, as well as information about what has been simulated
+#' are included in the sumamry output.
+#'
+#' @param object Spatial Simulation Object
+#'
+#' @usage \\method{summary}{`Spatial Simulation Object`}
+#'
 #' @export
 setMethod("summary",
           signature = "Spatial Simulation Object",
@@ -18,6 +28,20 @@ setMethod("summary",
             cat("\t", c_kernels, " cell kernels for ", c_types, " cell types\n", sep="")
           })
 
+#' Method `plot` for objects of class `Spatial Simulation Object`
+#'
+#' When proceeding though the simulation of multiplex data, it is nice to view some of the processes and results of the process.
+#' Using the plot function, the `plot` from spatstat is used (in the case of plotting just the point process). When plotting
+#' more detail from the `Spatial Simulation Object`, please use `PlotSimulation`
+#'
+#' @param x Spatial Simulation Object
+#' @param nrow number of rows in the output plot
+#' @param ncol number of columns in the output plot
+#' @param which which spatial pattern(s) to plot
+#' @param what currently only accepting "Processes" but potentially more things using the spatstat plot function in the future
+#'
+#' @usage \\method{plot}{`Spatial Simulation Object`}
+#'
 #' @export
 setMethod("plot",
           signature = "Spatial Simulation Object",

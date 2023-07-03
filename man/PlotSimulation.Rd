@@ -47,7 +47,7 @@ and columns of the plot grid, respectively.
 # create a Spatial Simulation Object
 sim_object <- CreateSimulationObject()
 sim_object = GenerateSpatialProcess(sim_object)
-sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 1, cores = 1)
+sim_object = GenerateTissue(sim_object, density_heatmap = TRUE, step_size = 1, cores = 1)
 # plot a heatmap of tissue 1
 PlotSimulation(sim_object, which = 1, what = "tissue heatmap")
 }

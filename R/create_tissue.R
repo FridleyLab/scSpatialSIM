@@ -6,8 +6,8 @@
 #' belonging to stromal or tumor tissue, based on a Gaussian kernel density
 #' estimate calculated for each process.
 #'
-#' @param sim_object A 'Spatial Simulation Object' created with
-#'   \code{\link{CreateSpatialSimulationObject}}.
+#' @param sim_object A `Spatial Simulation Object` created with
+#'   \code{\link{CreateSimulationObject}}.
 #' @param k Number of clusters to generate for each process.
 #' @param xmin Minimum x-coordinate for cluster centers.
 #' @param xmax Maximum x-coordinate for cluster centers.

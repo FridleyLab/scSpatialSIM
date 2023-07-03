@@ -3,11 +3,6 @@ Title: Simulation of Multiplex Immunofluorescence (mIF) Data
 Version: 0.0.0.9000
 Authors@R: 
     c(
-      person(given = "Samantha",
-             family = "Bothwell",
-             email = "samantha.bothwell@cuanschutz.edu",
-             role = c("aut"), 
-             comment = c(ORCID = "")),
       person(given = "Alex",
              family =  "Soupir", 
              email = "alex.soupir@moffitt.org", 
@@ -42,10 +37,15 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
-    spatstat,
-    tune
+    tune,
+    spatstat.geom,
+    crayon,
+    ggpubr,
+    pbmcapply,
+    spatstat.random,
+    tidyr
 Depends: 
-    R (>= 2.10)
+    R (>= 4.00)
 LazyData: true
 Suggests: 
     knitr,

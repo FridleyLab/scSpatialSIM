@@ -26,13 +26,13 @@ returns the updated \code{Spatial Simulation Object} object.
 }
 \examples{
 # Create a simulation object
-sim_obj <- create_simObject()
+sim_obj <- CreateSimulationObject()
 
 # Update the simulation window
-new_window <- owin(c(0, 5), c(0, 5))
+new_window <- spatstat.geom::owin(c(0, 5), c(0, 5))
 updated_sim_obj <- UpdateSimulationWindow(sim_obj, window = new_window)
 
 }
 \seealso{
-\code{\link{create_simObject}}
+\code{\link{CreateSimulationObject}}
 }

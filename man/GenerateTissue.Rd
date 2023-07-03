@@ -20,8 +20,8 @@ GenerateTissue(
 )
 }
 \arguments{
-\item{sim_object}{A 'Spatial Simulation Object' created with
-\code{\link{CreateSpatialSimulationObject}}.}
+\item{sim_object}{A \verb{Spatial Simulation Object} created with
+\code{\link{CreateSimulationObject}}.}
 
 \item{k}{Number of clusters to generate for each process.}
 

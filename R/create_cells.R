@@ -2,7 +2,7 @@
 #'
 #' Generate the probability of a cell being positive given a set of simulation parameters for each file in a spatial simulation object.
 #'
-#' @param sim_object A \code{\link{mIFSim}} object containing the simulated data.
+#' @param sim_object A \code{mIFSim} object containing the simulated data.
 #' @param k An integer specifying the number of clusters for each simulated process.
 #' @param xmin A numeric value specifying the minimum x value for the kernel.
 #' @param xmax A numeric value specifying the maximum x value for the kernel.
@@ -17,10 +17,10 @@
 #' @param cores An integer value specifying the number of cores to use for parallel computation.
 #' @param correlation A value between -1 and 1 for how related a second or more cell type is to the first
 #'
-#' @return Returns the original \code{\link{mIFSim}} object with additional generated data added to each cell object.
+#' @return Returns the original \code{mIFsim} object with additional generated data added to each cell object.
 #'
 #' @details The function generates the probability of a cell being positive given a set of simulation parameters f
-#' or each file in a \code{\link{mIFSim}} object. It creates a kernel parameter list for \code{k} clusters
+#' or each file in a \code{mIFsim} object. It creates a kernel parameter list for \code{k} clusters
 #' in each simulated process and computes the probability of each point in the grid of points within the
 #' window for each cell. The function also computes a density heatmap for each cell if \code{density_heatmap} is set to \code{TRUE}.
 #'
@@ -45,7 +45,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
   #dummy variable to prevent console printing
   dmb = lapply(seq(ncells), function(cell){
     #if no parameters are input then use the initialized
-    params = mapply(mIFsim:::replace_na, sim_object@Cells[[cell]]@Parameters, params, SIMPLIFY = FALSE)
+    params = mapply(replace_na, sim_object@Cells[[cell]]@Parameters, params, SIMPLIFY = FALSE)
     #add updated parameters to the object cell
     sim_object@Cells[[cell]]@Parameters <<- params
     #get the window size
@@ -63,7 +63,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
     #produce kernel parameter list for k clusters in each simulated process
     if(cell == 1){
       sim_object@Cells[[cell]]@`Simulationed Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
-        do.call(mIFsim:::gaussian_kernel, head(params, -1))
+        do.call(gaussian_kernel, head(params, -1))
       })
     } else {
       sim_object@Cells[[cell]]@`Simulationed Kernels` <<- sim_object@Cells[[1]]@`Simulationed Kernels`
@@ -78,7 +78,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
         message(paste0("Computing density heatmap for Cell ", cell))
         sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[cell]]@`Simulationed Kernels`, function(gauss_tab){
           cbind(grid,
-                prob = mIFsim:::CalculateGrid(grid, gauss_tab, cores = cores))
+                prob = CalculateGrid(grid, gauss_tab, cores = cores))
         })
       } else {
         message(paste0("Adjusting density heatmap for Cell ", cell))
@@ -97,13 +97,13 @@ GenerateCellPositivity = function(sim_object, k = NA,
 
     }
 
-    if(mIFsim:::is.empty(sim_object, "Spatial Files")){
+    if(is.empty(sim_object, "Spatial Files")){
       sim_object@`Spatial Files` <<- lapply(sim_object@Processes, data.frame)
     }
 
     message(paste0("Computing probability for Cell ", cell))
     sim_object@`Spatial Files` <<- pbmcapply::pbmclapply(seq(sim_object@`Spatial Files`), function(spat_num){
-      vec = mIFsim:::CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
+      vec = CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
                                                       sim_object@Cells[[cell]]@`Simulationed Kernels`[[spat_num]], cores = cores)
       #if the cell is other than the first, adjust it based on first cell and correlation
       if(cell != 1){
@@ -116,7 +116,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
         }
       }
       #make table with probabilities and positive/negative
-      df = data.frame(col1 = mIFsim:::scale_probs(vec * 0.9, params$probs))
+      df = data.frame(col1 = scale_probs(vec * 0.9, params$probs))
       df$col2 = ifelse(rbinom(nrow(df), size = 1, prob = df$col1) == 1, "Positive", "Negative")
 
       names(df) = c(paste("Cell", cell, "Probability"), paste("Cell", cell, "Assignment"))

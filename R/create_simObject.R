@@ -51,7 +51,7 @@
 CreateSimulationObject = function(window = NULL,
                             sims = NULL,
                             cell_types = 1){
-  require(spatstat)
+  #require(spatstat)
   if(is.null(window)){
     message("No `window` specified - defaulting to x (0, 10); y (0, 10)")
     window = spatstat.geom::owin(c(0,10), c(0,10))

@@ -30,11 +30,11 @@
 #' # create a Spatial Simulation Object
 #' sim_object <- CreateSimulationObject()
 #' sim_object = GenerateSpatialProcess(sim_object)
-#' sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 1, cores = 1)
+#' sim_object = GenerateTissue(sim_object, density_heatmap = TRUE, step_size = 1, cores = 1)
 #' # plot a heatmap of tissue 1
 #' PlotSimulation(sim_object, which = 1, what = "tissue heatmap")
 PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tissue heatmap"){
-  require(ggplot2)
+  #require(ggplot2)
   if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_object` must be of class 'Spatial Simulation Object'")
   density_plot = function(dat){
     dat %>%
