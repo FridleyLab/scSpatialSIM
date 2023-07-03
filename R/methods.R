@@ -6,7 +6,7 @@
 #'
 #' @param object Spatial Simulation Object
 #'
-#' @usage \\method{summary}{`Spatial Simulation Object`}
+#' @usage \\method{summary}{`object`}
 #'
 #' @export
 setMethod("summary",
@@ -40,7 +40,7 @@ setMethod("summary",
 #' @param which which spatial pattern(s) to plot
 #' @param what currently only accepting "Processes" but potentially more things using the spatstat plot function in the future
 #'
-#' @usage \\method{plot}{`Spatial Simulation Object`}
+#' @usage \\method{plot}{`x`, `nrow`, `ncol`, `which`, `what`}
 #'
 #' @export
 setMethod("plot",

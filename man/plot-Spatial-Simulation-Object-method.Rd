@@ -4,7 +4,7 @@
 \alias{plot,Spatial Simulation Object-method}
 \title{Method \code{plot} for objects of class \verb{Spatial Simulation Object}}
 \usage{
-\\method{plot}{`Spatial Simulation Object`}
+\\method{plot}{`x`, `nrow`, `ncol`, `which`, `what`}
 }
 \arguments{
 \item{x}{Spatial Simulation Object}

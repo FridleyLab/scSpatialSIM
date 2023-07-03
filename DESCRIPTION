@@ -43,7 +43,9 @@ Imports:
     ggpubr,
     pbmcapply,
     spatstat.random,
-    tidyr
+    tidyr,
+    utils,
+    methods
 Depends: 
     R (>= 4.00)
 LazyData: true

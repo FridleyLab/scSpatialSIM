@@ -4,7 +4,7 @@
 \alias{summary,Spatial Simulation Object-method}
 \title{Method \code{summary} for objects in the \code{mIFsim} package}
 \usage{
-\\method{summary}{`Spatial Simulation Object`}
+\\method{summary}{`object`}
 }
 \arguments{
 \item{object}{Spatial Simulation Object}
