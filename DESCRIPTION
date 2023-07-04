@@ -55,3 +55,4 @@ Suggests:
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Config/testthat/edition: 3
+URL: https://github.com/FridleyLab/mIFsim

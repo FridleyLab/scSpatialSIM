@@ -41,9 +41,9 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/1.Introduction.html">Introduction</a>
-    <a class="dropdown-item" href="../articles/Bivariate_Simulation.html">Simulating Bivariate Cells</a>
-    <a class="dropdown-item" href="../articles/Univariate_Simulation.html">Simulating Univariate Cells</a>
+    <a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a>
+    <a class="dropdown-item" href="../articles/a02_Univariate_Simulation.html">Simulating Univariate Cells</a>
+    <a class="dropdown-item" href="../articles/a03_Bivariate_Simulation.html">Simulating Bivariate Cells</a>
   </div>
 </li>
       </ul>
@@ -73,8 +73,8 @@
       <img src="" class="logo" alt=""><h1>Introduction</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/mIFsim/blob/HEAD/vignettes/1.Introduction.Rmd" class="external-link"><code>vignettes/1.Introduction.Rmd</code></a></small>
-      <div class="d-none name"><code>1.Introduction.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/mIFsim/blob/HEAD/vignettes/a01_Introduction.Rmd" class="external-link"><code>vignettes/a01_Introduction.Rmd</code></a></small>
+      <div class="d-none name"><code>a01_Introduction.Rmd</code></div>
     </div>
 
     
@@ -249,7 +249,7 @@ how our new process looks like with <code><a href="https://rdrr.io/r/graphics/pl
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 1 cell types</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_object</span>, what <span class="op">=</span> <span class="st">"Processes"</span>, ncol <span class="op">=</span> <span class="fl">1</span>, nrow <span class="op">=</span> <span class="fl">1</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="co">#print only first point pattern</span></span></code></pre></div>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Next we will generate some regions of different tissue. For the
 purpose here, tissue 1 will be tumor and tissue 2 will be stroma. There
 are some parameters that are initialized when building the spatial
@@ -285,7 +285,7 @@ ranges in the window, the function will use the overlap between default
 for <code><a href="../reference/GenerateTissue.html">GenerateTissue()</a></code> for more details.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, what <span class="op">=</span> <span class="st">"tissue heatmap"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-7-1.png" width="864"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-7-1.png" width="864"></p>
 <p>The kernels are randomly laid about the simulation region and random
 sizes within the constraints of the parameters provided. The number of
 tissue regions simulated are fixed by the input <code>k</code> value,
@@ -329,10 +329,10 @@ distribution of ‘hole’ or ‘not a hole’.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, what <span class="op">=</span> <span class="st">"hole heatmap"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`1`</span></span></code></pre></div>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-9-1.png" width="864"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-9-1.png" width="864"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`2`</span></span></code></pre>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-9-2.png" width="864"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-9-2.png" width="864"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attr(,"class")</span></span>
 <span><span class="co">#&gt; [1] "list"      "ggarrange"</span></span></code></pre>
@@ -383,7 +383,7 @@ whole core, we can see our cells. There are little pockets of positive
 cells also with some noise.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span>, what <span class="op">=</span> <span class="st">"whole core"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-11-1.png" width="960"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-11-1.png" width="960"></p>
 </div>
 <div class="section level3">
 <h3 id="bivariate-simulation">Bivariate Simulation<a class="anchor" aria-label="anchor" href="#bivariate-simulation"></a>
@@ -422,7 +422,7 @@ Type 1 and Cell Type 2. First, the high correlation:</p>
 <span><span class="co">#&gt; Computing probability for Cell 2</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">bivariate_sim_tmp</span>, which <span class="op">=</span> <span class="fl">1</span>, what <span class="op">=</span> <span class="st">"whole core"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-13-1.png" width="960"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-13-1.png" width="960"></p>
 <p>We can see that in locations where Cell Type 1 is, Cell Type 2 is
 also present. There are a couple cells that are assigned as positive for
 both Cell Type 1 and Cell Type 2 which should be taken into
@@ -441,7 +441,7 @@ Cell Type 2?</p>
 <span><span class="co">#&gt; Computing probability for Cell 2</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">bivariate_sim_tmp</span>, which <span class="op">=</span> <span class="fl">1</span>, what <span class="op">=</span> <span class="st">"whole core"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="1.Introduction_files/figure-html/unnamed-chunk-14-1.png" width="960"></p>
+<p><img src="a01_Introduction_files/figure-html/unnamed-chunk-14-1.png" width="960"></p>
 <p>In Tissue 2 it’s easiser to see regions of only Cell Type 1 and
 regions of only Cell Type 2.</p>
 </div>
@@ -495,11 +495,11 @@ level counts for the different cell types.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Cells` `Cell 1 Assignment` `Cell 2 Assignment`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 135                  97</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 147                  85</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 133                 122</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 141                  94</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 117                 102</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 137                 119</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 155                  88</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 137                 105</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 142                 112</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 125                 135</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: `% Cell 1 Assignment` &lt;dbl&gt;, `% Cell 2 Assignment` &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>The spatial list and summary table can now be used with packages like
 <a href="https://github.com/FridleyLab/spatialTIME" class="external-link">spatialTIME</a> to compute spatial statistics on all of the

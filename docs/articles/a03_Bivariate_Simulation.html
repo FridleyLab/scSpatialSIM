@@ -41,9 +41,9 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/1.Introduction.html">Introduction</a>
-    <a class="dropdown-item" href="../articles/Bivariate_Simulation.html">Simulating Bivariate Cells</a>
-    <a class="dropdown-item" href="../articles/Univariate_Simulation.html">Simulating Univariate Cells</a>
+    <a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a>
+    <a class="dropdown-item" href="../articles/a02_Univariate_Simulation.html">Simulating Univariate Cells</a>
+    <a class="dropdown-item" href="../articles/a03_Bivariate_Simulation.html">Simulating Bivariate Cells</a>
   </div>
 </li>
       </ul>
@@ -51,7 +51,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/FridleyLab/mIFsim/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -66,8 +73,8 @@
       <img src="" class="logo" alt=""><h1>Simulating Bivariate Cells</h1>
             
       
-      
-      <div class="d-none name"><code>Bivariate_Simulation.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/mIFsim/blob/HEAD/vignettes/a03_Bivariate_Simulation.Rmd" class="external-link"><code>vignettes/a03_Bivariate_Simulation.Rmd</code></a></small>
+      <div class="d-none name"><code>a03_Bivariate_Simulation.Rmd</code></div>
     </div>
 
     
@@ -158,7 +165,7 @@ our new process looks like with <code>plot</code>.</p>
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Bivariate_Simulation_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="a03_Bivariate_Simulation_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Next we will generate some regions of the tumor an stroma. There are
 some parameters that are initialized when building the spatial
 simulation that tells downstream functions how to simulate things on a
@@ -192,7 +199,7 @@ tissue kernels with <code>PlotSimulation</code> and <code>what</code> as
 the tissue heatmap.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, what <span class="op">=</span> <span class="st">"tissue heatmap"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Bivariate_Simulation_files/figure-html/unnamed-chunk-6-1.png" width="864"></p>
+<p><img src="a03_Bivariate_Simulation_files/figure-html/unnamed-chunk-6-1.png" width="864"></p>
 <p>The kernels are randomly laid about the simulation region and random
 sizes within the constraints of the parameters used. The number of
 tissue regions simulated are fixed by the input <code>k</code> value,
@@ -232,7 +239,7 @@ distribution of ‘hole’ or ‘not a hole’. The <code>what</code> parameter
 is now “hole heatmap”.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, what <span class="op">=</span> <span class="st">"hole heatmap"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Bivariate_Simulation_files/figure-html/unnamed-chunk-8-1.png" width="864"></p>
+<p><img src="a03_Bivariate_Simulation_files/figure-html/unnamed-chunk-8-1.png" width="864"></p>
 <p>Next thing for us to do is to simulate the positivity of cells for a
 phenotype. Just like holes and the tissue, there are boundaries which
 the simulated positive cells will fall in which are stored in the
@@ -287,7 +294,7 @@ probability of being positive there will always be some ‘noise’ but the
 trend is there.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span>, what <span class="op">=</span> <span class="st">"whole core"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Bivariate_Simulation_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
+<p><img src="a03_Bivariate_Simulation_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
 <p>Lastly, the data is likely wanted in tabular format. Since there are
 multiple simulated point processes, the function
 <code>CreateSpatialList</code> returns a list of data frames containing
