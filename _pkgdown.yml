@@ -1,11 +1,3 @@
 url: ~
 template:
   bootstrap: 5
-
-articles:
-- title: Articles
-  navbar: ~
-  contents:
-  - Introduction
-  - Simulating Univariate Cells
-  - Simulating Bivariate Cells
