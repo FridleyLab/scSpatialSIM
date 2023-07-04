@@ -64,12 +64,12 @@ CreateSimulationObject = function(window = NULL,
     sims = 3
   }
 
-  if(!is(window, "owin")){
+  if(!methods::is(window, "owin")){
     sims = length(window)
   }
 
-  datClass = new("Spatial Simulation Object", Window = window, Sims = sims)
-  c_list = lapply(seq(cell_types), function(x) new("Cell"))
+  datClass = methods::new("SpatialSimulationObject", Window = window, Sims = sims)
+  c_list = lapply(seq(cell_types), function(x) methods::new("Cell"))
   datClass@Cells = c_list
   return(datClass)
 }
@@ -123,7 +123,7 @@ setClass("owin", slots = list(
   units = "list"
 ))
 
-setClass("Spatial Simulation Object", slots = list(
+setClass("SpatialSimulationObject", slots = list(
   Window = "owin",
   Sims = "numeric",
   Processes = "list",

@@ -32,7 +32,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
                           Force = FALSE,
                           density_heatmap = FALSE, step_size = 1, cores = 1,
                           correlation = 0){
-  if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_object` must be of class 'Spatial Simulation Object'")
+  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
 
   #create parameter vector
@@ -63,7 +63,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
     #produce kernel parameter list for k clusters in each simulated process
     if(cell == 1){
       sim_object@Cells[[cell]]@`Simulationed Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
-        do.call(gaussian_kernel, head(params, -1))
+        do.call(gaussian_kernel, utils::head(params, -1))
       })
     } else {
       sim_object@Cells[[cell]]@`Simulationed Kernels` <<- sim_object@Cells[[1]]@`Simulationed Kernels`
@@ -84,7 +84,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
         message(paste0("Adjusting density heatmap for Cell ", cell))
         sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[1]]@`Density Grids`, function(grid_tab){
           if(correlation == 0){
-            grid_tab$prob = runif(nrow(grid_tab), min = 0, max = 1)
+            grid_tab$prob = stats::runif(nrow(grid_tab), min = 0, max = 1)
           } else if(correlation < 0){
             grid_tab$prob = grid_tab$prob * correlation + 1
           } else {
@@ -108,7 +108,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
       #if the cell is other than the first, adjust it based on first cell and correlation
       if(cell != 1){
         if(correlation == 0){
-          vec = runif(length(vec), min = 0, max = 1)
+          vec = stats::runif(length(vec), min = 0, max = 1)
         } else if(correlation < 0){
           vec = vec * correlation + 1
         } else {
@@ -117,7 +117,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
       }
       #make table with probabilities and positive/negative
       df = data.frame(col1 = scale_probs(vec * 0.9, params$probs))
-      df$col2 = ifelse(rbinom(nrow(df), size = 1, prob = df$col1) == 1, "Positive", "Negative")
+      df$col2 = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$col1) == 1, "Positive", "Negative")
 
       names(df) = c(paste("Cell", cell, "Probability"), paste("Cell", cell, "Assignment"))
 

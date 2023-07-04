@@ -24,6 +24,7 @@ In order to get started simulating multiple immunofluorescence (mIF) samples, we
 
 ```{r setup}
 library(mIFsim)
+set.seed(333) #reproducibility
 ```
 
 ## Running mIFsim

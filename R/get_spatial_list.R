@@ -13,10 +13,10 @@
 #' @export
 CreateSpatialList =  function(sim_object){
   #require(dplyr)
-  if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_object` must be of class 'Spatial Simulation Object'")
+  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
 
   if(is.null(sim_object@`Spatial Files`)){
-    stop("There are no 'Spatial Files' associated with this 'Spatial Simulation Object'")
+    stop("There are no 'Spatial Files' associated with this 'SpatialSimulationObject'")
   }
 
   # Make a copy of the `Spatial Files` slot to avoid changing the original object
@@ -25,7 +25,7 @@ CreateSpatialList =  function(sim_object){
   # Loop over each data frame in the `spatial_files` list
   for(i in seq_along(spatial_files)){
     # Remove probability columns
-    spatial_files[[i]] <- dplyr::select(spatial_files[[i]], -contains("Probability"))
+    spatial_files[[i]] <- dplyr::select(spatial_files[[i]], -dplyr::contains("Probability"))
 
     # Replace "Positive" with 1 and "Negative" with 0 in assignment columns
     assignment_cols <- grep("Cell", colnames(spatial_files[[i]]))

@@ -29,7 +29,6 @@ Authors@R:
              role = c("cre"))
     )
 Description: mIFsim is an easy-to-use wrapper package for spatstat that allows users to simulate mulitplex immunofluorescence (mIF) data. The simulation of this data comes in a could different functions whether since cell clustering (univariate) or multiple cell clustering/colocalization (bivariate) is wanting to be explored. The main audience for this package is those wanting to validate or test hypotheses or methods on controllable abundance/clustering of cells within mIF data.
-License: `use_mit_license()`
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -53,3 +52,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+License: MIT + file LICENSE

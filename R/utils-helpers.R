@@ -28,11 +28,11 @@
 #kernal for generating distributions around random points for k centers
 gaussian_kernel = function(k = 10, xmin = 0, xmax = 10, ymin = 0, ymax = 10, sdmin = 1/2, sdmax = 2){
   #simulate centers centers of groups
-  center_peak = data.frame(x = runif(k,xmin,xmax), y = runif(k,ymin,ymax),
-                           sd.x = runif(k,sdmin,sdmax), sd.y = runif(k, sdmin, sdmax))
+  center_peak = data.frame(x = stats::runif(k,xmin,xmax), y = stats::runif(k,ymin,ymax),
+                           sd.x = stats::runif(k,sdmin,sdmax), sd.y = stats::runif(k, sdmin, sdmax))
   #spearman correlations for how the distribution falls in 2D space
   center_peak$rho = sapply(1:k, function(a){
-    runif(1,-center_peak$sd.x[a]*center_peak$sd.y[a], center_peak$sd.x[a]*center_peak$sd.y[a])
+    stats::runif(1,-center_peak$sd.x[a]*center_peak$sd.y[a], center_peak$sd.x[a]*center_peak$sd.y[a])
   })
   return(center_peak)
 }
@@ -41,7 +41,7 @@ gaussian_kernel = function(k = 10, xmin = 0, xmax = 10, ymin = 0, ymax = 10, sdm
 generate_holes = function(xmin = 0, xmax = 10, ymin = 0,
                           ymax = 10, sdmin = 1/2, sdmax = 2, hole_prob = c(0.2, 0.35)){
   #Random select the percent to total area missing
-  percent_area_missing = runif(1,hole_prob[1],hole_prob[2])
+  percent_area_missing = stats::runif(1,hole_prob[1],hole_prob[2])
   #Random select the number of holes, can range from 1 to floor(percent_area_missing*10)
   #for example if percent_area_missing = 0.213974, then there can be either 1 or 2 holes
   num_holes = sample(2:floor(percent_area_missing*10),1)
@@ -56,11 +56,11 @@ generate_holes = function(xmin = 0, xmax = 10, ymin = 0,
     area_allocation = generate_sum_vector(num_holes, 0.1, percent_area_missing, percent_area_missing)
   }
   #generate table for hole centers
-  center_hole = data.frame(x = runif(num_holes,xmin,xmax), y = runif(num_holes,ymin,ymax), rho = 0,
-                           sd.x = runif(num_holes,sdmin,sdmax), sd.y = runif(num_holes,sdmin,sdmax))
+  center_hole = data.frame(x = stats::runif(num_holes,xmin,xmax), y = stats::runif(num_holes,ymin,ymax), rho = 0,
+                           sd.x = stats::runif(num_holes,sdmin,sdmax), sd.y = stats::runif(num_holes,sdmin,sdmax))
   #add random spearman correlations again guessing for direction of skewness but sd should also provide that
   center_hole$rho = sapply(1:num_holes, function(a){
-    runif(1,-center_hole$sd.x[a]*center_hole$sd.y[a], center_hole$sd.x[a]*center_hole$sd.y[a])
+    stats::runif(1,-center_hole$sd.x[a]*center_hole$sd.y[a], center_hole$sd.x[a]*center_hole$sd.y[a])
   })
   #The max distance was derived by setting the area_allocation = area_circle/total_area (side^2) and solving
   #for r.
@@ -96,8 +96,8 @@ CalculateGridHoles = function(grid, gauss_tab, cores){
 }
 
 is.empty <- function(obj, slot.name) {
-  if (slot.name %in% slotNames(class(obj))) {
-    return(is.null(slot(obj, slot.name)) || length(slot(obj, slot.name)) == 0)
+  if (slot.name %in% methods::slotNames(class(obj))) {
+    return(is.null(methods::slot(obj, slot.name)) || length(methods::slot(obj, slot.name)) == 0)
   } else {
     stop(paste0("Object does not have a '", slot.name, "' slot."))
   }
@@ -115,7 +115,7 @@ replace_na <- function(x, y) {
 generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
   vals <- numeric(num_vals)
   while (TRUE) {
-    vals <- runif(num_vals, min_val, max_val)
+    vals <- stats::runif(num_vals, min_val, max_val)
     if (sum(vals) < sum_val) {
       break
     }

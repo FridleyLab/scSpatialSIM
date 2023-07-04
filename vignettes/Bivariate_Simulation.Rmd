@@ -24,6 +24,7 @@ In order to get started simulating bivariate multiple immunofluorescence (mIF) s
 
 ```{r setup}
 library(mIFsim)
+set.seed(333) #reproducibility
 ```
 
 ## Running mIFsim

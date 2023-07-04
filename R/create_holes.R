@@ -53,7 +53,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
                          hole_prob = c(0.2, 0.35),
                          force = FALSE,
                          density_heatmap = FALSE, step_size = 1, cores = 1){
-  if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_object` must be of class 'Spatial Simulation Object'")
+  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
   if(any(is.null(c(xmin, xmax, ymin, ymax, sdmin, sdmax, hole_prob)))) stop("Cannot have `NULL` parameters")
 
   #create parameter vector
@@ -110,7 +110,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
     df$`Hole Probability Scaled` = sqrt(df$`Hole Probability`)
     # df$`Hole Assignment` = ifelse(df$`Hole Z` < sim_object@Holes@`Simulationed Kernels`[[spat_num]][df$`Closest Hole`,"max_dist"],
     #                               "Drop", "Keep")
-    df$`Hole Assignment` = ifelse(rbinom(nrow(df), size = 1, prob = df$`Hole Probability Scaled`) == 1, "Drop", "Keep")
+    df$`Hole Assignment` = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$`Hole Probability Scaled`) == 1, "Drop", "Keep")
     return(df)
   })
 

@@ -24,9 +24,9 @@
 #' @export
 
 UpdateSimulationWindow = function(sim_object, window = NULL){
-  if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_list` must be of class 'Spatial Simulation Object'")
+  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_list` must be of class 'SpatialSimulationObject'")
   if(is.null(window)) stop("In order to update the simulation window, window must not be null")
-  if(!is(window, "owin")) stop("`window` must be of class 'owin'")
+  if(!methods::is(window, "owin")) stop("`window` must be of class 'owin'")
   sim_object@Window = window
   return(sim_object)
 }

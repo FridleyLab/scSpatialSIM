@@ -35,7 +35,7 @@
 #' PlotSimulation(sim_object, which = 1, what = "tissue heatmap")
 PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tissue heatmap"){
   #require(ggplot2)
-  if(!is(sim_object, "Spatial Simulation Object")) stop("`sim_object` must be of class 'Spatial Simulation Object'")
+  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
   density_plot = function(dat){
     dat %>%
       ggplot2::ggplot() +
