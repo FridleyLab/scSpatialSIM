@@ -127,14 +127,6 @@ If we plot the simulation object now specifying we want to see the whole core, w
 PlotSimulation(sim_object, which = 1, what = "whole core")
 ```
 
-Lastly, the data is likely wanted in tabular format. Since there are multiple simulated point patterns, the function `CreateSpatialList()` returns a list of data frames containing cell x and y locations, the tissue that the cell belongs to, whether the cell falls in a hole, and the positivity of the different cell types.
-
-```{r}
-spatial_list = CreateSpatialList(sim_object = sim_object)
-```
-
-The spatial list can now be used with packages like `{spatialTIME}` to compute spatial statistics on all of the simulated data frames. 
-
 ### Bivariate Simulation
 
 The process for 2 or more cell types is essentially the same as for a single cell type with the addition of the `correlation` value when simulating the cell types. Lets create another `SpatSimObj` to get to the phenotype simulating step with `GenerateCellPositivity()`. A great feature of mIFsim is that it works nicely with `{magrittr}` and the pipe function to immediately pass output from one function to the next.
@@ -150,3 +142,51 @@ bivariate_sim = CreateSimulationObject(sims = 5, cell_types = 2) %>%
   GenerateTissue(density_heatmap = T, step_size = 0.1, cores = 1)
 ```
 
+As previously mentioned, we can specify a `correlation` values of 1 to use the same kernal for both cell types which will assign them in such a way that will be identifable as colocalized between Cell Type 1 and Cell Type 2. First, the high correlation:
+
+```{r, fig.height=6, fig.width=10}
+bivariate_sim_tmp  = GenerateCellPositivity(bivariate_sim, k = 4,
+                                    sdmin = 3, sdmax = 5,
+                                    density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
+                                    correlation = 1)
+
+PlotSimulation(bivariate_sim_tmp, which = 1, what = "whole core")
+```
+
+We can see that in locations where Cell Type 1 is, Cell Type 2 is also present. There are a couple cells that are assigned as positive for both Cell Type 1 and Cell Type 2 which should be taken into consideration for next steps. If looking at colocalization of mutually exclusive cell types, these should be removed.
+
+How does this compare with strong segregation between Cell Type 1 and Cell Type 2?
+
+```{r, fig.height=6, fig.width=10}
+bivariate_sim_tmp  = GenerateCellPositivity(bivariate_sim, k = 4,
+                                    sdmin = 3, sdmax = 5,
+                                    density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
+                                    correlation = -1)
+
+PlotSimulation(bivariate_sim_tmp, which = 1, what = "whole core")
+```
+
+In Tissue 2 it's easiser to see regions of only Cell Type 1 and regions of only Cell Type 2.
+
+## Exporting Data
+
+Lastly, the data is likely wanted in tabular format. Since there are multiple simulated point patterns, the function `CreateSpatialList()` returns a list of data frames containing cell x and y locations, the tissue that the cell belongs to, whether the cell falls in a hole, and the positivity of the different cell types.
+
+```{r}
+spatial_list = CreateSpatialList(sim_object = bivariate_sim_tmp)
+head(spatial_list[[1]])
+```
+
+Alternatively, there is the ability with `CreateSpatialList()` to export all of the spatial pattern data as a single data frame using `single_df` set to `TRUE`. This adds an `Image Name` column that keeps the spatial pattern data separate, and can split back into a list later for use with `SummariseSpatial()`, which creates a core level counts for the different cell types.
+
+```{r}
+single_dataframe = CreateSpatialList(sim_object = bivariate_sim_tmp, single_df = TRUE)
+head(single_dataframe)
+```
+
+```{r}
+summary_data = SummariseSpatial(spatial_list = spatial_list, markers = c("Cell 1 Assignment", "Cell 2 Assignment"))
+head(summary_data)
+```
+
+The spatial list and summary table can now be used with packages like `{spatialTIME}` to compute spatial statistics on all of the simulated data frames. 
