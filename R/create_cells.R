@@ -1,8 +1,8 @@
 #' Generate Cell Positivity
 #'
-#' Generate the probability of a cell being positive given a set of simulation parameters for each file in a spatial simulation object.
+#' Generate the probability of a cell being positive given a set of simulation parameters for each file in a SpatSimObj.
 #'
-#' @param sim_object A \code{mIFSim} object containing the simulated data.
+#' @param sim_object A \code{SpatSimObj} object containing the simulated data.
 #' @param k An integer specifying the number of clusters for each simulated process.
 #' @param xmin A numeric value specifying the minimum x value for the kernel.
 #' @param xmax A numeric value specifying the maximum x value for the kernel.
@@ -32,7 +32,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
                           Force = FALSE,
                           density_heatmap = FALSE, step_size = 1, cores = 1,
                           correlation = 0){
-  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
+  if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
 
   #create parameter vector

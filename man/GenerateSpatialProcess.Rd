@@ -7,7 +7,7 @@
 GenerateSpatialProcess(sim_object, lambda = 25, ...)
 }
 \arguments{
-\item{sim_object}{A 'Spatial Simulation Object' containing a window.}
+\item{sim_object}{A 'SpatSimObj' containing a window.}
 
 \item{lambda}{The intensity of the point process. Default is 25.}
 

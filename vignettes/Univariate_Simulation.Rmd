@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 ## Background
 
+### 
+
 The development of novel clustering algorithms require the ability to create many samples in a controlled manner. Previously, we have used existing methods such as Ripley's K to classify multiple immunofluorescence (mIF) samples
 
 ## Libraries

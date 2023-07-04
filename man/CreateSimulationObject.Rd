@@ -17,12 +17,12 @@ ess than 1, defaults to 3.}
 \item{cell_types}{The number of cell types. Defaults to 1.}
 }
 \value{
-A \code{Spatial Simulation Object} containing the simulation
+A \code{SpatSimObj} containing the simulation
 window, the number of simulations to perform, and lists of cells,
 tumor/stroma, holes, and spatial files.
 }
 \description{
-This function creates a \code{Spatial Simulation Object} for
+This function creates a \code{SpatSimObj} for
 spatial simulations. The object contains information about the
 simulation window, the number of simulations to perform, and
 lists of cells, tumor/stroma, holes, and spatial files.
@@ -43,7 +43,7 @@ types to include in the simulation. By default, the function
 creates a single cell type, represented by an object of class
 \code{Cell}.
 
-The \code{Spatial Simulation Object} is composed of the following classes:
+The \code{SpatSimObj} is composed of the following classes:
 
 \itemize{
 \item A \code{Window} object of class \code{owin}.

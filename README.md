@@ -12,3 +12,7 @@ if (!require("devtools", quietly = TRUE))
 
 devtools::install_github("FridleyLab/mIFsim")
 ```
+
+# Vignettes
+
+If you are interested in documentation and tutorials, please visit: https://fridleylab.github.io/mIFsim/index.html 

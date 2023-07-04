@@ -2,27 +2,27 @@
 % Please edit documentation in R/update_window.R
 \name{UpdateSimulationWindow}
 \alias{UpdateSimulationWindow}
-\title{Update the simulation window in a Spatial Simulation Object}
+\title{Update the simulation window in a SpatSimObj}
 \usage{
 UpdateSimulationWindow(sim_object, window = NULL)
 }
 \arguments{
-\item{sim_object}{A \code{Spatial Simulation Object} object}
+\item{sim_object}{A \code{SpatSimObj} object}
 
 \item{window}{A new \code{owin} object representing the updated simulation window}
 }
 \value{
-The updated \code{Spatial Simulation Object} object
+The updated \code{SpatSimObj} object
 }
 \description{
-This function updates the simulation window of a \code{Spatial Simulation Object} by replacing
+This function updates the simulation window of a \code{SpatSimObj} by replacing
 the existing window with a new one.
 }
 \details{
 The \code{UpdateSimulationWindow()} function checks that the input \code{sim_object} is of class
-'Spatial Simulation Object', that the input \code{window} is not null and is of class 'owin'.
+'SpatSimObj', that the input \code{window} is not null and is of class 'owin'.
 If these checks pass, the function updates the simulation window in the input \code{sim_object} and
-returns the updated \code{Spatial Simulation Object} object.
+returns the updated \code{SpatSimObj} object.
 }
 \examples{
 # Create a simulation object

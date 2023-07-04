@@ -13,13 +13,13 @@ PlotSimulation(
 )
 }
 \arguments{
-\item{sim_object}{A Spatial Simulation Object}
+\item{sim_object}{A \code{SpatSimObj}}
 
 \item{nrow}{Number of rows of plots (only applicable when more than one plot is made)}
 
 \item{ncol}{Number of columns of plots (only applicable when more than one plot is made)}
 
-\item{which}{Index of the elements of the Spatial Simulation Object to be plotted}
+\item{which}{Index of the elements of the SpatSimObj to be plotted}
 
 \item{what}{What to plot ("tissue heatmap", "hole heatmap", or "whole core")}
 }
@@ -27,10 +27,10 @@ PlotSimulation(
 A plot or a grid of plots, depending on the input arguments
 }
 \description{
-Plot different aspects of a Spatial Simulation Object
+Plot different aspects of a SpatSimObj
 }
 \details{
-The \code{PlotSimulation} function is used to plot different aspects of a Spatial Simulation Object.
+The \code{PlotSimulation} function is used to plot different aspects of a SpatSimObj
 The function takes a \code{sim_object} as its first argument, which should be an object of class
 "Spatial Simulation Object". The function can then be used to plot different aspects of the
 simulation, such as heatmaps of the tissue or holes, or a plot of the whole core with assigned cells colored by type.
@@ -44,7 +44,7 @@ When more than one plot is made, \code{nrow} and \code{ncol} can be used to spec
 and columns of the plot grid, respectively.
 }
 \examples{
-# create a Spatial Simulation Object
+# create a SpatSimObj
 sim_object <- CreateSimulationObject()
 sim_object = GenerateSpatialProcess(sim_object)
 sim_object = GenerateTissue(sim_object, density_heatmap = TRUE, step_size = 1, cores = 1)

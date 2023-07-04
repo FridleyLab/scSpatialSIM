@@ -20,7 +20,7 @@ GenerateHoles(
 )
 }
 \arguments{
-\item{sim_object}{A spatial simulation object of class 'Spatial Simulation Object'}
+\item{sim_object}{A spatial simulation object of class \code{SpatSimObj}}
 
 \item{xmin}{Minimum x-coordinate for the holes (default: NA)}
 

@@ -88,7 +88,7 @@ CalculateGridHoles = function(grid, gauss_tab, cores){
       diff = c((val[1] - gauss_tab$x[a]), (val[2] - gauss_tab$y[a]))
       sigma = matrix(c(gauss_tab$sd.x[a]^2, rep(gauss_tab$rho[a], 2),
                        gauss_tab$sd.y[a]^2), nrow = 2, ncol = 2)
-      z = t(diff) %*% solve(sigma) %*% diff
+      z = t(diff) %*% solve(sigma) %*% diff #solve finds in the inverse of a single matrix without the righthand vector
     })
     data.frame(`Closest Hole` = which.min(mins),
       `Hole Z` = min(mins), check.names = FALSE)

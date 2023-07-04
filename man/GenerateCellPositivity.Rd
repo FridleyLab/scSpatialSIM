@@ -22,7 +22,7 @@ GenerateCellPositivity(
 )
 }
 \arguments{
-\item{sim_object}{A \code{mIFSim} object containing the simulated data.}
+\item{sim_object}{A \code{SpatSimObj} object containing the simulated data.}
 
 \item{k}{An integer specifying the number of clusters for each simulated process.}
 
@@ -54,7 +54,7 @@ GenerateCellPositivity(
 Returns the original \code{mIFsim} object with additional generated data added to each cell object.
 }
 \description{
-Generate the probability of a cell being positive given a set of simulation parameters for each file in a spatial simulation object.
+Generate the probability of a cell being positive given a set of simulation parameters for each file in a SpatSimObj.
 }
 \details{
 The function generates the probability of a cell being positive given a set of simulation parameters f

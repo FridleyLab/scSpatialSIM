@@ -10,6 +10,9 @@
     <loc>/LICENSE.html</loc>
   </url>
   <url>
+    <loc>/articles/1.Introduction.html</loc>
+  </url>
+  <url>
     <loc>/articles/Bivariate_Simulation.html</loc>
   </url>
   <url>
@@ -58,10 +61,10 @@
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/plot.SpatialSimulationObject.html</loc>
+    <loc>/reference/plot.SpatSimObj.html</loc>
   </url>
   <url>
-    <loc>/reference/summary.SpatialSimulationObject.html</loc>
+    <loc>/reference/summary.SpatSimObj.html</loc>
   </url>
   <url>
     <loc>/reference/wm.html</loc>

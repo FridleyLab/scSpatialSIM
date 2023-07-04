@@ -1,12 +1,12 @@
-#' summary function for SpatialSimulationObject
+#' summary function for SpatSimObj
 #'
-#' @param object of class `SpatialSimulationObject`
-#' @param ... nothing else to pass to summary if object is a SpatialSimulationObject
+#' @param object of class `SpatSimObj`
+#' @param ... nothing else to pass to summary if object is a SpatSimObj
 #'
-#' @method summary SpatialSimulationObject
+#' @method summary SpatSimObj
 #'
 #' @export
-summary.SpatialSimulationObject <- function(object, ...){
+summary.SpatSimObj <- function(object, ...){
   nsim = object@Sims
   win = matrix(c(object@Window$xrange, object@Window$yrange), nrow = 2, byrow = F)
   s_processes = length(object@Processes)
@@ -15,25 +15,25 @@ summary.SpatialSimulationObject <- function(object, ...){
   c_types = length(object@Cells)
   c_kernels=length(object@Cells[[1]]@`Simulationed Kernels`)
 
-  cat("Spatial Simulation object for", nsim,"simulations. Currently, there are:\n")
+  cat("Spatial Simulation object for", nsim,"simulated images. Currently, there are:\n")
   cat(paste0("\tWindow: x (", win[1], ",", win[2], "); y (", win[3], ",", win[4],")\n"), sep="")
-  cat("\t", s_processes, " spatial processes\n", sep="")
+  cat("\t", s_processes, " spatial point patterns\n", sep="")
   cat("\t", t_kernels, " tissue kernels\n", sep="")
   cat("\t", h_kernels, " hole kernels\n", sep="")
   cat("\t", c_kernels, " cell kernels for ", c_types, " cell types\n", sep="")
 }
 
-#' plot function for SpatialSimulationObject
+#' plot function for SpatSimObj
 #'
-#' @param x of class `SpatialSimulationObject`
-#' @param ... other things to pass to the plot method for SpatialSimulationObjects including `nrow`, `ncol` for the number of rows and columns of plots,
+#' @param x of class `SpatSimObj`
+#' @param ... other things to pass to the plot method for SpatSimObj including `nrow`, `ncol` for the number of rows and columns of plots,
 #' `which` processes to plot, and `what` which currently only works with "Processes" but may be updated in the future
 #'
-#' @method plot SpatialSimulationObject
+#' @method plot SpatSimObj
 #'
 #'
 #' @export
-plot.SpatialSimulationObject <- function(x, ...){ #
+plot.SpatSimObj <- function(x, ...){ #
   if(!exists("what")) what = "Processes"
   if(methods::is(nrow, "function")) nrow = 1
   if(methods::is(ncol, "function")) ncol = 1
@@ -53,3 +53,9 @@ plot.SpatialSimulationObject <- function(x, ...){ #
     cat("please be patient while method is being updated")
   }
 }
+
+setMethod(f = "show",
+          signature = "SpatSimObj",
+          definition = function(object){
+            summary(object)
+          })

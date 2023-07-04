@@ -1,15 +1,15 @@
-#' Update the simulation window in a Spatial Simulation Object
+#' Update the simulation window in a SpatSimObj
 #'
-#' This function updates the simulation window of a \code{Spatial Simulation Object} by replacing
+#' This function updates the simulation window of a \code{SpatSimObj} by replacing
 #' the existing window with a new one.
 #'
-#' @param sim_object A \code{Spatial Simulation Object} object
+#' @param sim_object A \code{SpatSimObj} object
 #' @param window A new \code{owin} object representing the updated simulation window
-#' @return The updated \code{Spatial Simulation Object} object
+#' @return The updated \code{SpatSimObj} object
 #' @details The \code{UpdateSimulationWindow()} function checks that the input \code{sim_object} is of class
-#' 'Spatial Simulation Object', that the input \code{window} is not null and is of class 'owin'.
+#' 'SpatSimObj', that the input \code{window} is not null and is of class 'owin'.
 #' If these checks pass, the function updates the simulation window in the input \code{sim_object} and
-#' returns the updated \code{Spatial Simulation Object} object.
+#' returns the updated \code{SpatSimObj} object.
 #'
 #' @examples
 #' # Create a simulation object
@@ -24,7 +24,7 @@
 #' @export
 
 UpdateSimulationWindow = function(sim_object, window = NULL){
-  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_list` must be of class 'SpatialSimulationObject'")
+  if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_list` must be of class 'SpatSimObj'")
   if(is.null(window)) stop("In order to update the simulation window, window must not be null")
   if(!methods::is(window, "owin")) stop("`window` must be of class 'owin'")
   sim_object@Window = window

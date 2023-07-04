@@ -1,6 +1,6 @@
 #' Create a spatial simulation object.
 #'
-#' This function creates a \code{Spatial Simulation Object} for
+#' This function creates a \code{SpatSimObj} for
 #' spatial simulations. The object contains information about the
 #' simulation window, the number of simulations to perform, and
 #' lists of cells, tumor/stroma, holes, and spatial files.
@@ -22,7 +22,7 @@
 #'  creates a single cell type, represented by an object of class
 #'   \code{Cell}.
 #'
-#' The \code{Spatial Simulation Object} is composed of the following classes:
+#' The \code{SpatSimObj} is composed of the following classes:
 #'
 #' \itemize{
 #'  \item A \code{Window} object of class \code{owin}.
@@ -40,7 +40,7 @@
 #' ess than 1, defaults to 3.
 #' @param cell_types The number of cell types. Defaults to 1.
 #'
-#' @return A \code{Spatial Simulation Object} containing the simulation
+#' @return A \code{SpatSimObj} containing the simulation
 #' window, the number of simulations to perform, and lists of cells,
 #' tumor/stroma, holes, and spatial files.
 #'
@@ -68,7 +68,7 @@ CreateSimulationObject = function(window = NULL,
     sims = length(window)
   }
 
-  datClass = methods::new("SpatialSimulationObject", Window = window, Sims = sims)
+  datClass = methods::new("SpatSimObj", Window = window, Sims = sims)
   c_list = lapply(seq(cell_types), function(x) methods::new("Cell"))
   datClass@Cells = c_list
   return(datClass)
@@ -123,7 +123,7 @@ setClass("owin", slots = list(
   units = "list"
 ))
 
-setClass("SpatialSimulationObject", slots = list(
+setClass("SpatSimObj", slots = list(
   Window = "owin",
   Sims = "numeric",
   Processes = "list",

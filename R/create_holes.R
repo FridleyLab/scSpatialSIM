@@ -7,7 +7,7 @@
 #' and to assign points within the holes to be dropped or kept based on a scaled
 #' probability value.
 #'
-#' @param sim_object A spatial simulation object of class 'Spatial Simulation Object'
+#' @param sim_object A spatial simulation object of class `SpatSimObj`
 #' @param xmin Minimum x-coordinate for the holes (default: NA)
 #' @param xmax Maximum x-coordinate for the holes (default: NA)
 #' @param ymin Minimum y-coordinate for the holes (default: NA)
@@ -53,7 +53,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
                          hole_prob = c(0.2, 0.35),
                          force = FALSE,
                          density_heatmap = FALSE, step_size = 1, cores = 1){
-  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
+  if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(xmin, xmax, ymin, ymax, sdmin, sdmax, hole_prob)))) stop("Cannot have `NULL` parameters")
 
   #create parameter vector

@@ -1,0 +1,152 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Background
+
+### Spatial Point Patterns
+
+Spatial point patterns are the realization of spatial point process models. They are points that represent some feature, in our case cells but in ecological studies can be trees or plants, in space. Our space is 2-dimensional with an x and y axis with arbitrary units. Each point in the spatial point pattern can have marks - characteristics that describe information about the point. These marks can be things like whether it's positive or negative for a specific phenotype or tissue, perhaps the size of the cell, or even the intensity of a fluorophore on the cells surface. The spatial point pattern can provide us with a great deal of information about a pathology when looking at cell spatial contexture.
+
+In order to understand the cell contexture of a pathology, researchers can employ different spatial statistic methods that describe some feature of the spatial point pattern. A simple descriptive statistic of a spatial point pattern is ***lambda*** which describes the _intensity_. A large *lambda* means that there are a large number of points in a given boundary, and a small *lambda* means for the same boundary area there are less points. Another summary statistic is Ripley's *K(r)* which describes how many other points of interest are within *r* of an anchor cell. This measurement can then be compared to different things like a complete spatial randomness (CSR) measurement to estimate how far the observed cell contexture deviates from random cell locations in the sample. In addition to Ripley's *K(r)*, there are several other methods such as a nearest neighbor *G(r)* function and an interaction variable developed by [Steinhart et. al](https://aacrjournals.org/mcr/article/19/12/1973/675069/The-Spatial-Context-of-Tumor-Infiltrating-Immune).
+
+### Simulating
+
+In order to compare metrics for describing point patterns, we have developed this simulation package: `mIFsim`. The main basis of the package is using Gaussian kernels to assign different characteristics to the underlying spatial point pattern. A Gaussian kernel is described in 3 different ways in our package: kernel's center, standard deviation in the x-direction and standard deviation in the y-direction. There are *k* kernel means or centers in the point pattern which each has these descriptors. With the kernels for a spatial point pattern described and locations of points, the kernels can be used to give a probability to the points - closer to the center *k* the greater the probability for what the kernel is describing and farther away from any *k* center the lower the probability.
+
+Having probabilities that range from 0 to 1 assumes kernel centers are 'hot' for the tissue/cell phenotype/hole, but in reality this is not always the case. Due to the inherent noise that we see with tissues at the cell level, we have provided the ability to limit the kernel center probability and increase the background probability. In addition to this making the simulations more realistic, this also allows for abundance control for cell phenotypes (lower max probability lower abundance).
+
+## Using `mIFsim`
+
+The process of simulating multiplex immunofluorescence data was streamlined in a similar way to what one thinks of when thinking of real data. First, an S4 `SpatSimObj` object is initialized with all the slots that are needed to proceed through the whole simulation process. Slots inside are for kernels that describe tissue, holes, cell phenotypes, the simulation window, and a tabular format of them. With the `SpatialSimulationObject()` ready, the point patterns can be simulated (these point patterns act as a 'master' for the next parts). The point pattern as it is is similar to an extracellular matrix that just has places for cells to go but no identity for the cells. Thinking more broadly, we need to create tissue regions for our images which is designated as either tissue 1 and tissue 2 (can be interpreted as tumor or stroma). Separately, cell phenotypes can be assigned to each cell. This is all done with separate kernels for each step which allows for high customization and fine tuning of the simulated samples and the spatial contexture. If parameters are changed from the initialized values, then they will be stored in the object so in the future they can be referred to again.
+
+Spatial statistics are usually interested in the amount of clustering points with a single mark type have. For example, it has been shown that [high abundance but low clustering of cytotoxic T cells is associated with better overall survival than missing cytotoxic T cells in high grade serous ovarian cancer tumors](https://doi.org/10.1371/journal.pcbi.1009900). There are also instances that colocalization of 2 difference cell types might be of interest such as T cell and B cells in tumors. With `mIFsim`, we provide methods to perform both of these spatial point patterns. Input parameters dictate the layout of a first cell type. In the case where more than one cell type is wanted, a correlation value is taken which uses the same kernel as the first cell type (`correlation = 1`) for strong colocalization or inverts the first cell types kernel (`correlation = -1`) for segregation.
+
+### Univariate Simulation
+
+In order to get started simulating multiplex immunofluorescence (mIF) samples, we need to import the package.
+
+```{r setup}
+library(mIFsim)
+set.seed(333) #reproducibility
+```
+
+To create a simulation object, we can call `CreateSimulationObject()`, which takes in 3 arguments that will initialize the object for all downstream functions:
+
+1. `window` - a `spatstat` owin object which is the boundary for which to simulate our points. The window acts as a mask so the functions know where to simulate points later on.
+2. `sims` - an integer value that is the number of samples that is wanting to be simulated
+3. `cell_types` - this is the number of different phenotypes to simulate, here we are only going to do a single cell type
+
+If a window isn't specified a built in 10x10 unit window will be used. To make a custom window, we an use `spatstat.geom::owin`
+
+```{r}
+custom_window = spatstat.geom::owin(xrange = c(0, 10), yrange = c(0, 10))
+```
+
+Let's create our simulation object.
+
+```{r}
+sim_object = CreateSimulationObject(sims = 9, cell_types = 1, window = custom_window)
+```
+
+The simulation object has some attribute that are gradually filled in as we progress. Using the `summary()` method, we can see what our simulation object has inside and what we need to do next. Here, we have 9 simulations with the default window and are wanting to perform this for a single cell type. This method is really useful for when fine tuning parameters to get the desired output because it shows you exactly what has already been done when loading in the base object from an RDS file.
+
+```{r}
+summary(sim_object)
+```
+
+How that we have our simulation object and parameters set within, we need to create the point pattern process. The `GenerateSpatialProcess()` function takes in the spatial simulation object and a `lambda`, or intensity of the point pattern. **NOTE: with large windows and large lambdas, the size of the spatial simulation object can grow fast so be mindful.** Any other parameters that could be passed to `spatstat.random::rpoispp` can then be passed to `GenerateSpatialProcess()` at the end. Again, we can check how we are filling in our slots with `summary()` and even see how our new process looks like with `plot()`.
+
+```{r}
+sim_object = GenerateSpatialProcess(sim_object)
+summary(sim_object)
+plot(sim_object, what = "Processes", ncol = 1, nrow = 1, which = 1)#print only first point pattern
+```
+
+Next we will generate some regions of different tissue. For the purpose here, tissue 1 will be tumor and tissue 2 will be stroma. There are some parameters that are initialized when building the spatial simulation that tells downstream functions how to simulate things on a Gaussian kernel - `GenerateTissue()` is one of those. If there is nothing supplied to the function when calling, it will default to these values. Alternatively, can specify them in the function call. These include regions within your window that you would like tissue regions to be simulated, the number of regions, the standard deviation range for how the probability falls off around the region centers, etc. Something here is whether the ending kernel should be converted to a heatmap and at what resolution. **NOTE: the smaller the `step_size` used for the heatmap the longer it takes to run so be mindful.** 
+
+After simulating the tissues we can look at the summary of the spatial simulation object to see the newly filled slot.
+
+```{r}
+sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 0.1, cores = 1)
+summary(sim_object)
+```
+
+The tissue kernel slot is now filled the number of kernels matching number of spatial processes we have. Let's take a look at the simulated tissue kernels with `PlotSimulation()`. If using negative ranges in the window, the function will use the overlap between default `GenerateTissue()` range and the window. See documentation for `GenerateTissue()` for more details.
+
+```{r, fig.height = 10, fig.width = 9, eval = T}
+PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "tissue heatmap")
+```
+
+The kernels are randomly laid about the simulation region and random sizes within the constraints of the parameters provided. The number of tissue regions simulated are fixed by the input `k` value, and not sampled from a distribution centered at `k`. A larger `sdmin` and `sdmax` would increase the sizes of the tissue regions. See `GenerateTissue()` for more information
+
+Generating holes can help assess the need for correcting metrics derived spatial statistics. For example, if there is a pond in the center of a field, crops are not able to be planted there yet measuring the amount of field there is just by the outside border will say that lots of crops should be able to fit. Sometimes, these things need to be adjusted for such as when you have tissue sections that are being stained and the second folds over or tears, leaving a large area where no longer cells are present. Even if not using holes for assessing metrics, performing them will just create a new column in the spatial files that can be later ignored. If holes are not needed at all, this can be skipped.
+
+The parameters that go into `GenerateHoles()` is similar to that of `GenerateTissue()` with one addition: `hole_prob` or the proportion range of the point patterns that could become holes. All of these parameters had defaults set when the spatial simulation object was created, but can be overridden here is a particular area of the process is wanted to have the holes and not the rest. The number of holes is random as long as the sum of the area is within the proportions above. 
+
+```{r, fig.height = 10, fig.width = 9}
+sim_object = GenerateHoles(sim_object, density_heatmap = T, step_size = 0.1, cores = 1)
+summary(sim_object)
+```
+
+Let's see how the kernels for holes look. The center of the holes have the highest probability of being removed with a Bernoulli distribution of 'hole' or 'not a hole'. 
+
+```{r, fig.height = 10, fig.width = 9, eval = T}
+PlotSimulation(sim_object, which = 1:8, ncol = 2, nrow = 2, what = "hole heatmap")
+```
+
+Next thing for us to do is to simulate the positivity of cells for a phenotype using `GenerateCellPositivity()`. Just like holes and the tissue, there are boundaries which the simulated positive cells will fall in which are stored in the parameters. This is helpful for going back and seeing what was done. However here, there are 2 different parameters that help set the abundance (`probs`) and, in the case of multiple cell types, how related those cell types are (`correlation`). 
+
+The `probs` parameter is used to scale the probabilities for the cell type where the first number is away from kernel peaks and the second is the maximum probability for a cell. For higher abundance, the maximum probability can be set higher and even increase the minimum probability. An issue with doing this on point patterns that have multiple cell types is that they are not entirely informed of one another when assigning cell types. B cells and T cells are distinct phenotypes and therefore one cell *shouldn't* be positive for both. What we do, is use the probability with the Bernoulli distribution so there's a chance a single cell will be positive for 2 cell types, even if the max probability is 0.1.
+
+For univariate clustering, smaller standard deviations and higher probability range will increase the amount of clustering. Large standard deviations and low probabilities will make the clustering metrics low. For univariate cell simulation, the `correlation` metric does nothing. The similarity of 2 or more cell types is controlled by the `correlation` value. A `correlation = 1` will use the same kernel used for probabilities of Cell Type 1 for the other cell types, and `correlation = -1` will invert Cell Type 1 kernel so that cells are segregated (with noise).
+
+```{r}
+sim_object = GenerateCellPositivity(sim_object, k = 4,
+                                    sdmin = 3, sdmax = 5,
+                                    density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
+                                    correlation = -1)
+summary(sim_object)
+```
+
+If we plot the simulation object now specifying we want to see the whole core, we can see our cells. There are little pockets of positive cells also with some noise.
+
+```{r, fig.height=6, fig.width=10}
+PlotSimulation(sim_object, which = 1, what = "whole core")
+```
+
+Lastly, the data is likely wanted in tabular format. Since there are multiple simulated point patterns, the function `CreateSpatialList()` returns a list of data frames containing cell x and y locations, the tissue that the cell belongs to, whether the cell falls in a hole, and the positivity of the different cell types.
+
+```{r}
+spatial_list = CreateSpatialList(sim_object = sim_object)
+```
+
+The spatial list can now be used with packages like `{spatialTIME}` to compute spatial statistics on all of the simulated data frames. 
+
+### Bivariate Simulation
+
+The process for 2 or more cell types is essentially the same as for a single cell type with the addition of the `correlation` value when simulating the cell types. Lets create another `SpatSimObj` to get to the phenotype simulating step with `GenerateCellPositivity()`. A great feature of mIFsim is that it works nicely with `{magrittr}` and the pipe function to immediately pass output from one function to the next.
+
+```{r}
+#set seed
+set.seed(333)
+#create the new object
+bivariate_sim = CreateSimulationObject(sims = 5, cell_types = 2) %>%
+  #produce the point pattern
+  GenerateSpatialProcess() %>%
+  #make tissues
+  GenerateTissue(density_heatmap = T, step_size = 0.1, cores = 1)
+```
+

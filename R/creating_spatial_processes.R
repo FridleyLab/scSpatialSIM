@@ -2,7 +2,7 @@
 #'
 #' Generate a spatial point process within the simulation object's window using a Poisson point process.
 #'
-#' @param sim_object A 'Spatial Simulation Object' containing a window.
+#' @param sim_object A 'SpatSimObj' containing a window.
 #' @param lambda The intensity of the point process. Default is 25.
 #' @param ... Additional arguments passed to 'rpoispp'.
 #'
@@ -17,7 +17,7 @@
 #' sim_object <- CreateSimulationObject()
 #' sim_object <- GenerateSpatialProcess(sim_object, lambda = 30)
 GenerateSpatialProcess = function(sim_object, lambda = 25, ...){
-  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
+  if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(is.null(lambda)) stop("Need an intensity in order to simulate points")
 
   window = sim_object@Window

@@ -6,7 +6,7 @@
 #' belonging to stromal or tumor tissue, based on a Gaussian kernel density
 #' estimate calculated for each process.
 #'
-#' @param sim_object A `Spatial Simulation Object` created with
+#' @param sim_object A `SpatSimObj` created with
 #'   \code{\link{CreateSimulationObject}}.
 #' @param k Number of clusters to generate for each process.
 #' @param xmin Minimum x-coordinate for cluster centers.
@@ -61,7 +61,7 @@ GenerateTissue = function(sim_object, k = NA,
                           sdmin = 1/2, sdmax = 2,
                           force = FALSE,
                           density_heatmap = FALSE, step_size = 1, cores = 1){
-  if(!methods::is(sim_object, "SpatialSimulationObject")) stop("`sim_object` must be of class 'SpatialSimulationObject'")
+  if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
 
   #create parameter vector
@@ -110,7 +110,7 @@ GenerateTissue = function(sim_object, k = NA,
     df = cbind(sim_object@`Spatial Files`[[spat_num]],
           `Stroma Probability` = CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
                                sim_object@Tissue@`Simulationed Kernels`[[spat_num]], cores = cores) * 0.9)
-    df$`Tissue Assignment` = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$`Stroma Probability`) == 1, "Stroma", "Tumor")
+    df$`Tissue Assignment` = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$`Stroma Probability`) == 1, "Tissue 1", "Tissue 2")
     return(df)
   })
 

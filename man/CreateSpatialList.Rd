@@ -2,12 +2,14 @@
 % Please edit documentation in R/get_spatial_list.R
 \name{CreateSpatialList}
 \alias{CreateSpatialList}
-\title{Get Spatial Files from a Spatial Simulation Object}
+\title{Get Spatial Files from a \code{SpatSimObj}}
 \usage{
-CreateSpatialList(sim_object)
+CreateSpatialList(sim_object, single_df = FALSE)
 }
 \arguments{
-\item{sim_object}{A Spatial Simulation Object}
+\item{sim_object}{A \code{SpatSimObj}}
+
+\item{single_df}{boolean as to whether to collapse the output list of data frames to a single data frame or not. default is \code{FALSE}}
 }
 \value{
 A list of data frames, one for each simulated cell type, with cleaned columns

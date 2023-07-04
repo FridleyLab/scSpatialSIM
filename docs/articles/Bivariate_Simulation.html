@@ -41,6 +41,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/1.Introduction.html">Introduction</a>
     <a class="dropdown-item" href="../articles/Bivariate_Simulation.html">Simulating Bivariate Cells</a>
     <a class="dropdown-item" href="../articles/Univariate_Simulation.html">Simulating Univariate Cells</a>
   </div>
@@ -130,9 +131,9 @@ has already been done when loading in the base object from an RDS
 file.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Spatial Simulation object for 9 simulations. Currently, there are:</span></span>
+<span><span class="co">#&gt; Spatial Simulation object for 9 simulated images. Currently, there are:</span></span>
 <span><span class="co">#&gt;  Window: x (0,10); y (0,10)</span></span>
-<span><span class="co">#&gt;  0 spatial processes</span></span>
+<span><span class="co">#&gt;  0 spatial point patterns</span></span>
 <span><span class="co">#&gt;  0 tissue kernels</span></span>
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span></code></pre></div>
@@ -150,9 +151,9 @@ our new process looks like with <code>plot</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateSpatialProcess.html">GenerateSpatialProcess</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Spatial Simulation object for 9 simulations. Currently, there are:</span></span>
+<span><span class="co">#&gt; Spatial Simulation object for 9 simulated images. Currently, there are:</span></span>
 <span><span class="co">#&gt;  Window: x (0,10); y (0,10)</span></span>
-<span><span class="co">#&gt;  9 spatial processes</span></span>
+<span><span class="co">#&gt;  9 spatial point patterns</span></span>
 <span><span class="co">#&gt;  0 tissue kernels</span></span>
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span>
@@ -179,9 +180,9 @@ spatial simulation object to see the newly filled slot.</p>
 <span><span class="co">#&gt; Computing density heatmap</span></span>
 <span><span class="co">#&gt; Computing tissue probability</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Spatial Simulation object for 9 simulations. Currently, there are:</span></span>
+<span><span class="co">#&gt; Spatial Simulation object for 9 simulated images. Currently, there are:</span></span>
 <span><span class="co">#&gt;  Window: x (0,10); y (0,10)</span></span>
-<span><span class="co">#&gt;  9 spatial processes</span></span>
+<span><span class="co">#&gt;  9 spatial point patterns</span></span>
 <span><span class="co">#&gt;  9 tissue kernels</span></span>
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span></code></pre></div>
@@ -219,9 +220,9 @@ as the sum of the area is within the proportions above.</p>
 <span><span class="co">#&gt; Computing density heatmap</span></span>
 <span><span class="co">#&gt; Computing hole probability</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Spatial Simulation object for 9 simulations. Currently, there are:</span></span>
+<span><span class="co">#&gt; Spatial Simulation object for 9 simulated images. Currently, there are:</span></span>
 <span><span class="co">#&gt;  Window: x (0,10); y (0,10)</span></span>
-<span><span class="co">#&gt;  9 spatial processes</span></span>
+<span><span class="co">#&gt;  9 spatial point patterns</span></span>
 <span><span class="co">#&gt;  9 tissue kernels</span></span>
 <span><span class="co">#&gt;  9 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span></code></pre></div>
@@ -270,9 +271,9 @@ happens.</p>
 <span><span class="co">#&gt; Adjusting density heatmap for Cell 2</span></span>
 <span><span class="co">#&gt; Computing probability for Cell 2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Spatial Simulation object for 9 simulations. Currently, there are:</span></span>
+<span><span class="co">#&gt; Spatial Simulation object for 9 simulated images. Currently, there are:</span></span>
 <span><span class="co">#&gt;  Window: x (0,10); y (0,10)</span></span>
-<span><span class="co">#&gt;  9 spatial processes</span></span>
+<span><span class="co">#&gt;  9 spatial point patterns</span></span>
 <span><span class="co">#&gt;  9 tissue kernels</span></span>
 <span><span class="co">#&gt;  9 hole kernels</span></span>
 <span><span class="co">#&gt;  9 cell kernels for 2 cell types</span></span></code></pre></div>
