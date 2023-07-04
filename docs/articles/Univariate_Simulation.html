@@ -94,7 +94,8 @@ samples, we need to import tha package.</p>
 <span><span class="co">#&gt;  | '_ ` _ \  | | |  __/ __| | '_ ` _ \</span></span>
 <span><span class="co">#&gt;  | | | | | |_| |_| |  \__ \ | | | | | |</span></span>
 <span><span class="co">#&gt;  |_| |_| |_|_____|_|  |___/_|_| |_| |_|</span></span>
-<span><span class="co">#&gt;  Fridley Lab <span style="color: #BBBBBB;">Enjoy</span></span></span></code></pre></div>
+<span><span class="co">#&gt;  Fridley Lab <span style="color: #BBBBBB;">Enjoy</span></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">333</span><span class="op">)</span> <span class="co">#reproducibility</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="running-mifsim">Running mIFsim<a class="anchor" aria-label="anchor" href="#running-mifsim"></a>
@@ -117,23 +118,6 @@ to simulate, here we are only going to do a single cell type</li>
 create our simulation object.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSimulationObject.html">CreateSimulationObject</a></span><span class="op">(</span>sims <span class="op">=</span> <span class="fl">9</span>, cell_types <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat.data</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat.geom</span></span>
-<span><span class="co">#&gt; spatstat.geom 3.2-1</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat.random</span></span>
-<span><span class="co">#&gt; spatstat.random 3.1-5</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat.explore</span></span>
-<span><span class="co">#&gt; Loading required package: nlme</span></span>
-<span><span class="co">#&gt; spatstat.explore 3.2-1</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat.model</span></span>
-<span><span class="co">#&gt; Loading required package: rpart</span></span>
-<span><span class="co">#&gt; spatstat.model 3.2-4</span></span>
-<span><span class="co">#&gt; Loading required package: spatstat.linnet</span></span>
-<span><span class="co">#&gt; spatstat.linnet 3.1-1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; spatstat 3.0-6 </span></span>
-<span><span class="co">#&gt; For an introduction to spatstat, type 'beginner'</span></span>
 <span><span class="co">#&gt; No `window` specified - defaulting to x (0, 10); y (0, 10)</span></span></code></pre></div>
 <p>The simulation object has some attribute that are gradually filled in
 as we progress. Using the <code>summary</code> method, we can see what
@@ -203,8 +187,7 @@ spatial simulation object to see the newly filled slot.</p>
 number of spatial processes we have. Let’s take a look at the simulated
 tissue kernels with <code>PlotSimulation</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, what <span class="op">=</span> <span class="st">"tissue heatmap"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: ggplot2</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, what <span class="op">=</span> <span class="st">"tissue heatmap"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Univariate_Simulation_files/figure-html/unnamed-chunk-6-1.png" width="864"></p>
 <p>The kernels are randomly laid about the simulation region and random
 sizes within the constraints of the parameters used. The number of
@@ -304,36 +287,24 @@ cell falls in a hole, and the positivity of the different cell
 types.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spatial_list</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSpatialList.html">CreateSpatialList</a></span><span class="op">(</span>sim_object <span class="op">=</span> <span class="va">sim_object</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: dplyr</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:nlme':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     collapse</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2492 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2463 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2488 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2448 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2496 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2507 variables to replace 1 variables</span></span>
-<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
-<span><span class="co">#&gt; provided 2498 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; provided 2495 variables to replace 1 variables</span></span>
 <span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
 <span><span class="co">#&gt; provided 2450 variables to replace 1 variables</span></span>
 <span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(1, :</span></span>
-<span><span class="co">#&gt; provided 2461 variables to replace 1 variables</span></span></code></pre></div>
+<span><span class="co">#&gt; provided 2500 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2514 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2486 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2517 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2534 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(1, :</span></span>
+<span><span class="co">#&gt; provided 2506 variables to replace 1 variables</span></span>
+<span><span class="co">#&gt; Warning in `[&lt;-.data.frame`(`*tmp*`, , assignment_cols, value = list(0, :</span></span>
+<span><span class="co">#&gt; provided 2451 variables to replace 1 variables</span></span></code></pre></div>
 <p>The spatial list can now be used with packages like
 <code>spatialTIME</code> to compute spatial statistics on all of the
 simulated data frames.</p>
@@ -346,7 +317,7 @@ simulated data frames.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Samantha Bothwell, Alex Soupir, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+<p>Developed by Alex Soupir, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">

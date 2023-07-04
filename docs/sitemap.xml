@@ -4,6 +4,12 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>/LICENSE.html</loc>
+  </url>
+  <url>
     <loc>/articles/Bivariate_Simulation.html</loc>
   </url>
   <url>
@@ -46,13 +52,16 @@
     <loc>/reference/UpdateSimulationWindow.html</loc>
   </url>
   <url>
-    <loc>/reference/hello.html</loc>
-  </url>
-  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot.SpatialSimulationObject.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summary.SpatialSimulationObject.html</loc>
   </url>
   <url>
     <loc>/reference/wm.html</loc>
