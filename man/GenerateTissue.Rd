@@ -23,7 +23,7 @@ GenerateTissue(
 \item{sim_object}{A \code{SpatSimObj} created with
 \code{\link{CreateSimulationObject}}.}
 
-\item{k}{Number of clusters to generate for each process.}
+\item{k}{Number of clusters to generate for each pattern}
 
 \item{xmin}{Minimum x-coordinate for cluster centers.}
 
@@ -55,20 +55,20 @@ calculations.}
 }
 \value{
 A modified 'Spatial Simulation Object' with updated tissue grids and
-assigned tissue types for each simulated process.
+assigned tissue types for each simulated pattern.
 }
 \description{
 This function generates a simulated tissue using a specified number of
-clusters and spatial parameters for each process in the simulation object.
+clusters and spatial parameters for each pattern in the simulation object.
 The tissue is represented by a grid of points with probabilities of
 belonging to stromal or tumor tissue, based on a Gaussian kernel density
-estimate calculated for each process.
+estimate calculated for each pattern
 }
 \details{
-This function generates a simulated tissue for each process in the
+This function generates a simulated tissue for each pattern in the
 simulation object by first generating k clusters within the specified x
 and y ranges and with a standard deviation within the specified range.
-Then, a Gaussian kernel density estimate is calculated for each process
+Then, a Gaussian kernel density estimate is calculated for each pattern
 using the generated clusters as center points and the specified standard
 deviation as kernel size. The density estimates represent the probability
 of each point in the simulation window belonging to a tumor or stromal
@@ -80,11 +80,11 @@ type is assigned as either "Tumor" or "Stroma" using a random sample with
 probability proportional to the probability of belonging to stroma tissue.
 }
 \examples{
-# Create a simulation object with a window and point process
+# Create a simulation object with a window and point pattern
 sim_object <- CreateSimulationObject()
 
 #simulate points
-sim_object <- GenerateSpatialProcess(sim_object, lambda = 20)
+sim_object <- GenerateSpatialPattern(sim_object, lambda = 20)
 
 # Generate tissue with default parameters
 sim_object <- GenerateTissue(sim_object)

@@ -77,10 +77,10 @@ CreateSimulationObject = function(window = NULL,
 
 
 setClass("Points", slot = list(
-  Processes = "list"
+  Patterns = "list"
 ),
 prototype = list(
-  Processes = list()
+  Patterns = list()
 ))
 
 setClass("Tumor/Stroma", slots = list(
@@ -126,7 +126,7 @@ setClass("owin", slots = list(
 setClass("SpatSimObj", slots = list(
   Window = "owin",
   Sims = "numeric",
-  Processes = "list",
+  Patterns = "list",
   `Tissue` = "Tumor/Stroma",
   Holes = "Holes",
   Cells = "list",

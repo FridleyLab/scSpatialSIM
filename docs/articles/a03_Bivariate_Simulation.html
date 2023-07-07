@@ -93,7 +93,7 @@ simulated cell arrangements.</p>
 <p>In order to get started simulating bivariate multiple
 immunofluorescence (mIF) samples, we need to import the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mIFsim</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/mIFsim" class="external-link">mIFsim</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; mIFsim Version:</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBBBB;">0.0.0.9000</span></span></span>
 <span><span class="co">#&gt;             _____ ______   _</span></span>
@@ -145,18 +145,18 @@ file.</p>
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span></code></pre></div>
 <p>Now that we have our simulation object and parameters set within, we
-need to create the point pattern process. The
-<code>GenerateSpatialProcess</code> function takes in the spatial
+need to create the point pattern pattern. The
+<code>GenerateSpatialPattern</code> function takes in the spatial
 simulation object and a <code>lambda</code>, or intensity of the point
-process. <strong>NOTE: with large windows and large lambdas, the size of
+pattern. <strong>NOTE: with large windows and large lambdas, the size of
 the spatial simulation object can grow fast so be mindful.</strong> Any
 other parameters that could be passed to
 <code><a href="https://rdrr.io/pkg/spatstat.random/man/rpoispp.html" class="external-link">spatstat.random::rpoispp</a></code> can then be passed to
-<code>GenerateSpatialProcess</code> at the end. Again, we can check how
+<code>GenerateSpatialPattern</code> at the end. Again, we can check how
 we are filling in our slots with <code>summary</code> and even see how
-our new process looks like with <code>plot</code>.</p>
+our new pattern looks like with <code>plot</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateSpatialProcess.html">GenerateSpatialProcess</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateSpatialPattern.html">GenerateSpatialPattern</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Spatial Simulation object for 9 simulated images. Currently, there are:</span></span>
 <span><span class="co">#&gt;  Window: x (0,10); y (0,10)</span></span>
@@ -194,7 +194,7 @@ spatial simulation object to see the newly filled slot.</p>
 <span><span class="co">#&gt;  0 hole kernels</span></span>
 <span><span class="co">#&gt;  0 cell kernels for 2 cell types</span></span></code></pre></div>
 <p>The tissue kernel slot is now filled the number of kernels matching
-number of spatial processes we have. Let’s take a look at the simulated
+number of spatial patterns we have. Let’s take a look at the simulated
 tissue kernels with <code>PlotSimulation</code> and <code>what</code> as
 the tissue heatmap.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -216,10 +216,10 @@ assessing metrics, performing them will just create a new column in the
 spatial files that can be later ignored.</p>
 <p>The parameters that go into <code>GenerateHoles</code> is similar to
 that of <code>GenerateTissue</code> with one addition:
-<code>hole_prob</code> or the proportion range of the point processes
+<code>hole_prob</code> or the proportion range of the point patterns
 that could become holes. All of these parameters had defaults set when
 the spatial simulation object was created, but can be overridden here if
-a particular area of the process is wanted to have the holes and not the
+a particular area of the pattern is wanted to have the holes and not the
 rest (x and y min and max ranges). The number of holes is random as long
 as the sum of the area is within the proportions above.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -251,7 +251,7 @@ how related those cell types are (<code>correlation</code>).</p>
 for the cell type where the first number is away from kernel peaks and
 the second is the maximum probability for a cell. For higher abundance,
 the maximum probability can be set higher and even increase the minimum
-probability. An issue with doing this on point processes that have
+probability. An issue with doing this on point patterns that have
 multiple cell types is that they are not entirely informed of one
 another when assigning cell types. B cells and T cells are distinct
 phenotypes and therefore one cell <em>shouldn’t</em> be positive for
@@ -296,7 +296,7 @@ trend is there.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PlotSimulation.html">PlotSimulation</a></span><span class="op">(</span><span class="va">sim_object</span>, which <span class="op">=</span> <span class="fl">1</span>, what <span class="op">=</span> <span class="st">"whole core"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a03_Bivariate_Simulation_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
 <p>Lastly, the data is likely wanted in tabular format. Since there are
-multiple simulated point processes, the function
+multiple simulated point patterns, the function
 <code>CreateSpatialList</code> returns a list of data frames containing
 cell x and y locations, the tissue that the cell belongs to, whether the
 cell falls in a hole, and the positivity of the different cell
@@ -315,7 +315,7 @@ simulated data frames.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Alex Soupir, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+<p>Developed by Alex Soupir, Christopher Wilson, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">

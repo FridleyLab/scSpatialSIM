@@ -67,12 +67,12 @@ The simulation object has some attribute that are gradually filled in as we prog
 summary(sim_object)
 ```
 
-How that we have our simulation object and parameters set within, we need to create the point pattern process. The `GenerateSpatialProcess()` function takes in the spatial simulation object and a `lambda`, or intensity of the point pattern. **NOTE: with large windows and large lambdas, the size of the spatial simulation object can grow fast so be mindful.** Any other parameters that could be passed to `spatstat.random::rpoispp` can then be passed to `GenerateSpatialProcess()` at the end. Again, we can check how we are filling in our slots with `summary()` and even see how our new process looks like with `plot()`.
+How that we have our simulation object and parameters set within, we need to create the point pattern. The `GenerateSpatialPattern()` function takes in the spatial simulation object and a `lambda`, or intensity of the point pattern. **NOTE: with large windows and large lambdas, the size of the spatial simulation object can grow fast so be mindful.** Any other parameters that could be passed to `spatstat.random::rpoispp` can then be passed to `GenerateSpatialPattern()` at the end. Again, we can check how we are filling in our slots with `summary()` and even see how our new process looks like with `plot()`.
 
 ```{r}
-sim_object = GenerateSpatialProcess(sim_object)
+sim_object = GenerateSpatialPattern(sim_object)
 summary(sim_object)
-plot(sim_object, what = "Processes", ncol = 1, nrow = 1, which = 1)#print only first point pattern
+plot(sim_object, what = "Patterns", ncol = 1, nrow = 1, which = 1)#print only first point pattern
 ```
 
 Next we will generate some regions of different tissue. For the purpose here, tissue 1 will be tumor and tissue 2 will be stroma. There are some parameters that are initialized when building the spatial simulation that tells downstream functions how to simulate things on a Gaussian kernel - `GenerateTissue()` is one of those. If there is nothing supplied to the function when calling, it will default to these values. Alternatively, can specify them in the function call. These include regions within your window that you would like tissue regions to be simulated, the number of regions, the standard deviation range for how the probability falls off around the region centers, etc. Something here is whether the ending kernel should be converted to a heatmap and at what resolution. **NOTE: the smaller the `step_size` used for the heatmap the longer it takes to run so be mindful.** 
@@ -137,7 +137,7 @@ set.seed(333)
 #create the new object
 bivariate_sim = CreateSimulationObject(sims = 5, cell_types = 2) %>%
   #produce the point pattern
-  GenerateSpatialProcess() %>%
+  GenerateSpatialPattern() %>%
   #make tissues
   GenerateTissue(density_heatmap = T, step_size = 0.1, cores = 1)
 ```

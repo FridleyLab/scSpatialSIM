@@ -1,14 +1,14 @@
 #' Generate Tissue
 #'
 #' This function generates a simulated tissue using a specified number of
-#' clusters and spatial parameters for each process in the simulation object.
+#' clusters and spatial parameters for each pattern in the simulation object.
 #' The tissue is represented by a grid of points with probabilities of
 #' belonging to stromal or tumor tissue, based on a Gaussian kernel density
-#' estimate calculated for each process.
+#' estimate calculated for each pattern
 #'
 #' @param sim_object A `SpatSimObj` created with
 #'   \code{\link{CreateSimulationObject}}.
-#' @param k Number of clusters to generate for each process.
+#' @param k Number of clusters to generate for each pattern
 #' @param xmin Minimum x-coordinate for cluster centers.
 #' @param xmax Maximum x-coordinate for cluster centers.
 #' @param ymin Minimum y-coordinate for cluster centers.
@@ -29,12 +29,12 @@
 #'   calculations.
 #'
 #' @return A modified 'Spatial Simulation Object' with updated tissue grids and
-#'   assigned tissue types for each simulated process.
+#'   assigned tissue types for each simulated pattern.
 #'
-#' @details This function generates a simulated tissue for each process in the
+#' @details This function generates a simulated tissue for each pattern in the
 #'   simulation object by first generating k clusters within the specified x
 #'   and y ranges and with a standard deviation within the specified range.
-#'   Then, a Gaussian kernel density estimate is calculated for each process
+#'   Then, a Gaussian kernel density estimate is calculated for each pattern
 #'   using the generated clusters as center points and the specified standard
 #'   deviation as kernel size. The density estimates represent the probability
 #'   of each point in the simulation window belonging to a tumor or stromal
@@ -46,11 +46,11 @@
 #'   probability proportional to the probability of belonging to stroma tissue.
 #'
 #' @examples
-#' # Create a simulation object with a window and point process
+#' # Create a simulation object with a window and point pattern
 #' sim_object <- CreateSimulationObject()
 #'
 #' #simulate points
-#' sim_object <- GenerateSpatialProcess(sim_object, lambda = 20)
+#' sim_object <- GenerateSpatialPattern(sim_object, lambda = 20)
 #'
 #' # Generate tissue with default parameters
 #' sim_object <- GenerateTissue(sim_object)
@@ -85,7 +85,7 @@ GenerateTissue = function(sim_object, k = NA,
            unlist(params[c(3, 5)]) > win_limits[c(2,4)]))){
     message("x and y range inside window boundary")
   }
-  #produce kernel parameter list for k clusters in each simulated process
+  #produce kernel parameter list for k clusters in each simulated pattern
   sim_object@Tissue@`Simulationed Kernels` = lapply(seq(sim_object@Sims), function(hld){
     do.call(gaussian_kernel, params)
   })
@@ -102,7 +102,7 @@ GenerateTissue = function(sim_object, k = NA,
   }
 
   if(is.empty(sim_object, "Spatial Files")){
-    sim_object@`Spatial Files` = lapply(sim_object@Processes, data.frame)
+    sim_object@`Spatial Files` = lapply(sim_object@Patterns, data.frame)
   }
 
   message("Computing tissue probability")

@@ -112,7 +112,7 @@ and columns of the plot grid, respectively.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create a SpatSimObj</span></span></span>
 <span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="CreateSimulationObject.html">CreateSimulationObject</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No `window` specified - defaulting to x (0, 10); y (0, 10)</span>
-<span class="r-in"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="GenerateSpatialProcess.html">GenerateSpatialProcess</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="GenerateSpatialPattern.html">GenerateSpatialPattern</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sim_object</span> <span class="op">=</span> <span class="fu"><a href="GenerateTissue.html">GenerateTissue</a></span><span class="op">(</span><span class="va">sim_object</span>, density_heatmap <span class="op">=</span> <span class="cn">TRUE</span>, step_size <span class="op">=</span> <span class="fl">1</span>, cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing density heatmap</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                              |   0%, ETA NA  |====================                                       |  33%, ETA 00:00  |=======================================                    |  67%, ETA 00:00  |=======================================================| 100%, Elapsed 00:00</span>
@@ -128,7 +128,7 @@ and columns of the plot grid, respectively.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Alex Soupir, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+  <p></p><p>Developed by Alex Soupir, Christopher Wilson, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">

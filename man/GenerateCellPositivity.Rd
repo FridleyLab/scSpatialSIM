@@ -24,7 +24,7 @@ GenerateCellPositivity(
 \arguments{
 \item{sim_object}{A \code{SpatSimObj} object containing the simulated data.}
 
-\item{k}{An integer specifying the number of clusters for each simulated process.}
+\item{k}{An integer specifying the number of clusters for each simulated patterns}
 
 \item{xmin}{A numeric value specifying the minimum x value for the kernel.}
 
@@ -59,6 +59,6 @@ Generate the probability of a cell being positive given a set of simulation para
 \details{
 The function generates the probability of a cell being positive given a set of simulation parameters f
 or each file in a \code{mIFsim} object. It creates a kernel parameter list for \code{k} clusters
-in each simulated process and computes the probability of each point in the grid of points within the
+in each simulated pattern and computes the probability of each point in the grid of points within the
 window for each cell. The function also computes a density heatmap for each cell if \code{density_heatmap} is set to \code{TRUE}.
 }

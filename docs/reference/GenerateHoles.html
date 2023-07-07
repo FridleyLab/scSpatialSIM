@@ -152,10 +152,10 @@ and that no parameters are NULL. If any parameters are NULL, the function stops
 with an error message. If the x- and y-ranges for the holes extend beyond the
 boundaries of the simulation window, the function also stops with an error message,
 unless the force parameter is set to TRUE. The function then produces kernel
-parameter lists for each simulated process, and generates a grid based on the user-defined
+parameter lists for each simulated pattern, and generates a grid based on the user-defined
 step size. If density_heatmap is set to TRUE, the function computes a density heatmap
 using the CalculateGrid function. Finally, the function computes hole probabilities
-for each simulated process, assigns each point to be dropped or kept based on a
+for each simulated pattern, assigns each point to be dropped or kept based on a
 scaled probability value, and returns the modified simulation object.</p>
     </div>
 
@@ -165,7 +165,7 @@ scaled probability value, and returns the modified simulation object.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No `window` specified - defaulting to x (0, 10); y (0, 10)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#simulate points</span></span></span>
-<span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateSpatialProcess.html">GenerateSpatialProcess</a></span><span class="op">(</span><span class="va">sim_object</span>, lambda <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateSpatialPattern.html">GenerateSpatialPattern</a></span><span class="op">(</span><span class="va">sim_object</span>, lambda <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate tissue with default parameters</span></span></span>
 <span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTissue.html">GenerateTissue</a></span><span class="op">(</span><span class="va">sim_object</span><span class="op">)</span></span></span>
@@ -175,7 +175,7 @@ scaled probability value, and returns the modified simulation object.</p>
 <span class="r-in"><span><span class="co"># Generate holes in the simulation object</span></span></span>
 <span class="r-in"><span><span class="va">sim_object</span> <span class="op">&lt;-</span> <span class="fu">GenerateHoles</span><span class="op">(</span><span class="va">sim_object</span>, hole_prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.3</span><span class="op">)</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing hole probability</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                              |   0%, ETA NA  |====================                                       |  33%, ETA 00:02  |=======================================                    |  67%, ETA 00:00  |=======================================================| 100%, Elapsed 00:01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                              |   0%, ETA NA  |====================                                       |  33%, ETA 00:01  |=======================================                    |  67%, ETA 00:00  |=======================================================| 100%, Elapsed 00:01</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -184,7 +184,7 @@ scaled probability value, and returns the modified simulation object.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Alex Soupir, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+  <p></p><p>Developed by Alex Soupir, Christopher Wilson, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">

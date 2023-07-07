@@ -9,7 +9,7 @@
 summary.SpatSimObj <- function(object, ...){
   nsim = object@Sims
   win = matrix(c(object@Window$xrange, object@Window$yrange), nrow = 2, byrow = F)
-  s_processes = length(object@Processes)
+  s_patterns = length(object@Patterns)
   t_kernels = length(object@Tissue@`Simulationed Kernels`)
   h_kernels = length(object@Holes@`Simulationed Kernels`)
   c_types = length(object@Cells)
@@ -17,7 +17,7 @@ summary.SpatSimObj <- function(object, ...){
 
   cat("Spatial Simulation object for", nsim,"simulated images. Currently, there are:\n")
   cat(paste0("\tWindow: x (", win[1], ",", win[2], "); y (", win[3], ",", win[4],")\n"), sep="")
-  cat("\t", s_processes, " spatial point patterns\n", sep="")
+  cat("\t", s_patterns, " spatial point patterns\n", sep="")
   cat("\t", t_kernels, " tissue kernels\n", sep="")
   cat("\t", h_kernels, " hole kernels\n", sep="")
   cat("\t", c_kernels, " cell kernels for ", c_types, " cell types\n", sep="")
@@ -34,19 +34,19 @@ summary.SpatSimObj <- function(object, ...){
 #'
 #' @export
 plot.SpatSimObj <- function(x, ...){ #
-  if(!exists("what")) what = "Processes"
+  if(!exists("what")) what = "Patterns"
   if(methods::is(nrow, "function")) nrow = 1
   if(methods::is(ncol, "function")) ncol = 1
   if(methods::is(which, "function")) which = 1
 
-  if(what == "Processes"){
+  if(what == "Patterns"){
     if(length(which) == 1){
-      plot(x@Processes[[which]], main = which)
+      plot(x@Patterns[[which]], main = which)
 
     } else {
       graphics::par(mfrow = c(nrow, ncol))
       hld = lapply(which, function(i){
-        plot(x@Processes[[i]], main = i)
+        plot(x@Patterns[[i]], main = i)
       })
     }
   } else {

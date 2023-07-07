@@ -47,10 +47,10 @@ Using the `summary` method, we can see what our simulation object has inside and
 summary(sim_object)
 ```
 
-Now that we have our simulation object and parameters set within, we need to create the point pattern process. The `GenerateSpatialProcess` function takes in the spatial simulation object and a `lambda`, or intensity of the point process. **NOTE: with large windows and large lambdas, the size of the spatial simulation object can grow fast so be mindful.** Any other parameters that could be passed to `spatstat.random::rpoispp` can then be passed to `GenerateSpatialProcess` at the end. Again, we can check how we are filling in our slots with `summary` and even see how our new process looks like with `plot`.
+Now that we have our simulation object and parameters set within, we need to create the point pattern pattern. The `GenerateSpatialPattern` function takes in the spatial simulation object and a `lambda`, or intensity of the point pattern. **NOTE: with large windows and large lambdas, the size of the spatial simulation object can grow fast so be mindful.** Any other parameters that could be passed to `spatstat.random::rpoispp` can then be passed to `GenerateSpatialPattern` at the end. Again, we can check how we are filling in our slots with `summary` and even see how our new pattern looks like with `plot`.
 
 ```{r}
-sim_object = GenerateSpatialProcess(sim_object)
+sim_object = GenerateSpatialPattern(sim_object)
 summary(sim_object)
 plot(sim_object)
 ```
@@ -64,7 +64,7 @@ sim_object = GenerateTissue(sim_object, density_heatmap = T, step_size = 0.1, co
 summary(sim_object)
 ```
 
-The tissue kernel slot is now filled the number of kernels matching number of spatial processes we have. Let's take a look at the simulated tissue kernels with `PlotSimulation` and `what` as the tissue heatmap.
+The tissue kernel slot is now filled the number of kernels matching number of spatial patterns we have. Let's take a look at the simulated tissue kernels with `PlotSimulation` and `what` as the tissue heatmap.
 
 ```{r, fig.height = 10, fig.width = 9, eval = T}
 PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "tissue heatmap")
@@ -74,7 +74,7 @@ The kernels are randomly laid about the simulation region and random sizes withi
 
 Generating holes can help assess the need for correcting spatial statistic metrics derived. For example, if there is a pond in the center of a field (a hole), crops are not able to be planted there yet measuring the amount of field there is just by the outside border (window) will say that lots of crops should be able to fit. Sometimes, these things need to be adjusted for. Even if not using holes for assessing metrics, performing them will just create a new column in the spatial files that can be later ignored.
 
-The parameters that go into `GenerateHoles` is similar to that of `GenerateTissue` with one addition: `hole_prob` or the proportion range of the point processes that could become holes. All of these parameters had defaults set when the spatial simulation object was created, but can be overridden here if a particular area of the process is wanted to have the holes and not the rest (x and y min and max ranges). The number of holes is random as long as the sum of the area is within the proportions above. 
+The parameters that go into `GenerateHoles` is similar to that of `GenerateTissue` with one addition: `hole_prob` or the proportion range of the point patterns that could become holes. All of these parameters had defaults set when the spatial simulation object was created, but can be overridden here if a particular area of the pattern is wanted to have the holes and not the rest (x and y min and max ranges). The number of holes is random as long as the sum of the area is within the proportions above. 
 
 ```{r}
 sim_object = GenerateHoles(sim_object, density_heatmap = T, step_size = 0.1, cores = 1)
@@ -89,7 +89,7 @@ PlotSimulation(sim_object, which = 1:4, ncol = 2, nrow = 2, what = "hole heatmap
 
 Next thing for us to do is to simulate the positivity of cells for a phenotype. Just like holes and the tissue, there are boundaries which the simulated positive cells will fall in which are stored in the parameters. This is helpful for going back and seeing what was done. However here, there are 2 different parameters that help set the abundance (`probs`) and, in the case of multiple cell types, how related those cell types are (`correlation`). 
 
-The `probs` parameter is used to scale the probabilities for the cell type where the first number is away from kernel peaks and the second is the maximum probability for a cell. For higher abundance, the maximum probability can be set higher and even increase the minimum probability. An issue with doing this on point processes that have multiple cell types is that they are not entirely informed of one another when assigning cell types. B cells and T cells are distinct phenotypes and therefore one cell *shouldn't* be positive for both. What we do, is use the probability with the Bernoulli distribution so there's a chance a single cell will be positive for 2 cell types, even if the max probability is 0.1.
+The `probs` parameter is used to scale the probabilities for the cell type where the first number is away from kernel peaks and the second is the maximum probability for a cell. For higher abundance, the maximum probability can be set higher and even increase the minimum probability. An issue with doing this on point patterns that have multiple cell types is that they are not entirely informed of one another when assigning cell types. B cells and T cells are distinct phenotypes and therefore one cell *shouldn't* be positive for both. What we do, is use the probability with the Bernoulli distribution so there's a chance a single cell will be positive for 2 cell types, even if the max probability is 0.1.
 
 Sometimes we want to study the clustering or dispersion of different cell types. In this case, we want to make them either very alike (positive correlation) or very different (negative correlation). What we do in the background is take same probability as the first cell simulated and adjust it according to the `correlation` parameter. The kernels in the spatial simulation object will be the same for all cell types, but at the time of creating the density heatmap or assigning a cell positive/negative, the probabilities are adjusted.
 
@@ -108,7 +108,7 @@ When there are multiple cells to be simulated, we can see the heatmap for cell t
 PlotSimulation(sim_object, which = 1, what = "whole core")
 ```
 
-Lastly, the data is likely wanted in tabular format. Since there are multiple simulated point processes, the function `CreateSpatialList` returns a list of data frames containing cell x and y locations, the tissue that the cell belongs to, whether the cell falls in a hole, and the positivity of the different cell types.
+Lastly, the data is likely wanted in tabular format. Since there are multiple simulated point patterns, the function `CreateSpatialList` returns a list of data frames containing cell x and y locations, the tissue that the cell belongs to, whether the cell falls in a hole, and the positivity of the different cell types.
 
 ```{r}
 spatial_list = CreateSpatialList(sim_object = sim_object)

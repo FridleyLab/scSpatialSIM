@@ -27,10 +27,10 @@
 #' with an error message. If the x- and y-ranges for the holes extend beyond the
 #' boundaries of the simulation window, the function also stops with an error message,
 #' unless the force parameter is set to TRUE. The function then produces kernel
-#' parameter lists for each simulated process, and generates a grid based on the user-defined
+#' parameter lists for each simulated pattern, and generates a grid based on the user-defined
 #' step size. If density_heatmap is set to TRUE, the function computes a density heatmap
 #' using the CalculateGrid function. Finally, the function computes hole probabilities
-#' for each simulated process, assigns each point to be dropped or kept based on a
+#' for each simulated pattern, assigns each point to be dropped or kept based on a
 #' scaled probability value, and returns the modified simulation object.
 #'
 #' @return A modified spatial simulation object with holes added
@@ -40,7 +40,7 @@
 #' sim_object <- CreateSimulationObject()
 #'
 #' #simulate points
-#' sim_object <- GenerateSpatialProcess(sim_object, lambda = 20)
+#' sim_object <- GenerateSpatialPattern(sim_object, lambda = 20)
 #'
 #' # Generate tissue with default parameters
 #' sim_object <- GenerateTissue(sim_object)
@@ -77,7 +77,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
            unlist(params[c(2, 4)]) > win_limits[c(2,4)]))){
     message("x and y range inside window boundary")
   }
-  #produce kernel parameter list for k clusters in each simulated process
+  #produce kernel parameter list for k clusters in each simulated pattern
   sim_object@Holes@`Simulationed Kernels` = lapply(seq(sim_object@Sims), function(hld){
     do.call(generate_holes, params)
   })
@@ -94,7 +94,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
   }
 
   if(is.empty(sim_object, "Spatial Files")){
-    sim_object@`Spatial Files` = lapply(sim_object@Processes, data.frame)
+    sim_object@`Spatial Files` = lapply(sim_object@Patterns, data.frame)
   }
 
   message("Computing hole probability")

@@ -14,6 +14,6 @@ An \code{owin} object with many slots describing the size and mask
 wm
 }
 \description{
-A window from spatstat that is similar to most tissue microarray image scans
+A mask that turns a window from spatstat round to mimic a window that is similar to most tissue microarray image scans
 }
 \keyword{datasets}

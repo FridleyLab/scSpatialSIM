@@ -3,7 +3,7 @@
 #' Generate the probability of a cell being positive given a set of simulation parameters for each file in a SpatSimObj.
 #'
 #' @param sim_object A \code{SpatSimObj} object containing the simulated data.
-#' @param k An integer specifying the number of clusters for each simulated process.
+#' @param k An integer specifying the number of clusters for each simulated patterns
 #' @param xmin A numeric value specifying the minimum x value for the kernel.
 #' @param xmax A numeric value specifying the maximum x value for the kernel.
 #' @param ymin A numeric value specifying the minimum y value for the kernel.
@@ -21,7 +21,7 @@
 #'
 #' @details The function generates the probability of a cell being positive given a set of simulation parameters f
 #' or each file in a \code{mIFsim} object. It creates a kernel parameter list for \code{k} clusters
-#' in each simulated process and computes the probability of each point in the grid of points within the
+#' in each simulated pattern and computes the probability of each point in the grid of points within the
 #' window for each cell. The function also computes a density heatmap for each cell if \code{density_heatmap} is set to \code{TRUE}.
 #'
 #'
@@ -60,7 +60,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
              unlist(params[c(3, 5)]) > win_limits[c(2,4)]))){
       message("x and y range inside window boundary")
     }
-    #produce kernel parameter list for k clusters in each simulated process
+    #produce kernel parameter list for k clusters in each simulated pattern
     if(cell == 1){
       sim_object@Cells[[cell]]@`Simulationed Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
         do.call(gaussian_kernel, utils::head(params, -1))
@@ -98,7 +98,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
     }
 
     if(is.empty(sim_object, "Spatial Files")){
-      sim_object@`Spatial Files` <<- lapply(sim_object@Processes, data.frame)
+      sim_object@`Spatial Files` <<- lapply(sim_object@Patterns, data.frame)
     }
 
     message(paste0("Computing probability for Cell ", cell))
