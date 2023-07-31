@@ -94,3 +94,19 @@ mif = create_mif(clinical_data = clinical,
 mif
 ```
 
+Since our window is from 0 to 10 (10 units), we should keep our search radius max less than 5. Lets do Univariate Ripley's K from 0 to 3 units and visualize the results.
+
+```{r}
+mif = ripleys_k(mif = mif, mnames = "Cell 1 Assignment", r_range = seq(0, 3, 0.1), 
+                permute = FALSE, edge_correction = "translation", workers = 1,
+                xloc = "x", yloc = "y")
+```
+
+```{r}
+library(ggplot2)
+mif$derived$univariate_Count %>%
+  ggplot() +
+  geom_line(aes(x = r, y = `Degree of Clustering Exact`, color = `Sample Tag`)) +
+  labs(title = "Univariate Clustering - Simulation")
+```
+

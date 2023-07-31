@@ -143,11 +143,11 @@ be split into a spatial list as well as a summary using
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Cells` `Cell 1 Assignment` `% Cell 1 Assignment`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 708                  28.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 700                  28.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 623                  24.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 424                  16.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 591                  23.8</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 703                  28.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 684                  27.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 598                  23.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 426                  16.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 559                  22.5</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="using-with-spatialtime">Using with <code>spatialTIME</code><a class="anchor" aria-label="anchor" href="#using-with-spatialtime"></a>
@@ -190,6 +190,25 @@ object along with the 3 data objects.</p>
 <span>                 sample_id <span class="op">=</span> <span class="st">"Sample Tag"</span><span class="op">)</span></span>
 <span><span class="va">mif</span></span>
 <span><span class="co">#&gt; <span style="color: #00D7FF;">5</span> patients spanning <span style="color: #00D7FF;">5</span> samples and <span style="color: #00D7FF;">5</span> spatial data frames were found</span></span></code></pre></div>
+<p>Since our window is from 0 to 10 (10 units), we should keep our
+search radius max less than 5. Lets do Univariate Ripley’s K from 0 to 3
+units and visualize the results.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mif</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialTIME/man/ripleys_k.html" class="external-link">ripleys_k</a></span><span class="op">(</span>mif <span class="op">=</span> <span class="va">mif</span>, mnames <span class="op">=</span> <span class="st">"Cell 1 Assignment"</span>, r_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0.1</span><span class="op">)</span>, </span>
+<span>                permute <span class="op">=</span> <span class="cn">FALSE</span>, edge_correction <span class="op">=</span> <span class="st">"translation"</span>, workers <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                xloc <span class="op">=</span> <span class="st">"x"</span>, yloc <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(r)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(r)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(r)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(r)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(r)`</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">mif</span><span class="op">$</span><span class="va">derived</span><span class="op">$</span><span class="va">univariate_Count</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">r</span>, y <span class="op">=</span> <span class="va">`Degree of Clustering Exact`</span>, color <span class="op">=</span> <span class="va">`Sample Tag`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Univariate Clustering - Simulation"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="a02_Using_with%20spatialTIME_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
