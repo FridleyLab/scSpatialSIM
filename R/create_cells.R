@@ -17,10 +17,10 @@
 #' @param cores An integer value specifying the number of cores to use for parallel computation.
 #' @param correlation A value between -1 and 1 for how related a second or more cell type is to the first
 #'
-#' @return Returns the original \code{mIFsim} object with additional generated data added to each cell object.
+#' @return Returns the original \code{csPointPros} object with additional generated data added to each cell object.
 #'
 #' @details The function generates the probability of a cell being positive given a set of simulation parameters f
-#' or each file in a \code{mIFsim} object. It creates a kernel parameter list for \code{k} clusters
+#' or each file in a \code{csPointPros} object. It creates a kernel parameter list for \code{k} clusters
 #' in each simulated pattern and computes the probability of each point in the grid of points within the
 #' window for each cell. The function also computes a density heatmap for each cell if \code{density_heatmap} is set to \code{TRUE}.
 #'

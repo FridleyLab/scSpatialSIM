@@ -1,9 +1,9 @@
-pandoc: 2.19.2
+pandoc: 3.1.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   a01_Introduction: a01_Introduction.html
-  a02_Univariate_Simulation: a02_Univariate_Simulation.html
-  a03_Bivariate_Simulation: a03_Bivariate_Simulation.html
-last_built: 2023-07-07T15:43Z
+  a02_Using_with spatialTIME: a02_Using_with spatialTIME.html
+  a03_CellAttributes: a03_CellAttributes.html
+last_built: 2023-07-31T19:17Z
 

@@ -1,5 +1,5 @@
-Package: mIFsim
-Title: Simulation of Multiplex Immunofluorescence (mIF) Data
+Package: csPointPros
+Title: Cellular Spatial Point Process Simulator Package
 Version: 0.0.0.9000
 Authors@R: 
     c(
@@ -33,7 +33,7 @@ Authors@R:
              email = "fridley.lab@moffitt.org",
              role = c("cre"))
     )
-Description: mIFsim is an easy-to-use wrapper package for spatstat that allows users to simulate mulitplex immunofluorescence (mIF) data. The simulation of this data comes in a could different functions whether since cell clustering (univariate) or multiple cell clustering/colocalization (bivariate) is wanting to be explored. The main audience for this package is those wanting to validate or test hypotheses or methods on controllable abundance/clustering of cells within mIF data.
+Description: csPointPros is an easy-to-use wrapper package for spatstat that allows users to simulate cellular point process data data. The simulation of this data comes in a couple different functions whether since cell clustering (univariate) or multiple cell clustering/colocalization (bivariate) is wanting to be explored. The main audience for this package is those wanting to validate or test hypotheses or methods on controllable abundance/clustering of cells within different spatial single-cell resolution data.
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

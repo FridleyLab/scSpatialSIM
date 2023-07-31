@@ -1,0 +1,96 @@
+---
+title: "Using with spatialTIME"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using with spatialTIME}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Background
+
+More than likely, you are going to want to use another package to analyze the simulated data produced by `{csPointPros}`. Here, we will show how the output from `{csPointPros}` works seemlessly with the spatial analysis package, `{spatialTIME}`
+
+### Simulating Data
+
+First thing we need to do is simulate data. The `vignette("Introduction)` showed us how we can do this in a univariate way where only a single cells positivity was simulated and bivaraiate way where we get positivity for multiple cell types. We can use this data with `{spatialTIME}` to derive spatial statistics like Ripley's *K*. See the spatialTIME package for more information about everything the package can do.
+
+```{r}
+library(csPointPros)
+```
+
+
+In this vignette, we will stick with a single cell type and look at univariate clustering with and without holes to display the caution that should be taken when using the observed Ripley's *K* values. 
+
+```{r, creating_spatial_object}
+#set seed
+set.seed(333)
+#create the new object
+sim_object = CreateSimulationObject(sims = 5, cell_types = 1) %>%
+    #produce the point pattern
+    GenerateSpatialPattern()
+    #make tissues
+sim_object = GenerateTissue(sim_object, density_heatmap = F) %>%
+    #create holes
+    GenerateHoles(density_heatmap = F) %>%
+    #Create positive/negative cells
+    GenerateCellPositivity(probs = c(0, 0.9))
+```
+
+With the simulation object filled in with a single cell type, it can be split into a spatial list as well as a summary using `CreateSpatialList()` and `SummariseSpatial()`.
+
+```{r sim_object_export}
+#creating the spatial list
+spatial_list = CreateSpatialList(sim_object, single_df = F)
+#summarise the spatial list
+summary_df = SummariseSpatial(spatial_list, markers = "Cell 1 Assignment")
+head(summary_df)
+```
+
+### Using with `spatialTIME`
+
+```{r}
+library(spatialTIME)
+```
+
+The `{spatialTIME}` package requires the input of 3 things. 1) spatial data frames in list format, 2) a summary of those spatial data frames, and 3) a clinical data frames The summary data frame acts as a linker between the spatial data frame IDs and the entries in the clinical data frame. Our spatial data frames need 1 more column: their name. This is pretty easy to do.
+
+```{r adding_spatial_df_name}
+#loop over all spatial data frames and add their names
+sf_names = names(spatial_list)
+spatial_list = lapply(setNames(sf_names, sf_names), function(nam){
+  spatial_list[[nam]] %>%
+    dplyr::mutate(`Sample Tag` = nam, .before = 1)
+})
+```
+
+Our summary data frame already contains the names of the spatial data frames but needs a patient ID added.
+
+```{r}
+summary_df$`Patient ID` = 1:5
+```
+
+The number 3 data we needed was the clinical data frame. For the sake of this example we will just make a single columned data frame with 1 through 5 to match the "Patient ID" in the summary data.
+
+```{r}
+clinical = data.frame(`Patient ID` = 1:5, check.names = F)
+```
+
+These column names will be used when creating the `mIF` object along with the 3 data objects.
+
+```{r}
+mif = create_mif(clinical_data = clinical,
+                 sample_data = summary_df,
+                 spatial_list = spatial_list,
+                 patient_id = "Patient ID",
+                 sample_id = "Sample Tag")
+mif
+```
+

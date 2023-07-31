@@ -124,3 +124,22 @@ generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
   vals[1] = vals[1] + dif
   return(vals)
 }
+
+
+
+
+make_dis = function(spat, positive_mean, negative_mean, positive_sd, negative_sd){
+  cells = grep("Cell", colnames(spat), value = TRUE)
+  dat = spat %>% dplyr::arrange(get(cell))
+  #ugh for loop
+  for(cell_n in seq(cells)){
+    cell = cells[cell_n]
+    counts = data.frame(table(spat[[cell]]))
+    negative_cells = stats::rnorm(counts$Freq[1], negative_mean, negative_sd)
+    positive_cells = stats::rnorm(counts$Freq[2], positive_mean, positive_sd)
+    dat[paste0("Cell ", cell_n, " Var")] = c(negative_cells, positive_cells)
+  }
+
+  return(dat)
+}
+
