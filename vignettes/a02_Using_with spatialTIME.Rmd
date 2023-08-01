@@ -39,7 +39,7 @@ sim_object = CreateSimulationObject(sims = 5, cell_types = 1) %>%
     #make tissues
 sim_object = GenerateTissue(sim_object, density_heatmap = F) %>%
     #create holes
-    GenerateHoles(density_heatmap = F) %>%
+    GenerateHoles(hole_prob = c(0.3, 0.5), density_heatmap = F) %>%
     #Create positive/negative cells
     GenerateCellPositivity(probs = c(0, 0.9))
 ```
@@ -108,5 +108,52 @@ mif$derived$univariate_Count %>%
   ggplot() +
   geom_line(aes(x = r, y = `Degree of Clustering Exact`, color = `Sample Tag`)) +
   labs(title = "Univariate Clustering - Simulation")
+```
+
+Up until now, we have been using the all simulated cells. We can filter the spatial_list down to create another mIF object that doesn't have the cells belonging to the class of "hole" (`Hole Assignment` == "Keep"). For now, sub-setting to only Tissue 1 or Tissue 2 will be left alone. Let's create this mIF and run Ripley's K on it.
+
+```{r}
+mif_holes = create_mif(clinical_data = clinical,
+                 sample_data = summary_df,
+                 spatial_list = lapply(spatial_list, function(spat){
+                   spat %>%
+                     dplyr::filter(`Hole Assignment` == "Keep")
+                 }),
+                 patient_id = "Patient ID",
+                 sample_id = "Sample Tag")
+mif_holes = ripleys_k(mif = mif_holes, mnames = "Cell 1 Assignment", r_range = seq(0, 3, 0.1), 
+                permute = FALSE, edge_correction = "translation", workers = 1,
+                xloc = "x", yloc = "y")
+```
+
+To see the importance of using the exact CSR approach (or permutation) when there are holes on samples, first look at the spatial plots to see how much the holes are impacting the distribution of the points.
+
+```{r}
+mif_holes$spatial %>%
+  do.call(dplyr::bind_rows, .) %>%
+  ggplot() +
+  geom_point(aes(x = x, y = y, color = as.factor(`Cell 1 Assignment`))) +
+  facet_wrap(~`Sample Tag`)
+```
+
+The regions with holes are rather small so wouldn't 
+
+```{r}
+dat = do.call(dplyr::bind_rows, mif_holes$derived$univariate_Count)
+dat %>%
+  dplyr::mutate(`Exact-Theo` = `Exact CSR` - `Theoretical CSR`) %>%
+  ggplot() +
+  geom_density(aes(x = `Exact-Theo`, fill = `Sample Tag`), alpha = 0.2, adjust = 0.2)
+```
+
+This clearly shows that the exact *typically* has larger values than those of the theoretical (positive values). These can be visualized by calculating the frequency of *r*s that have an exact CSR measurement greater than the theoretical CSR estimate, indicating the the theoretical is underestimating the CSR of the cores. 
+
+```{r}
+dat %>%
+    dplyr::mutate(`Exact-Theo` = `Exact CSR` - `Theoretical CSR`) %>%
+    dplyr::group_by(`Sample Tag`) %>%
+    dplyr::mutate(prop = ifelse(`Exact-Theo` > 0, 1/dplyr::n(), 0)) %>%
+    dplyr::select(`Sample Tag`, r, `Exact-Theo`, prop) %>%
+    dplyr::summarise(`Total Fraction` = sum(prop))
 ```
 
