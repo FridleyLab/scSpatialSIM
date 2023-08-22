@@ -1,10 +1,10 @@
-# mIFsim
+# sc.SpatialSIM
 
-R package to simulate multiplex immunofluorescence (mIF) data to benchmark spatial statistical methods
+A point pattern simulator R package for spatial cellular data
 
-# Installing mIFsim to RStudio
+# Installing sc.SpatialSIM to RStudio
 
-To install `mIFsim`, it is required to have `devtools` or `remotes` installed for their `install_github()` function:
+To install `sc.SpatialSIM`, it is required to have `devtools` or `remotes` installed for their `install_github()` function:
 
 ```{r}
 if (!require("devtools", quietly = TRUE))
