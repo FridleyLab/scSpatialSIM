@@ -4,7 +4,7 @@
 \alias{GenerateSpatialPattern}
 \title{Generate Spatial Point Pattern}
 \usage{
-GenerateSpatialPattern(sim_object, lambda = 25, ...)
+GenerateSpatialPattern(sim_object, lambda = 25, ..., gridded = FALSE)
 }
 \arguments{
 \item{sim_object}{A 'SpatSimObj' containing a window.}
@@ -12,6 +12,8 @@ GenerateSpatialPattern(sim_object, lambda = 25, ...)
 \item{lambda}{The intensity of the point pattern Default is 25.}
 
 \item{...}{Additional arguments passed to 'rpoispp'.}
+
+\item{gridded}{boolean value to whether or not simulate the point pattern in a grid. See details for more.}
 }
 \value{
 The updated 'sim_object' with a simulated point process added to the 'Processes' slot.
@@ -23,6 +25,10 @@ Generate a spatial point pattern within the simulation object's window using a P
 This function generates a spatial point process within the window of the 'sim_object'
 using a Poisson point pattern with intensity 'lambda'. The simulated point pattern is added
 to the 'Patterns' slot of the 'sim_object'. Additional arguments can be passed to the 'rpoispp' function.
+
+The \code{gridded} parameter is used for simulating point patterns that would represent som spatial transcriptomic
+technologies such as visium, where rather than like cell being randomly distributed in a sample, the spots where
+data is measured is evenly spaced.
 }
 \examples{
 sim_object <- CreateSimulationObject()

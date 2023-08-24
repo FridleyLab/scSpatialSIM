@@ -5,6 +5,7 @@
 #' @param sim_object A 'SpatSimObj' containing a window.
 #' @param lambda The intensity of the point pattern Default is 25.
 #' @param ... Additional arguments passed to 'rpoispp'.
+#' @param gridded boolean value to whether or not simulate the point pattern in a grid. See details for more.
 #'
 #' @return The updated 'sim_object' with a simulated point process added to the 'Processes' slot.
 #'
@@ -12,19 +13,61 @@
 #'  using a Poisson point pattern with intensity 'lambda'. The simulated point pattern is added
 #'  to the 'Patterns' slot of the 'sim_object'. Additional arguments can be passed to the 'rpoispp' function.
 #'
+#'  The `gridded` parameter is used for simulating point patterns that would represent som spatial transcriptomic
+#'  technologies such as visium, where rather than like cell being randomly distributed in a sample, the spots where
+#'  data is measured is evenly spaced.
+#'
 #' @export
 #' @examples
 #' sim_object <- CreateSimulationObject()
 #' sim_object <- GenerateSpatialPattern(sim_object, lambda = 30)
-GenerateSpatialPattern = function(sim_object, lambda = 25, ...){
+GenerateSpatialPattern = function(sim_object, lambda = 25, ..., gridded = FALSE){
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(is.null(lambda)) stop("Need an intensity in order to simulate points")
 
   window = sim_object@Window
   sims = sim_object@Sims
-  spatial_dfs = lapply(seq(sims), function(hld){
-    spatstat.random::rpoispp(lambda, win = window, nsim = 1, ...)
-  })
+
+  if(gridded){
+    #find the area to calculate the number of cells
+    area = spatstat.geom::area(window)
+    #get the window size to identify the region for simulation
+    x_size = diff(window$xrange)
+    y_size = diff(window$yrange)
+    #calculate the number of cells with lambda and the area
+    n_cells = lambda * area #should work!
+    #calculate cells per side
+    n_cells_side = floor(sqrt(n_cells))
+    #identify the spacing in both directions
+    x_spacing = x_size / (n_cells_side + 1)
+    y_spacing = y_size / (n_cells_side + 1)
+    #find x_positions
+    x_pos = seq(x_spacing/2, x_size, by = x_spacing)
+    #find y_positions
+    y_pos = seq(y_spacing/2, y_size, by = y_spacing)
+    #get x indices where y needs to shift
+    x_vals = x_pos[seq(1, length(x_pos), by = 2)]
+    #expand grid for positions
+    new_raw_df = data.frame(expand.grid(x = x_pos, y = y_pos)) %>%
+      dplyr::mutate(y = ifelse(x %in% x_vals, y + (y_spacing * 0.25), y))
+
+    #make the list of spatial dataframes like spatstat
+    spatial_dfs = lapply(seq(sims), function(hld){
+      sp_df = list(window = window,
+           n = nrow(new_raw_df),
+           x = new_raw_df$x + min(window$xrange),
+           y = new_raw_df$y + min(window$yrange),
+           markformat = 'none')
+      class(sp_df) = 'ppp'
+      return(sp_df)
+    })
+  } else {
+    spatial_dfs = lapply(seq(sims), function(hld){
+      spatstat.random::rpoispp(lambda, win = window, nsim = 1, ...)
+    })
+  }
+
+
 
   sim_object@Patterns = spatial_dfs
   return(sim_object)
