@@ -6,6 +6,7 @@
 #' @param lambda The intensity of the point pattern Default is 25.
 #' @param ... Additional arguments passed to 'rpoispp'.
 #' @param gridded boolean value to whether or not simulate the point pattern in a grid. See details for more.
+#' @param grid_shift the amount to move alternative columns down when gridded; between -0.5 and 0.5
 #'
 #' @return The updated 'sim_object' with a simulated point process added to the 'Processes' slot.
 #'
@@ -21,7 +22,7 @@
 #' @examples
 #' sim_object <- CreateSimulationObject()
 #' sim_object <- GenerateSpatialPattern(sim_object, lambda = 30)
-GenerateSpatialPattern = function(sim_object, lambda = 25, ..., gridded = FALSE){
+GenerateSpatialPattern = function(sim_object, lambda = 25, ..., gridded = FALSE, grid_shift = 0.5){
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(is.null(lambda)) stop("Need an intensity in order to simulate points")
 
@@ -29,6 +30,9 @@ GenerateSpatialPattern = function(sim_object, lambda = 25, ..., gridded = FALSE)
   sims = sim_object@Sims
 
   if(gridded){
+    if(grid_shift < -0.5 | grid_shift > 0.5){
+      stop("Max shift in either positive or negative direction is 0.5")
+    }
     #find the area to calculate the number of cells
     area = spatstat.geom::area(window)
     #get the window size to identify the region for simulation
@@ -49,7 +53,7 @@ GenerateSpatialPattern = function(sim_object, lambda = 25, ..., gridded = FALSE)
     x_vals = x_pos[seq(1, length(x_pos), by = 2)]
     #expand grid for positions
     new_raw_df = data.frame(expand.grid(x = x_pos, y = y_pos)) %>%
-      dplyr::mutate(y = ifelse(x %in% x_vals, y + (y_spacing * 0.25), y))
+      dplyr::mutate(y = ifelse(x %in% x_vals, y + (y_spacing * grid_shift), y))
 
     #make the list of spatial dataframes like spatstat
     spatial_dfs = lapply(seq(sims), function(hld){

@@ -4,7 +4,13 @@
 \alias{GenerateSpatialPattern}
 \title{Generate Spatial Point Pattern}
 \usage{
-GenerateSpatialPattern(sim_object, lambda = 25, ..., gridded = FALSE)
+GenerateSpatialPattern(
+  sim_object,
+  lambda = 25,
+  ...,
+  gridded = FALSE,
+  grid_shift = 0.5
+)
 }
 \arguments{
 \item{sim_object}{A 'SpatSimObj' containing a window.}
@@ -14,6 +20,8 @@ GenerateSpatialPattern(sim_object, lambda = 25, ..., gridded = FALSE)
 \item{...}{Additional arguments passed to 'rpoispp'.}
 
 \item{gridded}{boolean value to whether or not simulate the point pattern in a grid. See details for more.}
+
+\item{grid_shift}{the amount to move alternative columns down when gridded; between -0.5 and 0.5}
 }
 \value{
 The updated 'sim_object' with a simulated point process added to the 'Processes' slot.
