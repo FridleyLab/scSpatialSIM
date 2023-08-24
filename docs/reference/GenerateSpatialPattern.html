@@ -56,7 +56,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GenerateSpatialPattern</span><span class="op">(</span><span class="va">sim_object</span>, lambda <span class="op">=</span> <span class="fl">25</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GenerateSpatialPattern</span><span class="op">(</span><span class="va">sim_object</span>, lambda <span class="op">=</span> <span class="fl">25</span>, <span class="va">...</span>, gridded <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,6 +72,10 @@
 <dt>...</dt>
 <dd><p>Additional arguments passed to 'rpoispp'.</p></dd>
 
+
+<dt>gridded</dt>
+<dd><p>boolean value to whether or not simulate the point pattern in a grid. See details for more.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -84,6 +88,9 @@
     <p>This function generates a spatial point process within the window of the 'sim_object'
 using a Poisson point pattern with intensity 'lambda'. The simulated point pattern is added
 to the 'Patterns' slot of the 'sim_object'. Additional arguments can be passed to the 'rpoispp' function.</p>
+<p>The <code>gridded</code> parameter is used for simulating point patterns that would represent som spatial transcriptomic
+technologies such as visium, where rather than like cell being randomly distributed in a sample, the spots where
+data is measured is evenly spaced.</p>
     </div>
 
     <div class="section level2">
