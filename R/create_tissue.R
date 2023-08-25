@@ -27,6 +27,7 @@
 #' @param step_size Grid step size for the density heatmap.
 #' @param cores Number of cores to use for parallel processing of density
 #'   calculations.
+#' @param overwrite boolean whether to overwrite if tissue kernels already exist
 #'
 #' @return A modified 'Spatial Simulation Object' with updated tissue grids and
 #'   assigned tissue types for each simulated pattern.
@@ -60,9 +61,34 @@ GenerateTissue = function(sim_object, k = NA,
                           xmin = NA, xmax = NA, ymin = NA, ymax = NA,
                           sdmin = 1/2, sdmax = 2,
                           force = FALSE,
-                          density_heatmap = FALSE, step_size = 1, cores = 1){
+                          density_heatmap = FALSE, step_size = 1, cores = 1, overwrite = FALSE){
+  #stop conditions
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
+
+  if(!is.empty(sim_object@Tissue, "Simulated Kernels") & overwrite == FALSE) stop("Already have tissue kernels and `overwrite == FALSE`")
+  if(!is.empty(sim_object@Tissue, "Simulated Kernels") & overwrite == TRUE){
+    message("Overwriting existing tissue kernels")
+    message("Resetting Tissue slots")
+    #tissue
+    sim_object@Tissue@`Simulated Kernels` = list()
+    sim_object@Tissue@`Density Grids` = list()
+    # #holes
+    # sim_object@Holes@`Simulated Kernels` = list()
+    # sim_object@Holes@`Density Grids` = list()
+    # #cells
+    # for(i in seq(sim_object@Cells)){
+    #   sim_object@Cells[[i]]@`Simulated Kernels` = list()
+    #   sim_object@Cells[[i]]@`Density Grids` = list()
+    # }
+    #spatial files
+    sim_object@`Spatial Files` = lapply(sim_object@`Spatial Files`, function(spat){
+      spat %>%
+        dplyr::select(-dplyr::contains("Tissue"))
+    })
+    #letting know finished
+    message("Reset...Continuing.")
+  }
 
   #create parameter vector
   params = list(k = k,
@@ -86,7 +112,7 @@ GenerateTissue = function(sim_object, k = NA,
     message("x and y range inside window boundary")
   }
   #produce kernel parameter list for k clusters in each simulated pattern
-  sim_object@Tissue@`Simulationed Kernels` = lapply(seq(sim_object@Sims), function(hld){
+  sim_object@Tissue@`Simulated Kernels` = lapply(seq(sim_object@Sims), function(hld){
     do.call(gaussian_kernel, params)
   })
   #make gric based on user step size for their window
@@ -95,7 +121,7 @@ GenerateTissue = function(sim_object, k = NA,
 
   if(density_heatmap){
     message("Computing density heatmap")
-    sim_object@Tissue@`Density Grids` = pbmcapply::pbmclapply(sim_object@Tissue@`Simulationed Kernels`, function(gauss_tab){
+    sim_object@Tissue@`Density Grids` = pbmcapply::pbmclapply(sim_object@Tissue@`Simulated Kernels`, function(gauss_tab){
       cbind(grid,
             prob = CalculateGrid(grid, gauss_tab, cores = cores))
     })
@@ -109,7 +135,7 @@ GenerateTissue = function(sim_object, k = NA,
   sim_object@`Spatial Files` = pbmcapply::pbmclapply(seq(sim_object@`Spatial Files`), function(spat_num){
     df = cbind(sim_object@`Spatial Files`[[spat_num]],
           `Tissue Probability` = CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
-                               sim_object@Tissue@`Simulationed Kernels`[[spat_num]], cores = cores) * 0.9)
+                               sim_object@Tissue@`Simulated Kernels`[[spat_num]], cores = cores) * 0.9)
     df$`Tissue Assignment` = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$`Tissue Probability`) == 1, "Tissue 1", "Tissue 2")
     return(df)
   })

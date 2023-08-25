@@ -38,7 +38,8 @@ simulation, such as heatmaps of the tissue or holes, or a plot of the whole core
 When \code{what} is set to "tissue heatmap" or "hole heatmap", the function will plot heatmaps of
 the specified tissue or hole. When \code{what} is set to "whole core", the function will plot the
 entire core with assigned cells colored by type. Only a single element of the \code{sim_object} can
-be plotted when \code{what} is set to "whole core".
+be plotted when \code{what} is set to "whole core". \code{what} equal to "tissue points", "hole points", or
+"tissue hole points" will result in a point plot of the respective assignments on points.
 
 When more than one plot is made, \code{nrow} and \code{ncol} can be used to specify the number of rows
 and columns of the plot grid, respectively.

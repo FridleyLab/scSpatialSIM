@@ -16,7 +16,8 @@ GenerateTissue(
   force = FALSE,
   density_heatmap = FALSE,
   step_size = 1,
-  cores = 1
+  cores = 1,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ probability.}
 
 \item{cores}{Number of cores to use for parallel processing of density
 calculations.}
+
+\item{overwrite}{boolean whether to overwrite if tissue kernels already exist}
 }
 \value{
 A modified 'Spatial Simulation Object' with updated tissue grids and

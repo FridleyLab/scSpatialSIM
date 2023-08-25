@@ -10,10 +10,10 @@ summary.SpatSimObj <- function(object, ...){
   nsim = object@Sims
   win = matrix(c(object@Window$xrange, object@Window$yrange), nrow = 2, byrow = F)
   s_patterns = length(object@Patterns)
-  t_kernels = length(object@Tissue@`Simulationed Kernels`)
-  h_kernels = length(object@Holes@`Simulationed Kernels`)
+  t_kernels = length(object@Tissue@`Simulated Kernels`)
+  h_kernels = length(object@Holes@`Simulated Kernels`)
   c_types = length(object@Cells)
-  c_kernels=length(object@Cells[[1]]@`Simulationed Kernels`)
+  c_kernels=length(object@Cells[[1]]@`Simulated Kernels`)
 
   cat("Spatial Simulation object for", nsim,"simulated images. Currently, there are:\n")
   cat(paste0("\tWindow: x (", win[1], ",", win[2], "); y (", win[3], ",", win[4],")\n"), sep="")

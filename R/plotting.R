@@ -17,7 +17,8 @@
 #' When `what` is set to "tissue heatmap" or "hole heatmap", the function will plot heatmaps of
 #' the specified tissue or hole. When `what` is set to "whole core", the function will plot the
 #' entire core with assigned cells colored by type. Only a single element of the `sim_object` can
-#' be plotted when `what` is set to "whole core".
+#' be plotted when `what` is set to "whole core". `what` equal to "tissue points", "hole points", or
+#' "tissue hole points" will result in a point plot of the respective assignments on points.
 #'
 #' When more than one plot is made, `nrow` and `ncol` can be used to specify the number of rows
 #' and columns of the plot grid, respectively.
@@ -44,6 +45,27 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5)) +
       ggplot2::guides(fill=ggplot2::guide_legend(title="Probability\nSurface"))
   }
+  tissue_point_plot = function(dat){
+    dat %>%
+      ggplot2::ggplot() +
+      ggplot2::geom_point(ggplot2::aes(x = x, y = y, shape = `Tissue Assignment`)) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+  }
+  hole_point_plot = function(dat){
+    dat %>%
+      ggplot2::ggplot() +
+      ggplot2::geom_point(ggplot2::aes(x = x, y = y, alpha = `Hole Assignment`)) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+  }
+  tissue_hole_point_plot = function(dat){
+    dat %>%
+      ggplot2::ggplot() +
+      ggplot2::geom_point(ggplot2::aes(x = x, y = y, shape = `Tissue Assignment`, alpha = `Hole Assignment`)) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+  }
   if(what == "tissue heatmap"){
     if(length(which) == 1){
       density_plot(sim_object@Tissue@`Density Grids`[[which]]) +
@@ -56,7 +78,7 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
     }
   } else if(what == "hole heatmap"){
-    if(length(sim_object@Holes@`Simulationed Kernels`) == 0) stop("Holes have not been simulated")
+    if(length(sim_object@Holes@`Simulated Kernels`) == 0) stop("Holes have not been simulated")
     if(length(which) == 1){
       density_plot(sim_object@Holes@`Density Grids`[[which]]) +
         ggplot2::labs(title = which)
@@ -67,9 +89,42 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       })
       ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
     }
+  } else if(what == "tissue points"){
+    if(length(which) == 1){
+      tissue_point_plot(sim_object@`Spatial Files`[[which]]) +
+        ggplot2::labs(title = which)
+    } else {
+      p = lapply(seq(which), function(d){
+        tissue_point_plot(sim_object@`Spatial Files`[[d]]) +
+          ggplot2::labs(title = d)
+      })
+      ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
+    }
+  } else if(what == "hole points"){
+    if(length(which) == 1){
+      hole_point_plot(sim_object@`Spatial Files`[[which]]) +
+        ggplot2::labs(title = which)
+    } else {
+      p = lapply(seq(which), function(d){
+        hole_point_plot(sim_object@`Spatial Files`[[d]]) +
+          ggplot2::labs(title = d)
+      })
+      ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
+    }
+  } else if(what == "tissue hole points"){
+    if(length(which) == 1){
+      tissue_hole_point_plot(sim_object@`Spatial Files`[[which]]) +
+        ggplot2::labs(title = which)
+    } else {
+      p = lapply(seq(which), function(d){
+        tissue_hole_point_plot(sim_object@`Spatial Files`[[d]]) +
+          ggplot2::labs(title = d)
+      })
+      ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
+    }
   } else if(what == "whole core"){
     if(length(which) == 1){
-      if(length(sim_object@Cells[[1]]@`Simulationed Kernels`) == 0){
+      if(length(sim_object@Cells[[1]]@`Simulated Kernels`) == 0){
         stop("Need to simulate cells")
       }
       df = sim_object@`Spatial Files`[[which]]

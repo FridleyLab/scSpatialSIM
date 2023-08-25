@@ -5,6 +5,7 @@
 #' @param sim_object A 'SpatSimObj' containing a window.
 #' @param lambda The intensity of the point pattern Default is 25.
 #' @param ... Additional arguments passed to 'rpoispp'.
+#' @param overwrite boolean indicating whether or not to replace point patterns if they exist in object
 #' @param gridded boolean value to whether or not simulate the point pattern in a grid. See details for more.
 #' @param grid_shift the amount to move alternative columns down when gridded; between -0.5 and 0.5
 #'
@@ -22,9 +23,13 @@
 #' @examples
 #' sim_object <- CreateSimulationObject()
 #' sim_object <- GenerateSpatialPattern(sim_object, lambda = 30)
-GenerateSpatialPattern = function(sim_object, lambda = 25, ..., gridded = FALSE, grid_shift = 0.5){
+GenerateSpatialPattern = function(sim_object, lambda = 25, ..., overwrite = FALSE, gridded = FALSE, grid_shift = 0.5){
+  # stop conditions
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(is.null(lambda)) stop("Need an intensity in order to simulate points")
+  if(!is.empty(sim_object, "Patterns") & overwrite == FALSE) stop("Already have point patterns and `overwrite == FALSE`")
+  if(!is.empty(sim_object, "Patterns") & overwrite == TRUE) message("Overwriting existing point patterns")
+
 
   window = sim_object@Window
   sims = sim_object@Sims

@@ -8,6 +8,7 @@ GenerateSpatialPattern(
   sim_object,
   lambda = 25,
   ...,
+  overwrite = FALSE,
   gridded = FALSE,
   grid_shift = 0.5
 )
@@ -18,6 +19,8 @@ GenerateSpatialPattern(
 \item{lambda}{The intensity of the point pattern Default is 25.}
 
 \item{...}{Additional arguments passed to 'rpoispp'.}
+
+\item{overwrite}{boolean indicating whether or not to replace point patterns if they exist in object}
 
 \item{gridded}{boolean value to whether or not simulate the point pattern in a grid. See details for more.}
 

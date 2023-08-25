@@ -85,34 +85,34 @@ prototype = list(
 
 setClass("Tumor/Stroma", slots = list(
   Parameters = "list",
-  `Simulationed Kernels` = "list",
+  `Simulated Kernels` = "list",
   `Density Grids` = "list"
 ),
 prototype = list(
   Parameters = list(k = 10, xmin = 0, xmax = 10, ymin = 0, ymax = 10, sdmin = 1/2, sdmax = 2),
-  `Simulationed Kernels` = list(),
+  `Simulated Kernels` = list(),
   `Density Grids` = list()
 ))
 
 setClass("Holes", slots = list(
   Parameters = "list",
-  `Simulationed Kernels` = "list",
+  `Simulated Kernels` = "list",
   `Density Grids` = "list"
 ),
 prototype = list(
   Parameters = list(xmin = 0, xmax = 10, ymin = 0, ymax = 10, sdmin = 1/2, sdmax = 2, hole_prob = c(0.2, 0.35)),
-  `Simulationed Kernels` = list(),
+  `Simulated Kernels` = list(),
   `Density Grids` = list()
 ))
 
 setClass("Cell", slots = list(
   Parameters = "list",
-  `Simulationed Kernels` = "list",
+  `Simulated Kernels` = "list",
   `Density Grids` = "list"
 ),
 prototype = list(
   Parameters = list(k = 10, xmin = 0, xmax = 10, ymin = 0, ymax = 10, sdmin = 1/2, sdmax = 2, probs = c(0, 1)),
-  `Simulationed Kernels` = list(),
+  `Simulated Kernels` = list(),
   `Density Grids` = list()
 ))
 

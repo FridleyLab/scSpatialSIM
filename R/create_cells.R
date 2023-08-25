@@ -16,6 +16,7 @@
 #' @param step_size A numeric value specifying the step size for the grid of points within the window.
 #' @param cores An integer value specifying the number of cores to use for parallel computation.
 #' @param correlation A value between -1 and 1 for how related a second or more cell type is to the first
+#' @param overwrite boolean whether to overwrite existing cell kernels and assignments if present
 #'
 #' @return Returns the original \code{sc.SpatialSIM} object with additional generated data added to each cell object.
 #'
@@ -31,9 +32,34 @@ GenerateCellPositivity = function(sim_object, k = NA,
                           sdmin = 1/2, sdmax = 2, probs = c(0, 1),
                           Force = FALSE,
                           density_heatmap = FALSE, step_size = 1, cores = 1,
-                          correlation = 0){
+                          correlation = 0, overwrite = FALSE){
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
+
+  if(!is.empty(sim_object@Cells[[1]], "Simulated Kernels") & overwrite == FALSE) stop("Already have cell kernels and `overwrite == FALSE`")
+  if(!is.empty(sim_object@Cells[[1]], "Simulated Kernels") & overwrite == TRUE){
+    message("Overwriting existing cell kernels")
+    # #tissue
+    # sim_object@Tissue@`Simulated Kernels` = list()
+    # sim_object@Tissue@`Density Grids` = list()
+    # #holes
+    # sim_object@Holes@`Simulated Kernels` = list()
+    # sim_object@Holes@`Density Grids` = list()
+    #cells
+    message("Resetting Cell slots")
+    for(i in seq(sim_object@Cells)){
+      sim_object@Cells[[i]]@`Simulated Kernels` = list()
+      sim_object@Cells[[i]]@`Density Grids` = list()
+    }
+    #spatial files
+    sim_object@`Spatial Files` = lapply(sim_object@`Spatial Files`, function(spat){
+      spat %>%
+        dplyr::select(-dplyr::contains("Cell"))
+    })
+    #letting know finished
+    message("Reset...Continuing.")
+  }
+
 
   #create parameter vector
   params = list(k = k,
@@ -62,11 +88,11 @@ GenerateCellPositivity = function(sim_object, k = NA,
     }
     #produce kernel parameter list for k clusters in each simulated pattern
     if(cell == 1){
-      sim_object@Cells[[cell]]@`Simulationed Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
+      sim_object@Cells[[cell]]@`Simulated Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
         do.call(gaussian_kernel, utils::head(params, -1))
       })
     } else {
-      sim_object@Cells[[cell]]@`Simulationed Kernels` <<- sim_object@Cells[[1]]@`Simulationed Kernels`
+      sim_object@Cells[[cell]]@`Simulated Kernels` <<- sim_object@Cells[[1]]@`Simulated Kernels`
     }
 
     #make gric based on user step size for their window
@@ -76,7 +102,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
     if(density_heatmap){
       if(cell == 1){
         message(paste0("Computing density heatmap for Cell ", cell))
-        sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[cell]]@`Simulationed Kernels`, function(gauss_tab){
+        sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[cell]]@`Simulated Kernels`, function(gauss_tab){
           cbind(grid,
                 prob = CalculateGrid(grid, gauss_tab, cores = cores))
         })
@@ -104,7 +130,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
     message(paste0("Computing probability for Cell ", cell))
     sim_object@`Spatial Files` <<- pbmcapply::pbmclapply(seq(sim_object@`Spatial Files`), function(spat_num){
       vec = CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
-                                                      sim_object@Cells[[cell]]@`Simulationed Kernels`[[spat_num]], cores = cores)
+                                                      sim_object@Cells[[cell]]@`Simulated Kernels`[[spat_num]], cores = cores)
       #if the cell is other than the first, adjust it based on first cell and correlation
       if(cell != 1){
         if(correlation == 0){

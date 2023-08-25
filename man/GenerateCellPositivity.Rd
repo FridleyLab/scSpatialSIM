@@ -18,7 +18,8 @@ GenerateCellPositivity(
   density_heatmap = FALSE,
   step_size = 1,
   cores = 1,
-  correlation = 0
+  correlation = 0,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ GenerateCellPositivity(
 \item{cores}{An integer value specifying the number of cores to use for parallel computation.}
 
 \item{correlation}{A value between -1 and 1 for how related a second or more cell type is to the first}
+
+\item{overwrite}{boolean whether to overwrite existing cell kernels and assignments if present}
 }
 \value{
 Returns the original \code{sc.SpatialSIM} object with additional generated data added to each cell object.

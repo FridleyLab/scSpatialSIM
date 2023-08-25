@@ -16,7 +16,8 @@ GenerateHoles(
   force = FALSE,
   density_heatmap = FALSE,
   step_size = 1,
-  cores = 1
+  cores = 1,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -45,6 +46,8 @@ boundaries (default: FALSE)}
 \item{step_size}{The step size for the grid (default: 1)}
 
 \item{cores}{The number of cores to use for parallel processing (default: 1)}
+
+\item{overwrite}{boolean to replace holes if they have been simulated previously}
 }
 \value{
 A modified spatial simulation object with holes added
