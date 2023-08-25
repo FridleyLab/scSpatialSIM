@@ -52,12 +52,12 @@ GenerateCellPositivity = function(sim_object, k = NA,
     win_limits = c(sim_object@Window$xrange, sim_object@Window$yrange)
     #check whether the parameters would simulate outside window
     if(any((unlist(params[c(2, 4)]) < win_limits[c(1,3)]) |
-           (unlist(params[c(3, 5)]) < win_limits[c(2,4)])) & Force == FALSE){
+           (unlist(params[c(3, 5)]) > win_limits[c(2,4)])) & Force == FALSE){
       stop("x and y range outside simulation window limits")
     }
     #inform user parameter window inside simulation window
     if(any(c(unlist(params[c(2, 4)]) > win_limits[c(1,3)],
-             unlist(params[c(3, 5)]) > win_limits[c(2,4)]))){
+             unlist(params[c(3, 5)]) < win_limits[c(2,4)]))){
       message("x and y range inside window boundary")
     }
     #produce kernel parameter list for k clusters in each simulated pattern
