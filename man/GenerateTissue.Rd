@@ -45,7 +45,7 @@ window.}
 \item{density_heatmap}{Logical, whether to calculate a density heatmap for
 the simulated tissue. If \code{TRUE}, a grid of points will be generated
 covering the entire simulation window, and the probability of each grid
-point belonging to stroma will be calculated based on the generated tissue
+point belonging to tissue 1 will be calculated based on the generated tissue
 probability.}
 
 \item{step_size}{Grid step size for the density heatmap.}
@@ -61,7 +61,7 @@ assigned tissue types for each simulated pattern.
 This function generates a simulated tissue using a specified number of
 clusters and spatial parameters for each pattern in the simulation object.
 The tissue is represented by a grid of points with probabilities of
-belonging to stromal or tumor tissue, based on a Gaussian kernel density
+belonging to tissue 1 or tissue 2, based on a Gaussian kernel density
 estimate calculated for each pattern
 }
 \details{
@@ -71,13 +71,13 @@ and y ranges and with a standard deviation within the specified range.
 Then, a Gaussian kernel density estimate is calculated for each pattern
 using the generated clusters as center points and the specified standard
 deviation as kernel size. The density estimates represent the probability
-of each point in the simulation window belonging to a tumor or stromal
-tissue. If \code{density_heatmap = TRUE}, a density heatmap will be
+of each point in the simulation window belonging to tissue 1 or tissue 2.
+If \code{density_heatmap = TRUE}, a density heatmap will be
 calculated using a grid of points covering the entire simulation window.
-Finally, for each simulated point, the probability of belonging to stroma
-tissue is calculated based on the kernel density estimate, and the tissue
-type is assigned as either "Tumor" or "Stroma" using a random sample with
-probability proportional to the probability of belonging to stroma tissue.
+Finally, for each simulated point, the probability of belonging to
+tissue 1 is calculated based on the kernel density estimate, and the tissue
+type is assigned with
+probability proportional to the probability of belonging to tissue 1.
 }
 \examples{
 # Create a simulation object with a window and point pattern

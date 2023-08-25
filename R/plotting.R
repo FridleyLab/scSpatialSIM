@@ -42,7 +42,7 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       ggplot2::geom_contour_filled(ggplot2::aes(x = x, y = y, z = 100*prob)) +
       ggplot2::theme_bw() +
       ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5)) +
-      ggplot2::guides(fill=ggplot2::guide_legend(title="Probability\nof Stroma"))
+      ggplot2::guides(fill=ggplot2::guide_legend(title="Probability\nSurface"))
   }
   if(what == "tissue heatmap"){
     if(length(which) == 1){
