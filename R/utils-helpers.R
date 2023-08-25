@@ -70,7 +70,7 @@ generate_holes = function(xmin = 0, xmax = 10, ymin = 0,
 
 CalculateGrid = function(grid, gauss_tab, cores){
   parallel::mclapply(1:nrow(grid), function(val){
-    val = grid[val,] %>% as.numeric()
+    val = grid[val,1:2] %>% as.numeric()
     sapply(1:nrow(gauss_tab), function(a){
       diff = c((val[1] - gauss_tab$x[a]), (val[2] - gauss_tab$y[a]))
       sigma = matrix(c(gauss_tab$sd.x[a]^2, rep(gauss_tab$rho[a], 2),
