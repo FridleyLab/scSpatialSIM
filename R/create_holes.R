@@ -64,7 +64,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
   #if no parameters are input then use the initialized
   params = mapply(replace_na, sim_object@Holes@Parameters, params, SIMPLIFY = FALSE)
   #update initialized parameters with custom input from user
-  sim_object@Holes@Parameters <<- params
+  sim_object@Holes@Parameters <- params
   #get the window size
   win_limits = c(sim_object@Window$xrange, sim_object@Window$yrange)
   #check whether the parameters would simulate outside window
