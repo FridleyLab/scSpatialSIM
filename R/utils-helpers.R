@@ -125,9 +125,6 @@ generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
   return(vals)
 }
 
-
-
-
 make_dis = function(spat, positive_mean, negative_mean, positive_sd, negative_sd){
   cells = grep("Cell", colnames(spat), value = TRUE)
   dat = spat %>% dplyr::arrange(get(cell))
@@ -143,3 +140,95 @@ make_dis = function(spat, positive_mean, negative_mean, positive_sd, negative_sd
   return(dat)
 }
 
+gaussian_kernel_shift = function(kern, shift, win_limits){
+  if(nrow(kern) == 1){
+    #only single center
+    #move towards opposite side?
+    n_x = win_limits[2] - (kern$x[1] - win_limits[1])
+    n_y = win_limits[4] - (kern$y[1] - win_limits[2])
+    #shift towards the new point by shift amount
+    return(kern %>%
+             dplyr::mutate(x = (n_x) + (x - n_x) * (1-shift),
+                           y = (n_y) + (y - n_y) * (1-shift)))
+  } else { #if(nrow(kern) <= 3)
+    #going to go with a different method for introducing a bit more randomness
+    #number of kernels is less than or equal to 5, find all intersections and sample nros
+    #perform the dirichlet boundary calculation
+    pp_obj = spatstat.geom::ppp(x = kern$x, y = kern$y, window =
+                                  spatstat.geom::owin(win_limits[1:2], win_limits[3:4]))
+    dirichlet_boundary = spatstat.geom::dirichlet(pp_obj)
+    #pull out only the boundary and vertex information
+    dirich_boundary_extract = lapply(dirichlet_boundary$tiles, function(x){
+      x$bdry[[1]]
+    })
+    #find places that are for more than 1 point (probably all)
+    dirichlet_intersect = lapply(seq(dirich_boundary_extract), function(point_num){
+      others = lapply(dirich_boundary_extract[-point_num], data.frame) %>%
+        do.call(dplyr::bind_rows, .) %>%
+        dplyr::distinct() #%>%
+      #dplyr::filter(!(x %in% c(0, 10)), !( y %in% c(0,10)))
+      point_bounds = dirich_boundary_extract[[point_num]] %>% data.frame()
+      dplyr::inner_join(point_bounds, others, by = dplyr::join_by(x, y))
+    }) %>%
+      do.call(dplyr::bind_rows, .) %>%
+      dplyr::distinct()
+    #sample them to kern rows
+    dirichlet_intersect = dirichlet_intersect[sample(seq(nrow(dirichlet_intersect)), nrow(kern)),]
+    #find nearest real points
+    distance_matrix = proxy::dist(x = kern[,1:2], y = dirichlet_intersect)
+    #get minimum distance
+    x_diff = apply(distance_matrix, 1, which.min)
+    y_diff = apply(distance_matrix, 1, which.min)
+    #calculate new spot?
+    vec_dat = kern %>%
+      dplyr::select(x, y) %>%
+      dplyr::mutate(xend = dirichlet_intersect[x_diff, "x"],
+                    yend = dirichlet_intersect[y_diff, "y"])
+    vec_dat2 = vec_dat %>%
+      dplyr::mutate(xnew = (xend) + (x - xend) * (1-shift),
+                    ynew = (yend) + (y - yend) * (1-shift))
+    kern2 = kern
+    kern2$x = vec_dat2$xnew
+    kern2$y = vec_dat2$ynew
+    return(kern2)
+  }
+  # else {
+  #   #over 5, just use the resulting non-border locations since they *should* be spread out enough
+  #   #perform the dirichlet boundary calculation
+  #   pp_obj = spatstat.geom::ppp(x = kern$x, y = kern$y, window =
+  #                                 spatstat.geom::owin(win_limits[1:2], win_limits[3:4]))
+  #   dirichlet_boundary = spatstat.geom::dirichlet(pp_obj)
+  #   #pull out only the boundary and vertex information
+  #   dirich_boundary_extract = lapply(dirichlet_boundary$tiles, function(x){
+  #     x$bdry[[1]]
+  #   })
+  #   #find places that are for more than 1 point (probably all)
+  #   dirichlet_intersect = lapply(seq(dirich_boundary_extract), function(point_num){
+  #     others = lapply(dirich_boundary_extract[-point_num], data.frame) %>%
+  #       do.call(dplyr::bind_rows, .) %>%
+  #       dplyr::distinct() %>%
+  #       dplyr::filter(!(x %in% win_limits[1:2]), !( y %in% win_limits[3:4]))
+  #     point_bounds = dirich_boundary_extract[[point_num]] %>% data.frame()
+  #     dplyr::inner_join(point_bounds, others, by = dplyr::join_by(x, y))
+  #   }) %>%
+  #     do.call(dplyr::bind_rows, .) %>%
+  #     dplyr::distinct()
+  #   #find nearest real points
+  #   distance_matrix = proxy::dist(x = kern[,1:2], y = dirichlet_intersect)
+  #   #get minimum distance
+  #   x_diff = apply(distance_matrix, 1, which.min)
+  #   y_diff = apply(distance_matrix, 1, which.min)
+  #   #calculate new spot?
+  #   vec_dat = kern %>%
+  #     dplyr::select(x, y) %>%
+  #     dplyr::mutate(xend = dirichlet_intersect[x_diff, "x"],
+  #                   yend = dirichlet_intersect[y_diff, "y"])
+  #   vec_dat2 = vec_dat %>%
+  #     dplyr::mutate(xnew = (xend) + (x - xend) * (1-shift),
+  #                   ynew = (yend) + (y - yend) * (1-shift))
+  #   kern2 = kern
+  #   kern2$x = vec_dat2$xnew
+  #   kern2$y = vec_dat2$ynew
+  #   return(kern2)
+  # }
+}

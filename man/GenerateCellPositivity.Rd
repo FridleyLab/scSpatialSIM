@@ -18,7 +18,8 @@ GenerateCellPositivity(
   density_heatmap = FALSE,
   step_size = 1,
   cores = 1,
-  correlation = 0,
+  shift = 0,
+  random = FALSE,
   overwrite = FALSE
 )
 }
@@ -49,7 +50,7 @@ GenerateCellPositivity(
 
 \item{cores}{An integer value specifying the number of cores to use for parallel computation.}
 
-\item{correlation}{A value between -1 and 1 for how related a second or more cell type is to the first}
+\item{shift}{A value between 0 and 1 for how related a second or more cell type is to the first}
 
 \item{overwrite}{boolean whether to overwrite existing cell kernels and assignments if present}
 }

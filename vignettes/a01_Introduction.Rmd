@@ -25,22 +25,22 @@ In order to understand the cell contexture of a pathology, researchers can emplo
 
 ### Simulating
 
-In order to compare metrics for describing point patterns, we have developed this simulation package: `{sc.SpatialSIM}`. The main basis of the package is using Gaussian kernels to assign different characteristics to the underlying spatial point pattern. A Gaussian kernel is described in 3 different ways in our package: kernel's center, standard deviation in the x-direction and standard deviation in the y-direction. There are *k* kernel means or centers in the point pattern which each has these descriptors. With the kernels for a spatial point pattern described and locations of points, the kernels can be used to give a probability to the points - closer to the center *k* the greater the probability for what the kernel is describing and farther away from any *k* center the lower the probability.
+In order to compare metrics for describing point patterns, we have developed this simulation package: `{scSpatialSIM}`. The main basis of the package is using Gaussian kernels to assign different characteristics to the underlying spatial point pattern. A Gaussian kernel is described in 3 different ways in our package: kernel's center, standard deviation in the x-direction and standard deviation in the y-direction. There are *k* kernel means or centers in the point pattern which each has these descriptors. With the kernels for a spatial point pattern described and locations of points, the kernels can be used to give a probability to the points - closer to the center *k* the greater the probability for what the kernel is describing and farther away from any *k* center the lower the probability.
 
 Having probabilities that range from 0 to 1 assumes kernel centers are 'hot' for the tissue/cell phenotype/hole, but in reality this is not always the case. Due to the inherent noise that we see with tissues at the cell level, we have provided the ability to limit the kernel center probability and increase the background probability. In addition to this making the simulations more realistic, this also allows for abundance control for cell phenotypes (lower max probability lower abundance).
 
-## Using `sc.SpatialSIM`
+## Using `scSpatialSIM`
 
 The process of simulating cell type data was streamlined in a similar way to what one thinks of when thinking of real data. First, an S4 `SpatSimObj` object is initialized with all the slots that are needed to proceed through the whole simulation process. Slots inside are for kernels that describe tissue, holes, cell phenotypes, the simulation window, and a tabular format of them. With the `SpatialSimulationObject()` ready, the point patterns can be simulated (these point patterns act as a 'master' for the next parts). The point pattern as it is is similar to an extracellular matrix that just has places for cells to go but no identity for the cells. Thinking more broadly, we need to create tissue regions for our images which is designated as either tissue 1 and tissue 2 (can be interpreted as tumor or stroma). Separately, cell phenotypes can be assigned to each cell. This is all done with separate kernels for each step which allows for high customization and fine tuning of the simulated samples and the spatial contexture. If parameters are changed from the initialized values, then they will be stored in the object so in the future they can be referred to again.
 
-Spatial statistics are usually interested in the amount of clustering points with a single mark type have. For example, it has been shown that [high abundance but low clustering of cytotoxic T cells is associated with better overall survival than missing cytotoxic T cells in high grade serous ovarian cancer tumors](https://doi.org/10.1371/journal.pcbi.1009900). There are also instances that colocalization of 2 difference cell types might be of interest such as T cell and B cells in tumors. With `{sc.SpatialSIM}`, we provide methods to perform both of these spatial point patterns. Input parameters dictate the layout of a first cell type. In the case where more than one cell type is wanted, a correlation value is taken which uses the same kernel as the first cell type (`correlation = 1`) for strong colocalization or inverts the first cell types kernel (`correlation = -1`) for segregation.
+Spatial statistics are usually interested in the amount of clustering points with a single mark type have. For example, it has been shown that [high abundance but low clustering of cytotoxic T cells is associated with better overall survival than missing cytotoxic T cells in high grade serous ovarian cancer tumors](https://doi.org/10.1371/journal.pcbi.1009900). There are also instances that colocalization of 2 difference cell types might be of interest such as T cell and B cells in tumors. With `{scSpatialSIM}`, we provide methods to perform both of these spatial point patterns. Input parameters dictate the layout of a first cell type. In the case where more than one cell type is wanted, a correlation value is taken which uses the same kernel as the first cell type (`correlation = 1`) for strong colocalization or inverts the first cell types kernel (`correlation = -1`) for segregation.
 
 ### Univariate Simulation
 
 In order to get started simulating cell type samples, we need to import the package.
 
 ```{r setup}
-library(sc.SpatialSIM)
+library(scSpatialSIM)
 set.seed(333) #reproducibility
 ```
 
@@ -130,7 +130,7 @@ PlotSimulation(sim_object, which = 1, what = "whole core")
 
 ### Bivariate Simulation
 
-The process for 2 or more cell types is essentially the same as for a single cell type with the addition of the `correlation` value when simulating the cell types. Lets create another `SpatSimObj` to get to the phenotype simulating step with `GenerateCellPositivity()`. A great feature of `{sc.SpatialSIM}` is that it works nicely with `{magrittr}` and the pipe function to immediately pass output from one function to the next.
+The process for 2 or more cell types is essentially the same as for a single cell type with the addition of the `correlation` value when simulating the cell types. Lets create another `SpatSimObj` to get to the phenotype simulating step with `GenerateCellPositivity()`. A great feature of `{scSpatialSIM}` is that it works nicely with `{magrittr}` and the pipe function to immediately pass output from one function to the next.
 
 ```{r}
 #set seed
