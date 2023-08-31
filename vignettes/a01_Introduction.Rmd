@@ -33,7 +33,7 @@ Having probabilities that range from 0 to 1 assumes kernel centers are 'hot' for
 
 The process of simulating cell type data was streamlined in a similar way to what one thinks of when thinking of real data. First, an S4 `SpatSimObj` object is initialized with all the slots that are needed to proceed through the whole simulation process. Slots inside are for kernels that describe tissue, holes, cell phenotypes, the simulation window, and a tabular format of them. With the `SpatialSimulationObject()` ready, the point patterns can be simulated (these point patterns act as a 'master' for the next parts). The point pattern as it is is similar to an extracellular matrix that just has places for cells to go but no identity for the cells. Thinking more broadly, we need to create tissue regions for our images which is designated as either tissue 1 and tissue 2 (can be interpreted as tumor or stroma). Separately, cell phenotypes can be assigned to each cell. This is all done with separate kernels for each step which allows for high customization and fine tuning of the simulated samples and the spatial contexture. If parameters are changed from the initialized values, then they will be stored in the object so in the future they can be referred to again.
 
-Spatial statistics are usually interested in the amount of clustering points with a single mark type have. For example, it has been shown that [high abundance but low clustering of cytotoxic T cells is associated with better overall survival than missing cytotoxic T cells in high grade serous ovarian cancer tumors](https://doi.org/10.1371/journal.pcbi.1009900). There are also instances that colocalization of 2 difference cell types might be of interest such as T cell and B cells in tumors. With `{scSpatialSIM}`, we provide methods to perform both of these spatial point patterns. Input parameters dictate the layout of a first cell type. In the case where more than one cell type is wanted, a correlation value is taken which uses the same kernel as the first cell type (`correlation = 1`) for strong colocalization or inverts the first cell types kernel (`correlation = -1`) for segregation.
+Spatial statistics are usually interested in the amount of clustering points with a single mark type have. For example, it has been shown that [high abundance but low clustering of cytotoxic T cells is associated with better overall survival than missing cytotoxic T cells in high grade serous ovarian cancer tumors](https://doi.org/10.1371/journal.pcbi.1009900). There are also instances that colocalization of 2 difference cell types might be of interest such as T cell and B cells in tumors. With `{scSpatialSIM}`, we provide methods to perform both of these spatial point patterns. Input parameters dictate the layout of a first cell type. In the case where more than one cell type is wanted, a shift value is taken which uses the same kernel as the first cell type (`shift = 0`) for strong colocalization or moved the first cell types' kernel towards Dirichlet vertices (`shift = 1`) for segregation.
 
 ### Univariate Simulation
 
@@ -108,17 +108,17 @@ Let's see how the kernels for holes look. The center of the holes have the highe
 PlotSimulation(sim_object, which = 1:8, ncol = 2, nrow = 2, what = "hole heatmap")
 ```
 
-Next thing for us to do is to simulate the positivity of cells for a phenotype using `GenerateCellPositivity()`. Just like holes and the tissue, there are boundaries which the simulated positive cells will fall in which are stored in the parameters. This is helpful for going back and seeing what was done. However here, there are 2 different parameters that help set the abundance (`probs`) and, in the case of multiple cell types, how related those cell types are (`correlation`). 
+Next thing for us to do is to simulate the positivity of cells for a phenotype using `GenerateCellPositivity()`. Just like holes and the tissue, there are boundaries which the simulated positive cells will fall in which are stored in the parameters. This is helpful for going back and seeing what was done. However here, there are 2 different parameters that help set the abundance (`probs`) and, in the case of multiple cell types, how related those cell types are (`shift`). 
 
 The `probs` parameter is used to scale the probabilities for the cell type where the first number is away from kernel peaks and the second is the maximum probability for a cell. For higher abundance, the maximum probability can be set higher and even increase the minimum probability. An issue with doing this on point patterns that have multiple cell types is that they are not entirely informed of one another when assigning cell types. B cells and T cells are distinct phenotypes and therefore one cell *shouldn't* be positive for both. What we do, is use the probability with the Bernoulli distribution so there's a chance a single cell will be positive for 2 cell types, even if the max probability is 0.1.
 
-For univariate clustering, smaller standard deviations and higher probability range will increase the amount of clustering. Large standard deviations and low probabilities will make the clustering metrics low. For univariate cell simulation, the `correlation` metric does nothing. The similarity of 2 or more cell types is controlled by the `correlation` value. A `correlation = 1` will use the same kernel used for probabilities of Cell Type 1 for the other cell types, and `correlation = -1` will invert Cell Type 1 kernel so that cells are segregated (with noise).
+For univariate clustering, smaller standard deviations and higher probability range will increase the amount of clustering. Large standard deviations and low probabilities will make the clustering metrics low. For univariate cell simulation, the `shift` metric does nothing. The similarity of 2 or more cell types is controlled by the `shift` value. A `shift = 0` will use the same kernel used for probabilities of Cell Type 1 for the other cell types, and `shift = 1` will move Cell Type 1 kernel so that cells are segregated (with noise) to Dirichlet vertices when 3 or more kernel centers are used.
 
 ```{r}
 sim_object = GenerateCellPositivity(sim_object, k = 4,
                                     sdmin = 3, sdmax = 5,
                                     density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
-                                    correlation = -1)
+                                    shift = 1)
 summary(sim_object)
 ```
 
@@ -130,7 +130,7 @@ PlotSimulation(sim_object, which = 1, what = "whole core")
 
 ### Bivariate Simulation
 
-The process for 2 or more cell types is essentially the same as for a single cell type with the addition of the `correlation` value when simulating the cell types. Lets create another `SpatSimObj` to get to the phenotype simulating step with `GenerateCellPositivity()`. A great feature of `{scSpatialSIM}` is that it works nicely with `{magrittr}` and the pipe function to immediately pass output from one function to the next.
+The process for 2 or more cell types is essentially the same as for a single cell type with the addition of the `shift` value when simulating the cell types. Lets create another `SpatSimObj` to get to the phenotype simulating step with `GenerateCellPositivity()`. A great feature of `{scSpatialSIM}` is that it works nicely with `{magrittr}` and the pipe function to immediately pass output from one function to the next.
 
 ```{r}
 #set seed
@@ -143,13 +143,13 @@ bivariate_sim = CreateSimulationObject(sims = 5, cell_types = 2) %>%
   GenerateTissue(density_heatmap = T, step_size = 0.1, cores = 1)
 ```
 
-As previously mentioned, we can specify a `correlation` values of 1 to use the same kernal for both cell types which will assign them in such a way that will be identifable as colocalized between Cell Type 1 and Cell Type 2. First, the high correlation:
+As previously mentioned, we can specify a `shift` values of 0 to use the same kernel for both cell types which will assign them in such a way that will be identifiable as colocalized between Cell Type 1 and Cell Type 2. First, the low shift:
 
 ```{r, fig.height=6, fig.width=10}
 bivariate_sim_tmp  = GenerateCellPositivity(bivariate_sim, k = 4,
                                     sdmin = 3, sdmax = 5,
                                     density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
-                                    correlation = 1)
+                                    shift = 0)
 
 PlotSimulation(bivariate_sim_tmp, which = 1, what = "whole core")
 ```
@@ -162,12 +162,12 @@ How does this compare with strong segregation between Cell Type 1 and Cell Type 
 bivariate_sim_tmp  = GenerateCellPositivity(bivariate_sim, k = 4,
                                     sdmin = 3, sdmax = 5,
                                     density_heatmap = T, step_size = 0.1, cores = 1, probs = c(0.0, 0.1),
-                                    correlation = -1)
+                                    shift = 1)
 
 PlotSimulation(bivariate_sim_tmp, which = 1, what = "whole core")
 ```
 
-In Tissue 2 it's easiser to see regions of only Cell Type 1 and regions of only Cell Type 2.
+In Tissue 2 it's easier to see regions of only Cell Type 1 and regions of only Cell Type 2.
 
 ## Exporting Data
 

@@ -55,14 +55,14 @@ GenerateCellPositivity(
 \item{overwrite}{boolean whether to overwrite existing cell kernels and assignments if present}
 }
 \value{
-Returns the original \code{sc.SpatialSIM} object with additional generated data added to each cell object.
+Returns the original \code{scSpatialSIM} object with additional generated data added to each cell object.
 }
 \description{
 Generate the probability of a cell being positive given a set of simulation parameters for each file in a SpatSimObj.
 }
 \details{
 The function generates the probability of a cell being positive given a set of simulation parameters f
-or each file in a \code{sc.SpatialSIM} object. It creates a kernel parameter list for \code{k} clusters
+or each file in a \code{scSpatialSIM} object. It creates a kernel parameter list for \code{k} clusters
 in each simulated pattern and computes the probability of each point in the grid of points within the
 window for each cell. The function also computes a density heatmap for each cell if \code{density_heatmap} is set to \code{TRUE}.
 }
