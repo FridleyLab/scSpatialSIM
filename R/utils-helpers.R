@@ -127,7 +127,7 @@ generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
 
 make_dis = function(spat, positive_mean, negative_mean, positive_sd, negative_sd){
   cells = grep("Cell", colnames(spat), value = TRUE)
-  dat = spat %>% dplyr::arrange(get(cell))
+  dat = spat %>% dplyr::arrange(get(cells))
   #ugh for loop
   for(cell_n in seq(cells)){
     cell = cells[cell_n]

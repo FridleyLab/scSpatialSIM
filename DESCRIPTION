@@ -1,6 +1,6 @@
 Package: scSpatialSIM
 Title: A point pattern simulator for spatial cellular data
-Version: 0.0.0.9000
+Version: 0.1.0.0
 Authors@R: 
     c(
       person(given = "Alex",
@@ -41,7 +41,6 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
-    tune,
     spatstat.geom,
     crayon,
     ggpubr,
@@ -49,14 +48,16 @@ Imports:
     spatstat.random,
     tidyr,
     utils,
-    methods
+    methods,
+    proxy
 Depends: 
     R (>= 4.00)
 LazyData: true
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    spatialTIME
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Config/testthat/edition: 3

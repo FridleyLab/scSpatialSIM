@@ -154,7 +154,7 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
         ggplot2::geom_point(data = df %>% dplyr::filter(`Cell Type` != 'Background'),
                             ggplot2::aes(x = x, y = y, color = `Cell Type`, shape = `Tissue Assignment`)) +
         ggplot2::theme_bw() +
-        tune::coord_obs_pred() +
+        ggplot2::coord_equal() +
         ggplot2::scale_shape_manual(values=c(3, 16)) +
         ggplot2::facet_wrap(~`Tissue Assignment`) +
         ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5)) +

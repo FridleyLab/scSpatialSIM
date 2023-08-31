@@ -16,6 +16,7 @@
 #' @param step_size A numeric value specifying the step size for the grid of points within the window.
 #' @param cores An integer value specifying the number of cores to use for parallel computation.
 #' @param shift A value between 0 and 1 for how related a second or more cell type is to the first
+#' @param random whether or not to randomly generate kernels for cells 2 or more, uf TRUE, shift is not used
 #' @param overwrite boolean whether to overwrite existing cell kernels and assignments if present
 #'
 #' @return Returns the original \code{scSpatialSIM} object with additional generated data added to each cell object.

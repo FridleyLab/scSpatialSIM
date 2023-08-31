@@ -52,6 +52,8 @@ GenerateCellPositivity(
 
 \item{shift}{A value between 0 and 1 for how related a second or more cell type is to the first}
 
+\item{random}{whether or not to randomly generate kernels for cells 2 or more, uf TRUE, shift is not used}
+
 \item{overwrite}{boolean whether to overwrite existing cell kernels and assignments if present}
 }
 \value{

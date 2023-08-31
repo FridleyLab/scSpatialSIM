@@ -1,7 +1,7 @@
 #check if cells have been simulated
 #' Generate Characteristic Distributions of Cells
 #'
-#' @param spatial_list object of either class `list` or `data.frame`. Can be created from `SpatSimObj` with \code{\link{CreateSpatialList}}
+#' @param spatial_data object of either class `list` or `data.frame`. Can be created from `SpatSimObj` with \code{\link{CreateSpatialList}}
 #' @param positive_mean,negative_mean number for mean of which to center the distribution of the positive and negative cell types.
 #' Can be single number of vector with length matching number of Cells.
 #' @param positive_sd,negative_sd number for the standard deviation around the positive cell type mean. Can be single value or same length as number of Cells.
@@ -11,14 +11,14 @@
 #'
 #' @examples
 #' #create simulation object
-#' spatial_data = CreateSimulationObject(sims = 5, cell_types = 1) %>%
+#' spatial_data = CreateSimulationObject(sims = 1, cell_types = 1) %>%
 #'   #produce the point pattern
 #'   GenerateSpatialPattern() %>%
 #'   #make tissues
-#'   GenerateTissue(density_heatmap = T, step_size = 0.1, cores = 1) %>%
+#'   GenerateTissue(density_heatmap = FALSE, step_size = 0.1, cores = 1) %>%
 #'   #create positive and negative cells
 #'   GenerateCellPositivity(k = 4, sdmin = 3, sdmax = 5,
-#'   density_heatmap = F, step_size = 1, cores = 1, probs = c(0.0, 0.1), correlation = -1) %>%
+#'   density_heatmap = FALSE, step_size = 1, cores = 1, probs = c(0.0, 0.1), shift = 0) %>%
 #'   #convert to a list of spatial data frames
 #'   CreateSpatialList(single_df = FALSE)
 #' spat_data_distribution = GenerateDistributions(spatial_data)

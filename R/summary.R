@@ -8,7 +8,7 @@
 #' @export
 summary.SpatSimObj <- function(object, ...){
   nsim = object@Sims
-  win = matrix(c(object@Window$xrange, object@Window$yrange), nrow = 2, byrow = F)
+  win = matrix(c(object@Window$xrange, object@Window$yrange), nrow = 2, byrow = FALSE)
   s_patterns = length(object@Patterns)
   t_kernels = length(object@Tissue@`Simulated Kernels`)
   h_kernels = length(object@Holes@`Simulated Kernels`)
