@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scSpatialSIM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,7 +100,7 @@ more information about everything the package can do.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; scSpatialSIM Version:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.0.0.9000</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.0.0</span></span></span>
 <span><span class="co">#&gt;             _____             _   _       _  _____ _____ __  __</span></span>
 <span><span class="co">#&gt;            / ____|           | | (_)     | |/ ____|_   _|  \/  |</span></span>
 <span><span class="co">#&gt;   ___  ___| (___  _ __   __ _| |_ _  __ _| | (___   | | | \  / |</span></span>
@@ -144,11 +144,11 @@ be split into a spatial list as well as a summary using
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Cells` `Cell 1 Assignment` `% Cell 1 Assignment`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 355                  14.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 627                  25.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 600                  24  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 644                  25.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 564                  22.7</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 351                  14.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 639                  26.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 620                  24.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 645                  25.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 567                  22.8</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="using-with-spatialtime">Using with <code>spatialTIME</code><a class="anchor" aria-label="anchor" href="#using-with-spatialtime"></a>
@@ -269,9 +269,9 @@ cores.</p>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Fraction`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1            0.968</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2            0.484</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3            0.581</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4            0.871</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2            0.355</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3            0.613</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4            0.710</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5            0.774</span></span></code></pre></div>
 </div>
 </div>

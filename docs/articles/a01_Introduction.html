@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scSpatialSIM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a>
-    <a class="dropdown-item" href="../articles/a02_Using_with%20spatialTIME.html">Using with spatialTIME</a>
+    <a class="dropdown-item" href="../articles/a02_Using_with_spatialTIME.html">Using with spatialTIME</a>
     <a class="dropdown-item" href="../articles/a03_CellAttributes.html">Adding Cell Attributes</a>
   </div>
 </li>
@@ -180,7 +180,7 @@ import the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; scSpatialSIM Version:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.0.0.9000</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.0.0</span></span></span>
 <span><span class="co">#&gt;             _____             _   _       _  _____ _____ __  __</span></span>
 <span><span class="co">#&gt;            / ____|           | | (_)     | |/ ____|_   _|  \/  |</span></span>
 <span><span class="co">#&gt;   ___  ___| (___  _ __   __ _| |_ _  __ _| | (___   | | | \  / |</span></span>
@@ -468,7 +468,7 @@ cell types.</p>
 <span><span class="co">#&gt; 2 0.2011937 2.748664          Tissue 2                 0                 0</span></span>
 <span><span class="co">#&gt; 3 7.2355739 6.800332          Tissue 2                 0                 0</span></span>
 <span><span class="co">#&gt; 4 6.0939363 6.601037          Tissue 2                 0                 0</span></span>
-<span><span class="co">#&gt; 5 3.0671935 2.480361          Tissue 1                 0                 0</span></span>
+<span><span class="co">#&gt; 5 3.0671935 2.480361          Tissue 2                 0                 0</span></span>
 <span><span class="co">#&gt; 6 0.6350984 1.242892          Tissue 1                 0                 0</span></span></code></pre></div>
 <p>Alternatively, there is the ability with
 <code><a href="../reference/CreateSpatialList.html">CreateSpatialList()</a></code> to export all of the spatial pattern
@@ -485,7 +485,7 @@ level counts for the different cell types.</p>
 <span><span class="co">#&gt; 2 Spatial Data 1 0.2011937 2.748664          Tissue 2                 0</span></span>
 <span><span class="co">#&gt; 3 Spatial Data 1 7.2355739 6.800332          Tissue 2                 0</span></span>
 <span><span class="co">#&gt; 4 Spatial Data 1 6.0939363 6.601037          Tissue 2                 0</span></span>
-<span><span class="co">#&gt; 5 Spatial Data 1 3.0671935 2.480361          Tissue 1                 0</span></span>
+<span><span class="co">#&gt; 5 Spatial Data 1 3.0671935 2.480361          Tissue 2                 0</span></span>
 <span><span class="co">#&gt; 6 Spatial Data 1 0.6350984 1.242892          Tissue 1                 0</span></span>
 <span><span class="co">#&gt;   Cell 2 Assignment</span></span>
 <span><span class="co">#&gt; 1                 0</span></span>
@@ -500,11 +500,11 @@ level counts for the different cell types.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Cells` `Cell 1 Assignment` `Cell 2 Assignment`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 129                 130</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 147                 136</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 143                 101</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 148                 108</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 130                  91</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 151                 150</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 152                 143</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 137                 125</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 134                 123</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 142                  71</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: `% Cell 1 Assignment` &lt;dbl&gt;, `% Cell 2 Assignment` &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>The spatial list and summary table can now be used with packages like
 <a href="https://github.com/FridleyLab/spatialTIME" class="external-link">spatialTIME</a> to compute spatial statistics on all of the

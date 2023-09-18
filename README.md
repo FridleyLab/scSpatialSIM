@@ -1,10 +1,10 @@
-# sc.SpatialSIM
+# scSpatialSIM
 
 A point pattern simulator R package for spatial cellular data
 
-# Installing sc.SpatialSIM to RStudio
+# Installing scSpatialSIM to RStudio
 
-To install `sc.SpatialSIM`, it is required to have `devtools` or `remotes` installed for their `install_github()` function:
+To install `scSpatialSIM`, it is required to have `devtools` or `remotes` installed for their `install_github()` function:
 
 ```
 if (!require("devtools", quietly = TRUE))
