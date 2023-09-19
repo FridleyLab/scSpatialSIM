@@ -10,7 +10,7 @@
 \item{x}{of class \code{SpatSimObj}}
 
 \item{...}{other things to pass to the plot method for SpatSimObj including \code{nrow}, \code{ncol} for the number of rows and columns of plots,
-\code{which} processes to plot, and \code{what} which currently only works with "Processes" but may be updated in the future}
+\code{which} pattern to plot, and \code{what} which currently only works with "Processes" but may be updated in the future}
 }
 \description{
 plot function for SpatSimObj

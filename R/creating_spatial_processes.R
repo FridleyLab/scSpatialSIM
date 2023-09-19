@@ -72,7 +72,8 @@ GenerateSpatialPattern = function(sim_object, lambda = 25, ..., overwrite = FALS
     })
   } else {
     spatial_dfs = lapply(seq(sims), function(hld){
-      spatstat.random::rpoispp(lambda, win = window, nsim = 1, ...)
+      spatstat.random::rpoispp(lambda, win = window, nsim = 1, ...) %>%
+        data.frame()
     })
   }
 

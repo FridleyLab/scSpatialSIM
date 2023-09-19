@@ -27,27 +27,39 @@ summary.SpatSimObj <- function(object, ...){
 #'
 #' @param x of class `SpatSimObj`
 #' @param ... other things to pass to the plot method for SpatSimObj including `nrow`, `ncol` for the number of rows and columns of plots,
-#' `which` processes to plot, and `what` which currently only works with "Processes" but may be updated in the future
+#' `which` pattern to plot, and `what` which currently only works with "Processes" but may be updated in the future
 #'
 #' @method plot SpatSimObj
 #'
 #'
 #' @export
 plot.SpatSimObj <- function(x, ...){ #
-  if(!exists("what")) what = "Patterns"
-  if(methods::is(nrow, "function")) nrow = 1
-  if(methods::is(ncol, "function")) ncol = 1
-  if(methods::is(which, "function")) which = 1
+  params = as.list(substitute(list(...)))
+  if(!("ncol" %in% names(params))) params$ncol = 1
+  if(!("nrow" %in% names(params))) params$ncol = 1
+  if(!("which" %in% names(params))) params$ncol = 1
+  params$what = "Patterns"
 
-  if(what == "Patterns"){
-    if(length(which) == 1){
-      plot(x@Patterns[[which]], main = which)
+  require(ggplot2)
 
+  basic_plot = function(x, p){
+    x@Patterns[[p]] %>%
+      ggplot() +
+      geom_point(aes(x = x, y = y)) +
+      labs(title = p) +
+      coord_equal() +
+      theme(plot.title = element_text(hjust = 0.5))
+  }
+
+  if(params$what == "Patterns"){#
+    if(length(params$which) == 1){
+      basic_plot(x, 1)
     } else {
-      graphics::par(mfrow = c(nrow, ncol))
-      hld = lapply(which, function(i){
-        plot(x@Patterns[[i]], main = i)
+      hld = lapply(eval(params$which), function(i){
+        #print(i)
+        basic_plot(x, i)
       })
+      ggpubr::ggarrange(plotlist = hld, ncol = params$ncol, nrow = params$nrow)
     }
   } else {
     cat("please be patient while method is being updated")
