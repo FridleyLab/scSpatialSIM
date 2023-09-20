@@ -1,30 +1,3 @@
-# ppp_to_spatial = function(ppp_list, phenotype_names){
-#   simulated_cell_positive = lapply(names(ppp_list), function(core){
-#     #convert ppp into long formatted dataframe
-#     whole_core = data.frame(x = ppp_list[[core]]$x,
-#                             y = ppp_list[[core]]$y,
-#                             marks = ppp_list[[core]]$marks) %>%
-#       dplyr::mutate(label = "Tumor",
-#                     pos = 1) %>%
-#       tidyr::spread(key = marks, value = pos) %>%
-#       dplyr::mutate(background_pos = 1) %>%
-#       dplyr::mutate_at(.vars = grep(paste0(phenotype_names,collapse = "|"), colnames(.), value = T), .funs = ~ ifelse(is.na(.x), 0, 1)) %>%
-#       dplyr::mutate(dplyr::across(grep(paste0(phenotype_names, collapse = "|"), colnames(.), value = T),
-#                                   list(intensity = function(x){
-#                                     ifelse(x == 1,
-#                                            rnorm(dplyr::n(), 10, 2),
-#                                            rnorm(dplyr::n(), 3, 1))
-#                                   }),
-#                                   .names = "{gsub('pos', 'intensity', {col}, fixed = TRUE)}"))
-#
-#     #spread_wide
-#     return(whole_core)
-#   })
-#
-#   names(simulated_cell_positive) = names(ppp_list)
-#   return(simulated_cell_positive)
-# }
-
 #kernal for generating distributions around random points for k centers
 gaussian_kernel = function(k = 10, xmin = 0, xmax = 10, ymin = 0, ymax = 10, sdmin = 1/2, sdmax = 2){
   #simulate centers centers of groups
@@ -114,11 +87,22 @@ replace_na <- function(x, y) {
 
 generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
   vals <- numeric(num_vals)
+  #cat("running\n")
+  cn = 1
   while (TRUE) {
     vals <- stats::runif(num_vals, min_val, max_val)
     if (sum(vals) < sum_val) {
       break
     }
+    #have to slowly slowly decrease the threshold otherwise samples get into a situation where,
+    #for example, trying to randomly generate 3 numbers between 0.1 and 0.35, that add up to 0.3
+    #and unles the numbers are identical it'll never achieve it
+    if(cn == 10000){
+      #cat("tick\n")
+      min_val = min_val - (min_val * 0.1)
+      cn = 1
+    }
+    cn = cn + 1
   }
   dif = sum_val - sum(vals)
   vals[1] = vals[1] + dif
