@@ -40,15 +40,13 @@ plot.SpatSimObj <- function(x, ...){ #
   if(!("which" %in% names(params))) params$ncol = 1
   params$what = "Patterns"
 
-  require(ggplot2)
-
   basic_plot = function(x, p){
     x@Patterns[[p]] %>%
-      ggplot() +
-      geom_point(aes(x = x, y = y)) +
-      labs(title = p) +
-      coord_equal() +
-      theme(plot.title = element_text(hjust = 0.5))
+      ggplot2::ggplot() +
+      ggplot2::geom_point(ggplot2::aes(x = x, y = y)) +
+      ggplot2::labs(title = p) +
+      ggplot2::coord_equal() +
+      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
   }
 
   if(params$what == "Patterns"){#
