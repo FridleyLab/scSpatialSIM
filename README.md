@@ -15,8 +15,8 @@ devtools::install_github("FridleyLab/scSpatialSIM@v0.1.1.0")
 
 # Vignettes
 
-If you are interested in documentation and tutorials, please visit: https://fridleylab.github.io/mIFsim/index.html 
+If you are interested in documentation and tutorials, please visit: https://fridleylab.github.io/scSpatialSIM/index.html 
 
 # GitHub Repository
 
-For source code, can click the GitHub icon in the upper right corner of the `pkgdown` site or follow this link: https://github.com/FridleyLab/mIFsim/
+For source code, can click the GitHub icon in the upper right corner of the `pkgdown` site or follow this link: https://github.com/FridleyLab/scSpatialSIM/
