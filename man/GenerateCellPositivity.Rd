@@ -20,7 +20,8 @@ GenerateCellPositivity(
   cores = 1,
   shift = 0,
   random = FALSE,
-  overwrite = FALSE
+  overwrite = FALSE,
+  use_window = FALSE
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ GenerateCellPositivity(
 \item{random}{whether or not to randomly generate kernels for cells 2 or more, uf TRUE, shift is not used}
 
 \item{overwrite}{boolean whether to overwrite existing cell kernels and assignments if present}
+
+\item{use_window}{boolean whether to use the simulation window to set x and y limits}
 }
 \value{
 Returns the original \code{scSpatialSIM} object with additional generated data added to each cell object.

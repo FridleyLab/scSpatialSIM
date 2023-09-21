@@ -18,6 +18,7 @@
 #' @param shift A value between 0 and 1 for how related a second or more cell type is to the first
 #' @param random whether or not to randomly generate kernels for cells 2 or more, uf TRUE, shift is not used
 #' @param overwrite boolean whether to overwrite existing cell kernels and assignments if present
+#' @param use_window boolean whether to use the simulation window to set x and y limits
 #'
 #' @return Returns the original \code{scSpatialSIM} object with additional generated data added to each cell object.
 #'
@@ -33,7 +34,8 @@ GenerateCellPositivity = function(sim_object, k = NA,
                           sdmin = 1/2, sdmax = 2, probs = c(0, 1),
                           Force = FALSE,
                           density_heatmap = FALSE, step_size = 1, cores = 1,
-                          shift = 0, random = FALSE, overwrite = FALSE){
+                          shift = 0, random = FALSE, overwrite = FALSE,
+                          use_window = FALSE){
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
 
@@ -59,6 +61,14 @@ GenerateCellPositivity = function(sim_object, k = NA,
     })
     #letting know finished
     message("Reset...Continuing.")
+  }
+
+  #check if using window is TRUE
+  if(use_window){
+    xmin = sim_object@Window$xrange[1]
+    xmax = sim_object@Window$xrange[2]
+    ymin = sim_object@Window$yrange[1]
+    ymax = sim_object@Window$yrange[2]
   }
 
   #create parameter vector

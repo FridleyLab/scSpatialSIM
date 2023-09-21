@@ -22,6 +22,7 @@
 #' @param step_size The step size for the grid (default: 1)
 #' @param cores The number of cores to use for parallel processing (default: 1)
 #' @param overwrite boolean to replace holes if they have been simulated previously
+#' @param use_window boolean whether to use the simulation window to set x and y limits
 #'
 #' @details The function first checks that the input object is of the correct class,
 #' and that no parameters are NULL. If any parameters are NULL, the function stops
@@ -53,7 +54,8 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
                          sdmin = 1/2, sdmax = 2,
                          hole_prob = c(0.2, 0.35),
                          force = FALSE,
-                         density_heatmap = FALSE, step_size = 1, cores = 1, overwrite = FALSE){
+                         density_heatmap = FALSE, step_size = 1, cores = 1, overwrite = FALSE,
+                         use_window = FALSE){
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(xmin, xmax, ymin, ymax, sdmin, sdmax, hole_prob)))) stop("Cannot have `NULL` parameters")
 
@@ -81,6 +83,13 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
     message("Reset...Continuing.")
   }
 
+  #check if using window is TRUE
+  if(use_window){
+    xmin = sim_object@Window$xrange[1]
+    xmax = sim_object@Window$xrange[2]
+    ymin = sim_object@Window$yrange[1]
+    ymax = sim_object@Window$yrange[2]
+  }
 
   #create parameter vector
   params = list(xmin = xmin, xmax = xmax,

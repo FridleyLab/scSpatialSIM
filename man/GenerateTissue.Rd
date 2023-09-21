@@ -17,7 +17,8 @@ GenerateTissue(
   density_heatmap = FALSE,
   step_size = 1,
   cores = 1,
-  overwrite = FALSE
+  overwrite = FALSE,
+  use_window = FALSE
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ probability.}
 calculations.}
 
 \item{overwrite}{boolean whether to overwrite if tissue kernels already exist}
+
+\item{use_window}{boolean whether to use the simulation window to set x and y limits}
 }
 \value{
 A modified 'Spatial Simulation Object' with updated tissue grids and
