@@ -3,7 +3,7 @@
 #' This function creates a \code{SpatSimObj} for
 #' spatial simulations. The object contains information about the
 #' simulation window, the number of simulations to perform, and
-#' lists of cells, tumor/stroma, holes, and spatial files.
+#' lists of cells, Tissue1/Tissue2, holes, and spatial files.
 #'
 #' @details
 #'
@@ -28,7 +28,7 @@
 #'  \item A \code{Window} object of class \code{owin}.
 #'  \item An integer \code{Sims} specifying the number of simulations to perform.
 #'  \item A list of \code{Cells} of class \code{Cell}.
-#'  \item A \code{Tissue} object of class \code{Tumor/Stroma}, representing the tumor and stroma components of the simulation.
+#'  \item A \code{Tissue} object of class \code{Tissue1/Tissue2}, representing the Tissue1/Tissue2 components of the simulation.
 #'  \item A \code{Holes} object of class \code{Holes}, representing holes in the simulation.
 #'  \item A list of \code{Spatial Files} containing any spatial data associated with the simulation.
 #' }
@@ -42,7 +42,7 @@
 #'
 #' @return A \code{SpatSimObj} containing the simulation
 #' window, the number of simulations to perform, and lists of cells,
-#' tumor/stroma, holes, and spatial files.
+#' Tissue1/Tissue2, holes, and spatial files.
 #'
 #' @export
 #'
@@ -83,7 +83,7 @@ prototype = list(
   Patterns = list()
 ))
 
-setClass("Tumor/Stroma", slots = list(
+setClass("Tissue1/Tissue2", slots = list(
   Parameters = "list",
   `Simulated Kernels` = "list",
   `Density Grids` = "list"
@@ -127,7 +127,7 @@ setClass("SpatSimObj", slots = list(
   Window = "owin",
   Sims = "numeric",
   Patterns = "list",
-  `Tissue` = "Tumor/Stroma",
+  `Tissue` = "Tissue1/Tissue2",
   Holes = "Holes",
   Cells = "list",
   `Spatial Files` = "list"

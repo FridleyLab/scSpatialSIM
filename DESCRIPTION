@@ -1,6 +1,6 @@
 Package: scSpatialSIM
 Title: A point pattern simulator for spatial cellular data
-Version: 0.1.1.0
+Version: 0.1.2.0
 Authors@R: 
     c(
       person(given = "Alex",
@@ -12,6 +12,11 @@ Authors@R:
              family =  "Wilson", 
              email = "", 
              role = c("aut"),  
+             comment = c(ORCID = "")),
+      person(given = "Jordan",
+             family = "Creed",
+             email = "jordan.creed@moffitt.org",
+             role = c("aut"),
              comment = c(ORCID = "")),
       person(given = "Julia", 
              family = "Wrobel", 

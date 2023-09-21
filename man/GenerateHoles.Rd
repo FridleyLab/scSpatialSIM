@@ -17,7 +17,8 @@ GenerateHoles(
   density_heatmap = FALSE,
   step_size = 1,
   cores = 1,
-  overwrite = FALSE
+  overwrite = FALSE,
+  use_window = FALSE
 )
 }
 \arguments{
@@ -48,6 +49,8 @@ boundaries (default: FALSE)}
 \item{cores}{The number of cores to use for parallel processing (default: 1)}
 
 \item{overwrite}{boolean to replace holes if they have been simulated previously}
+
+\item{use_window}{boolean whether to use the simulation window to set x and y limits}
 }
 \value{
 A modified spatial simulation object with holes added

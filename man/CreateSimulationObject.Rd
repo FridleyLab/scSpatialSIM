@@ -19,13 +19,13 @@ ess than 1, defaults to 3.}
 \value{
 A \code{SpatSimObj} containing the simulation
 window, the number of simulations to perform, and lists of cells,
-tumor/stroma, holes, and spatial files.
+Tissue1/Tissue2, holes, and spatial files.
 }
 \description{
 This function creates a \code{SpatSimObj} for
 spatial simulations. The object contains information about the
 simulation window, the number of simulations to perform, and
-lists of cells, tumor/stroma, holes, and spatial files.
+lists of cells, Tissue1/Tissue2, holes, and spatial files.
 }
 \details{
 The simulation window is represented by an object of class
@@ -49,7 +49,7 @@ The \code{SpatSimObj} is composed of the following classes:
 \item A \code{Window} object of class \code{owin}.
 \item An integer \code{Sims} specifying the number of simulations to perform.
 \item A list of \code{Cells} of class \code{Cell}.
-\item A \code{Tissue} object of class \code{Tumor/Stroma}, representing the tumor and stroma components of the simulation.
+\item A \code{Tissue} object of class \code{Tissue1/Tissue2}, representing the Tissue1/Tissue2 components of the simulation.
 \item A \code{Holes} object of class \code{Holes}, representing holes in the simulation.
 \item A list of \code{Spatial Files} containing any spatial data associated with the simulation.
 }
