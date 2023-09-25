@@ -37,9 +37,19 @@
 PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tissue heatmap"){
   #require(ggplot2)
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
+  if(what == "tissue heatmap" &
+     !(which %in% seq(sim_object@Tissue@`Density Grids`))) stop("`which` not in Tissue Density Grids")
+  if(what == "tissue points" &
+     !(which %in% seq(sim_object@`Spatial Files`)) &
+     (TRUE %in% grepl("Tissue", colnames(test_obj@`Spatial Files`[[1]])))) stop("`which` not in Spatial Files or Tissue not simulated")
+
+  if(what == "hole heatmap" &
+     !(which %in% seq(sim_object@Tissue@`Density Grids`))) stop("`which` not in Tissue Density Grids")
+  if(what == "hole points" &
+     !(which %in% seq(sim_object@`Spatial Files`)) &
+     (TRUE %in% grepl("Hole", colnames(test_obj@`Spatial Files`[[1]])))) stop("`which` not in Spatial Files or Holes not simulated")
 
   if(what == "tissue heatmap"){
-    if(!(which %in% seq(sim_object@Tissue@`Density Grids`))) stop("`which` not in Tissue Density Grids")
     if(length(which) == 1){
       density_plot(sim_object@Tissue@`Density Grids`[[which]]) +
         ggplot2::labs(title = which)
@@ -51,7 +61,6 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
     }
   } else if(what == "hole heatmap"){
-    if(!(which %in% seq(sim_object@Tissue@`Density Grids`))) stop("`which` not in Tissue Density Grids")
     if(length(which) == 1){
       density_plot(sim_object@Holes@`Density Grids`[[which]]) +
         ggplot2::labs(title = which)
