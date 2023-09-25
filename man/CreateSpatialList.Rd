@@ -4,12 +4,14 @@
 \alias{CreateSpatialList}
 \title{Get Spatial Files from a \code{SpatSimObj}}
 \usage{
-CreateSpatialList(sim_object, single_df = FALSE)
+CreateSpatialList(sim_object, single_df = FALSE, multihit_action = "random")
 }
 \arguments{
 \item{sim_object}{A \code{SpatSimObj}}
 
 \item{single_df}{boolean as to whether to collapse the output list of data frames to a single data frame or not. default is \code{FALSE}}
+
+\item{multihit_action}{string of value 'random', 'drop', or 'keep' for cells that are positive for multiple cell assignments}
 }
 \value{
 A list of data frames, one for each simulated cell type, with cleaned columns
