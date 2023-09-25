@@ -48,16 +48,16 @@ CalculateDensity = function(sim_object, steps = NULL, which = "all", step_size =
       message(step)
       #make empty class
       if(step == "Tissue"){
-        cl = new("Tissue1/Tissue2")
+        cl = methods::new("Tissue1/Tissue2")
       } else {
-        cl = new("Holes")
+        cl = methods::new("Holes")
       }
       #get the slot data
       s = methods::slot(sim_object, step)
       if(length(s@`Simulated Kernels`) == 0 ){
         #let user know that these haven't been used for any simulation step yet
         message(paste0("\t", step, " has not yet been simulated"))
-        next
+        NA
       }
       #make new
       cl@Parameters = s@Parameters
@@ -80,7 +80,7 @@ CalculateDensity = function(sim_object, steps = NULL, which = "all", step_size =
       message(step)
       for(cell in seq(sim_object@Cells)){
         #make new cell class object
-        cl = new("Cell")
+        cl = methods::new("Cell")
         s = methods::slot(sim_object, step)[[cell]]
         #fill in with existing parameters
         cl@Parameters = s@Parameters
