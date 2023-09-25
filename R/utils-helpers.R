@@ -176,43 +176,36 @@ gaussian_kernel_shift = function(kern, shift, win_limits){
     kern2$y = vec_dat2$ynew
     return(kern2)
   }
-  # else {
-  #   #over 5, just use the resulting non-border locations since they *should* be spread out enough
-  #   #perform the dirichlet boundary calculation
-  #   pp_obj = spatstat.geom::ppp(x = kern$x, y = kern$y, window =
-  #                                 spatstat.geom::owin(win_limits[1:2], win_limits[3:4]))
-  #   dirichlet_boundary = spatstat.geom::dirichlet(pp_obj)
-  #   #pull out only the boundary and vertex information
-  #   dirich_boundary_extract = lapply(dirichlet_boundary$tiles, function(x){
-  #     x$bdry[[1]]
-  #   })
-  #   #find places that are for more than 1 point (probably all)
-  #   dirichlet_intersect = lapply(seq(dirich_boundary_extract), function(point_num){
-  #     others = lapply(dirich_boundary_extract[-point_num], data.frame) %>%
-  #       do.call(dplyr::bind_rows, .) %>%
-  #       dplyr::distinct() %>%
-  #       dplyr::filter(!(x %in% win_limits[1:2]), !( y %in% win_limits[3:4]))
-  #     point_bounds = dirich_boundary_extract[[point_num]] %>% data.frame()
-  #     dplyr::inner_join(point_bounds, others, by = dplyr::join_by(x, y))
-  #   }) %>%
-  #     do.call(dplyr::bind_rows, .) %>%
-  #     dplyr::distinct()
-  #   #find nearest real points
-  #   distance_matrix = proxy::dist(x = kern[,1:2], y = dirichlet_intersect)
-  #   #get minimum distance
-  #   x_diff = apply(distance_matrix, 1, which.min)
-  #   y_diff = apply(distance_matrix, 1, which.min)
-  #   #calculate new spot?
-  #   vec_dat = kern %>%
-  #     dplyr::select(x, y) %>%
-  #     dplyr::mutate(xend = dirichlet_intersect[x_diff, "x"],
-  #                   yend = dirichlet_intersect[y_diff, "y"])
-  #   vec_dat2 = vec_dat %>%
-  #     dplyr::mutate(xnew = (xend) + (x - xend) * (1-shift),
-  #                   ynew = (yend) + (y - yend) * (1-shift))
-  #   kern2 = kern
-  #   kern2$x = vec_dat2$xnew
-  #   kern2$y = vec_dat2$ynew
-  #   return(kern2)
-  # }
+}
+
+`%notin%` <- Negate(`%in%`)
+
+
+
+#assign positivity to one cell assignment column if the cell is positive for more than 1
+multihit_random = function(df, assignment_cols){
+  df1 = df[,assignment_cols]
+  df2 = df[,setdiff(colnames(df), assignment_cols)]
+
+  new_cols = apply(df1, 1, function(r){
+    #have to dynamically identify multihits
+    if(sum(r == 1) > 1){
+      #get how many are 1
+      pos = r == 1
+      #randomly select from number of positives
+      nval = sample(c(1, rep(0, sum(pos) - 1)), 2, replace = F)
+      #replace positives with only one being positive
+      #should avoid assigning positive ot a cell that was originally negative
+      r[pos] = nval
+    }
+    return(r)
+  }) %>% t() %>% data.frame()
+  colnames(new_cols) = colnames(df1)
+  return(dplyr::bind_cols(df2, new_cols))
+}
+
+#drop cells that are multi-hits
+multihit_drop = function(df, assignment_cols){
+  #filter all cells with more than 1 cell type assignment
+  df[!rowSums(df[,assignment_cols])>1,]
 }

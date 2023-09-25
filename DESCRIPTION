@@ -1,6 +1,6 @@
 Package: scSpatialSIM
 Title: A point pattern simulator for spatial cellular data
-Version: 0.1.2.0
+Version: 0.1.3.0
 Authors@R: 
     c(
       person(given = "Alex",

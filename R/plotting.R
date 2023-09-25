@@ -37,35 +37,19 @@
 PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tissue heatmap"){
   #require(ggplot2)
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
-  density_plot = function(dat){
-    dat %>%
-      ggplot2::ggplot() +
-      ggplot2::geom_contour_filled(ggplot2::aes(x = x, y = y, z = 100*prob)) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5)) +
-      ggplot2::guides(fill=ggplot2::guide_legend(title="Probability\nSurface"))
-  }
-  tissue_point_plot = function(dat){
-    dat %>%
-      ggplot2::ggplot() +
-      ggplot2::geom_point(ggplot2::aes(x = x, y = y, shape = `Tissue Assignment`)) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
-  }
-  hole_point_plot = function(dat){
-    dat %>%
-      ggplot2::ggplot() +
-      ggplot2::geom_point(ggplot2::aes(x = x, y = y, alpha = `Hole Assignment`)) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
-  }
-  tissue_hole_point_plot = function(dat){
-    dat %>%
-      ggplot2::ggplot() +
-      ggplot2::geom_point(ggplot2::aes(x = x, y = y, shape = `Tissue Assignment`, alpha = `Hole Assignment`)) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
-  }
+
+  if(what == "tissue heatmap" &
+     sum(!(which %in% seq(sim_object@Tissue@`Density Grids`)))>0) stop("`which` not in Tissue Density Grids")
+  if(what == "tissue points" &
+     sum(!(which %in% seq(sim_object@`Spatial Files`))>0) &
+     (TRUE %in% grepl("Tissue", colnames(sim_object@`Spatial Files`[[1]])))) stop("`which` not in Spatial Files or Tissue not simulated")
+
+  if(what == "hole heatmap" &
+     sum(!(which %in% seq(sim_object@Tissue@`Density Grids`)))>0) stop("`which` not in Tissue Density Grids")
+  if(what == "hole points" &
+     sum(!(which %in% seq(sim_object@`Spatial Files`))>0) &
+     (TRUE %in% grepl("Hole", colnames(sim_object@`Spatial Files`[[1]])))) stop("`which` not in Spatial Files or Holes not simulated")
+
   if(what == "tissue heatmap"){
     if(length(which) == 1){
       density_plot(sim_object@Tissue@`Density Grids`[[which]]) +
@@ -78,7 +62,6 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       ggpubr::ggarrange(plotlist = p, ncol = ncol, nrow = nrow, common.legend = TRUE)
     }
   } else if(what == "hole heatmap"){
-    if(length(sim_object@Holes@`Simulated Kernels`) == 0) stop("Holes have not been simulated")
     if(length(which) == 1){
       density_plot(sim_object@Holes@`Density Grids`[[which]]) +
         ggplot2::labs(title = which)
@@ -165,4 +148,35 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
   } else {
     cat("please be patient while method is being updated")
   }
+}
+
+#helpers
+density_plot = function(dat){
+  dat %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_contour_filled(ggplot2::aes(x = x, y = y, z = 100*prob)) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5)) +
+    ggplot2::guides(fill=ggplot2::guide_legend(title="Probability\nSurface"))
+}
+tissue_point_plot = function(dat){
+  dat %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(ggplot2::aes(x = x, y = y, shape = `Tissue Assignment`)) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+}
+hole_point_plot = function(dat){
+  dat %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(ggplot2::aes(x = x, y = y, alpha = `Hole Assignment`)) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+}
+tissue_hole_point_plot = function(dat){
+  dat %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(ggplot2::aes(x = x, y = y, shape = `Tissue Assignment`, alpha = `Hole Assignment`)) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 }
