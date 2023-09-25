@@ -41,7 +41,8 @@ GenerateCellPositivity(
 
 \item{sdmax}{A numeric value specifying the maximum standard deviation for the kernel.}
 
-\item{probs}{A numeric vector of length 2 specifying the minimum and maximum probability values for scaling the kernel values.}
+\item{probs}{Either a vector of c(low probability, high probability) for all cell types or data frame where each row
+is the low and high probabilities for the cell type. If data frame, number of rows must equal number of cells}
 
 \item{Force}{A logical value indicating whether to force simulation parameters to be within the simulation window limits.}
 
