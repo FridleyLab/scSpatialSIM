@@ -10,7 +10,8 @@
 #' @param ymax A numeric value specifying the maximum y value for the kernel.
 #' @param sdmin A numeric value specifying the minimum standard deviation for the kernel.
 #' @param sdmax A numeric value specifying the maximum standard deviation for the kernel.
-#' @param probs A numeric vector of length 2 specifying the minimum and maximum probability values for scaling the kernel values.
+#' @param probs Either a vector of c(low probability, high probability) for all cell types or data frame where each row
+#' is the low and high probabilities for the cell type. If data frame, number of rows must equal number of cells
 #' @param Force A logical value indicating whether to force simulation parameters to be within the simulation window limits.
 #' @param density_heatmap A logical value indicating whether to compute a density heatmap for each cell.
 #' @param step_size A numeric value specifying the step size for the grid of points within the window.
@@ -40,6 +41,10 @@ GenerateCellPositivity = function(sim_object, k = NA,
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
 
   if(!is.empty(sim_object@Cells[[1]], "Simulated Kernels") & overwrite == FALSE) stop("Already have cell kernels and `overwrite == FALSE`")
+
+  ncells = length(sim_object@Cells)
+  if(methods::is(probs, "data.frame"))
+    if(nrow(probs) != ncells) stop("`probs` should either be data.frame with nrow length of Cells or a vector of length 2")
   if(!is.empty(sim_object@Cells[[1]], "Simulated Kernels") & overwrite == TRUE){
     message("Overwriting existing cell kernels")
     # #tissue
@@ -72,16 +77,25 @@ GenerateCellPositivity = function(sim_object, k = NA,
   }
 
   #create parameter vector
-  params = list(k = k,
-             xmin = xmin, xmax = xmax,
-             ymin = ymin, ymax = ymax,
-             sdmin = sdmin, sdmax = sdmax,
-             probs = probs)
-  ncells = length(sim_object@Cells)
+  if(methods::is(probs, "vector")){
+    probs2 = data.frame(matrix(rep(probs, ncells), nrow = ncells, byrow = TRUE)) %>% stats::setNames(c("Low", "High"))
+  } else {
+    probs2 = probs
+  }
+
+  params_overall = list(k = k,
+                        xmin = xmin, xmax = xmax,
+                        ymin = ymin, ymax = ymax,
+                        sdmin = sdmin, sdmax = sdmax,
+                        probs = probs2)
+
   #make sure that the shift is in bounds
   if((shift < 0 | shift > 1) & ncells > 1) stop("supply an appropriate shift")
   #dummy variable to prevent console printing
   dmb = lapply(seq(ncells), function(cell){
+    #subset the params to the specific cells parameters
+    params = params_overall
+    params$probs = params$probs[cell,] %>% as.numeric()
     #if no parameters are input then use the initialized
     params = mapply(replace_na, sim_object@Cells[[cell]]@Parameters, params, SIMPLIFY = FALSE)
     #add updated parameters to the object cell

@@ -157,7 +157,13 @@ gaussian_kernel_shift = function(kern, shift, win_limits){
       do.call(dplyr::bind_rows, .) %>%
       dplyr::distinct()
     #sample them to kern rows
-    dirichlet_intersect = dirichlet_intersect[sample(seq(nrow(dirichlet_intersect)), nrow(kern)),]
+    repl = ifelse(nrow(dirichlet_intersect) < nrow(kern), TRUE, FALSE)
+    if(repl){
+      warning("kernel has more rows than the Dirishlet Intersections")
+      print(kern)
+    }
+    dirichlet_intersect = dirichlet_intersect[sample(seq(nrow(dirichlet_intersect)), nrow(kern),
+                                                     replace = ifelse(nrow(dirichlet_intersect) < nrow(kern), TRUE, FALSE)),]
     #find nearest real points
     distance_matrix = proxy::dist(x = kern[,1:2], y = dirichlet_intersect)
     #get minimum distance
