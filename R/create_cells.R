@@ -145,12 +145,12 @@ GenerateCellPositivity = function(sim_object, k = NA,
         sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[cell]]@`Simulated Kernels`, function(gauss_tab){
           cbind(grid,
                 prob = CalculateGrid(grid, gauss_tab, cores = cores))
-        })
+        }, mc.cores = 1)
       } else {
         message(paste0("Copying density heatmap for Cell ", cell))
         sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[1]]@`Density Grids`, function(grid_tab){
           return(grid_tab)
-        })
+        }, mc.cores = 1)
       }
 
 
@@ -182,7 +182,7 @@ GenerateCellPositivity = function(sim_object, k = NA,
 
       return(cbind(sim_object@`Spatial Files`[[spat_num]],
                    df))
-    })
+    }, mc.cores = 1)
   })
 
   return(sim_object)
