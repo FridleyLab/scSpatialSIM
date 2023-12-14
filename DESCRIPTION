@@ -1,6 +1,6 @@
 Package: scSpatialSIM
-Title: A point pattern simulator for spatial cellular data
-Version: 0.1.3.1
+Title: A Point Pattern Simulator for Spatial Cellular Data
+Version: 0.1.3.3
 Authors@R: 
     c(
       person(given = "Alex",
@@ -31,14 +31,14 @@ Authors@R:
       person(given = "Brooke", 
              family = "Fridley", 
              email = "brooke.fridley.moffitt.org", 
-             role = c("aut"), 
+             role = c("cph"), 
              comment = c(ORCID = "")),
       person(given = "Fridley",
              family = "Lab", 
              email = "fridley.lab@moffitt.org",
              role = c("cre"))
     )
-Description: scSpatialSIM is an easy-to-use wrapper package for spatstat that allows users to simulate cellular point pattern data. The simulation of this data comes in a couple different functions whether since cell clustering (univariate) or multiple cell clustering/colocalization (bivariate) is wanting to be explored. The main audience for this package is those wanting to validate or test hypotheses or methods on controllable abundance/clustering of cells within different spatial single-cell resolution data.
+Description: Single cell resolution data has been valuable in learning about tissue microenvironments and interactions between cells or spots. This package allows for the simulation of this level of data, be it single cell or ‘spots’, in both a univariate (single metric or cell type) and bivariate (2 or more metrics or cell types) ways. As more technologies come to marker, more methods will be developed to derive spatial metrics from the data which will require a way to benchmark methods against each other. Additionally, as the field currently stands, there is not a gold standard method to be compared against. We set out to develop an R package that will allow users to simulate point patterns that can be biologically informed from different tissue domains, holes, and varying degrees of clustering/colocalization. The data can be exported as spatial files and a summary file (like 'HALO'). <https://github.com/FridleyLab/scSpatialSIM/>.
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

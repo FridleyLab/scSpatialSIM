@@ -87,7 +87,6 @@ replace_na <- function(x, y) {
 
 generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
   vals <- numeric(num_vals)
-  #cat("running\n")
   cn = 1
   while (TRUE) {
     vals <- stats::runif(num_vals, min_val, max_val)
@@ -98,7 +97,6 @@ generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
     #for example, trying to randomly generate 3 numbers between 0.1 and 0.35, that add up to 0.3
     #and unles the numbers are identical it'll never achieve it
     if(cn == 10000){
-      #cat("tick\n")
       min_val = min_val - (min_val * 0.1)
       cn = 1
     }
@@ -112,7 +110,6 @@ generate_sum_vector <- function(num_vals, min_val, max_val, sum_val) {
 make_dis = function(spat, positive_mean, negative_mean, positive_sd, negative_sd){
   cells = grep("Cell", colnames(spat), value = TRUE)
   dat = spat %>% dplyr::arrange(get(cells))
-  #ugh for loop
   for(cell_n in seq(cells)){
     cell = cells[cell_n]
     counts = data.frame(table(spat[[cell]]))
@@ -160,7 +157,6 @@ gaussian_kernel_shift = function(kern, shift, win_limits){
     repl = ifelse(nrow(dirichlet_intersect) < nrow(kern), TRUE, FALSE)
     if(repl){
       warning("kernel has more rows than the Dirishlet Intersections")
-      print(kern)
     }
     dirichlet_intersect = dirichlet_intersect[sample(seq(nrow(dirichlet_intersect)), nrow(kern),
                                                      replace = ifelse(nrow(dirichlet_intersect) < nrow(kern), TRUE, FALSE)),]

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scSpatialSIM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,6 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a>
     <a class="dropdown-item" href="../articles/a02_Using_with_spatialTIME.html">Using with spatialTIME</a>
-    <a class="dropdown-item" href="../articles/a03_CellAttributes.html">Adding Cell Attributes</a>
   </div>
 </li>
       </ul>
@@ -53,7 +52,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/FridleyLab/mIFsim/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/FridleyLab/scSpatialSIM/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -73,7 +72,7 @@
       <img src="" class="logo" alt=""><h1>Introduction</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/mIFsim/blob/HEAD/vignettes/a01_Introduction.Rmd" class="external-link"><code>vignettes/a01_Introduction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/scSpatialSIM/blob/HEAD/vignettes/a01_Introduction.Rmd" class="external-link"><code>vignettes/a01_Introduction.Rmd</code></a></small>
       <div class="d-none name"><code>a01_Introduction.Rmd</code></div>
     </div>
 
@@ -117,7 +116,7 @@ et. al</a>.</p>
 <h3 id="simulating">Simulating<a class="anchor" aria-label="anchor" href="#simulating"></a>
 </h3>
 <p>In order to compare metrics for describing point patterns, we have
-developed this simulation package: <a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a>. The main
+developed this simulation package: <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a>. The main
 basis of the package is using Gaussian kernels to assign different
 characteristics to the underlying spatial point pattern. A Gaussian
 kernel is described in 3 different ways in our package: kernel’s center,
@@ -165,7 +164,7 @@ but low clustering of cytotoxic T cells is associated with better
 overall survival than missing cytotoxic T cells in high grade serous
 ovarian cancer tumors</a>. There are also instances that colocalization
 of 2 difference cell types might be of interest such as T cell and B
-cells in tumors. With <a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a>, we provide methods to
+cells in tumors. With <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a>, we provide methods to
 perform both of these spatial point patterns. Input parameters dictate
 the layout of a first cell type. In the case where more than one cell
 type is wanted, a shift value is taken which uses the same kernel as the
@@ -178,17 +177,18 @@ moved the first cell types’ kernel towards Dirichlet vertices
 <p>In order to get started simulating cell type samples, we need to
 import the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; scSpatialSIM Version:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.2.0</span></span></span>
-<span><span class="co">#&gt;             _____             _   _       _  _____ _____ __  __</span></span>
-<span><span class="co">#&gt;            / ____|           | | (_)     | |/ ____|_   _|  \/  |</span></span>
-<span><span class="co">#&gt;   ___  ___| (___  _ __   __ _| |_ _  __ _| | (___   | | | \  / |</span></span>
-<span><span class="co">#&gt;  / __|/ __|\___ \| '_ \ / _` | __| |/ _` | |\___ \  | | | |\/| |</span></span>
-<span><span class="co">#&gt;  \__ \ (__ ____) | |_) | (_| | |_| | (_| | |____) |_| |_| |  | |</span></span>
-<span><span class="co">#&gt;  |___/\___|_____/| .__/ \__,_|\__|_|\__,_|_|_____/|_____|_|  |_|</span></span>
-<span><span class="co">#&gt;                  | |</span></span>
-<span><span class="co">#&gt;                  |_|</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.3.2</span></span></span>
+<span><span class="co">#&gt;   .-')               .-')     _ (`-.    ('-.     .-') _             ('-.                .-')            _   .-')</span></span>
+<span><span class="co">#&gt;  ( OO ).            ( OO ).  ( (OO  )  ( OO ).-.(  OO) )           ( OO ).-.           ( OO ).         ( '.( OO )_</span></span>
+<span><span class="co">#&gt; (_)---\_)   .-----.(_)---\_)_.`     \  / . --. //     '._ ,-.-')   / . --. / ,--.     (_)---\_)  ,-.-') ,--.   ,--.)</span></span>
+<span><span class="co">#&gt; /    _ |   '  .--.//    _ |(__...--''  | \-.  \ |'--...__)|  |OO)  | \-.  \  |  |.-') /    _ |   |  |OO)|   `.'   |</span></span>
+<span><span class="co">#&gt; \  :` `.   |  |('-.\  :` `. |  /  | |.-'-'  |  |'--.  .--'|  |  \.-'-'  |  | |  | OO )\  :` `.   |  |  \|         |</span></span>
+<span><span class="co">#&gt;  '..`''.) /_) |OO  )'..`''.)|  |_.' | \| |_.'  |   |  |   |  |(_/ \| |_.'  | |  |`-' | '..`''.)  |  |(_/|  |'.'|  |</span></span>
+<span><span class="co">#&gt; .-._)   \ ||  |`-'|.-._)   \|  .___.'  |  .-.  |   |  |  ,|  |_.'  |  .-.  |(|  '---.'.-._)   \ ,|  |_.'|  |   |  |</span></span>
+<span><span class="co">#&gt; \       /(_'  '--'\\       /|  |       |  | |  |   |  | (_|  |     |  | |  | |      | \       /(_|  |   |  |   |  |</span></span>
+<span><span class="co">#&gt;  `-----'    `-----' `-----' `--'       `--' `--'   `--'   `--'     `--' `--' `------'  `-----'   `--'   `--'   `--'</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fridley Lab <span style="color: #BBBBBB;">Enjoy</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">333</span><span class="op">)</span> <span class="co">#reproducibility</span></span></code></pre></div>
@@ -397,7 +397,7 @@ single cell type with the addition of the <code>shift</code> value when
 simulating the cell types. Lets create another <code>SpatSimObj</code>
 to get to the phenotype simulating step with
 <code><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity()</a></code>. A great feature of
-<a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a> is that it works nicely with
+<a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> is that it works nicely with
 <a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a> and the pipe function to immediately pass output
 from one function to the next.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -467,8 +467,8 @@ cell types.</p>
 <span><span class="co">#&gt; 1 5.7130558 1.274980          Tissue 2                 0                 0</span></span>
 <span><span class="co">#&gt; 2 0.2011937 2.748664          Tissue 2                 0                 0</span></span>
 <span><span class="co">#&gt; 3 7.2355739 6.800332          Tissue 2                 0                 0</span></span>
-<span><span class="co">#&gt; 4 6.0939363 6.601037          Tissue 2                 0                 0</span></span>
-<span><span class="co">#&gt; 5 3.0671935 2.480361          Tissue 2                 0                 1</span></span>
+<span><span class="co">#&gt; 4 6.0939363 6.601037          Tissue 2                 0                 1</span></span>
+<span><span class="co">#&gt; 5 3.0671935 2.480361          Tissue 2                 0                 0</span></span>
 <span><span class="co">#&gt; 6 0.6350984 1.242892          Tissue 1                 0                 0</span></span></code></pre></div>
 <p>Alternatively, there is the ability with
 <code><a href="../reference/CreateSpatialList.html">CreateSpatialList()</a></code> to export all of the spatial pattern
@@ -491,8 +491,8 @@ level counts for the different cell types.</p>
 <span><span class="co">#&gt; 1                 0</span></span>
 <span><span class="co">#&gt; 2                 0</span></span>
 <span><span class="co">#&gt; 3                 0</span></span>
-<span><span class="co">#&gt; 4                 0</span></span>
-<span><span class="co">#&gt; 5                 1</span></span>
+<span><span class="co">#&gt; 4                 1</span></span>
+<span><span class="co">#&gt; 5                 0</span></span>
 <span><span class="co">#&gt; 6                 0</span></span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/SummariseSpatial.html">SummariseSpatial</a></span><span class="op">(</span>spatial_list <span class="op">=</span> <span class="va">spatial_list</span>, markers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cell 1 Assignment"</span>, <span class="st">"Cell 2 Assignment"</span><span class="op">)</span><span class="op">)</span></span>
@@ -500,11 +500,11 @@ level counts for the different cell types.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Cells` `Cell 1 Assignment` `Cell 2 Assignment`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 133                 131</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 136                 140</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 135                 120</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 144                 128</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 132                  82</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 128                 104</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 119                 113</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 143                 124</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 111                  91</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 117                 100</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: `% Cell 1 Assignment` &lt;dbl&gt;, `% Cell 2 Assignment` &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>The spatial list and summary table can now be used with packages like
 <a href="https://github.com/FridleyLab/spatialTIME" class="external-link">spatialTIME</a> to compute spatial statistics on all of the
@@ -518,7 +518,7 @@ simulated data frames.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Alex Soupir, Christopher Wilson, Jordan Creed, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+<p>Developed by Alex Soupir, Christopher Wilson, Jordan Creed, Julia Wrobel, Oscar Ospina, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">

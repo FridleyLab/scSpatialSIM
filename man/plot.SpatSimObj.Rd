@@ -12,6 +12,9 @@
 \item{...}{other things to pass to the plot method for SpatSimObj including \code{nrow}, \code{ncol} for the number of rows and columns of plots,
 \code{which} pattern to plot, and \code{what} which currently only works with "Processes" but may be updated in the future}
 }
+\value{
+basic x-y ggplot object
+}
 \description{
 plot function for SpatSimObj
 }

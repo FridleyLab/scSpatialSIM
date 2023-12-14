@@ -107,7 +107,7 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
     }
   } else if(what == "whole core"){
     if(length(which) == 1){
-      if(length(sim_object@Cells[[1]]@`Simulated Kernels`) == 0){
+      if(length(sim_object@`Spatial Files`[[1]]) == 0){
         stop("Need to simulate cells")
       }
       df = sim_object@`Spatial Files`[[which]]
@@ -146,7 +146,7 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
       stop("For whole core, only a single spatial file can be plotted at once")
     }
   } else {
-    cat("please be patient while method is being updated")
+    stop("Please be patient while method is being updated")
   }
 }
 

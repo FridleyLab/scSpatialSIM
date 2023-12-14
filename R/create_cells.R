@@ -20,6 +20,7 @@
 #' @param random whether or not to randomly generate kernels for cells 2 or more, uf TRUE, shift is not used
 #' @param overwrite boolean whether to overwrite existing cell kernels and assignments if present
 #' @param use_window boolean whether to use the simulation window to set x and y limits
+#' @param no_kernel boolean whether to create kernels or to randomly assign points positive based on `probs`
 #'
 #' @return Returns the original \code{scSpatialSIM} object with additional generated data added to each cell object.
 #'
@@ -36,9 +37,13 @@ GenerateCellPositivity = function(sim_object, k = NA,
                           Force = FALSE,
                           density_heatmap = FALSE, step_size = 1, cores = 1,
                           shift = 0, random = FALSE, overwrite = FALSE,
-                          use_window = FALSE){
+                          use_window = FALSE, no_kernel = FALSE){
   if(!methods::is(sim_object, "SpatSimObj")) stop("`sim_object` must be of class 'SpatSimObj'")
   if(any(is.null(c(k, xmin, xmax, ymin, ymax, sdmin, sdmax)))) stop("Cannot have `NULL` parameters")
+  if(no_kernel){
+    message("random cell assignments without kernels")
+    density_heatmap = FALSE
+  }
 
   if(!is.empty(sim_object@Cells[[1]], "Simulated Kernels") & overwrite == FALSE) stop("Already have cell kernels and `overwrite == FALSE`")
 
@@ -92,14 +97,16 @@ GenerateCellPositivity = function(sim_object, k = NA,
   #make sure that the shift is in bounds
   if((shift < 0 | shift > 1) & ncells > 1) stop("supply an appropriate shift")
   #dummy variable to prevent console printing
-  dmb = lapply(seq(ncells), function(cell){
+  #need to convert to for loop
+  for (cell in seq(ncells)){
+    cl =  methods::new("Cell")
     #subset the params to the specific cells parameters
     params = params_overall
     params$probs = params$probs[cell,] %>% as.numeric()
     #if no parameters are input then use the initialized
     params = mapply(replace_na, sim_object@Cells[[cell]]@Parameters, params, SIMPLIFY = FALSE)
     #add updated parameters to the object cell
-    sim_object@Cells[[cell]]@Parameters <<- params
+    cl@Parameters = params
     #get the window size
     win_limits = c(sim_object@Window$xrange, sim_object@Window$yrange)
     #check whether the parameters would simulate outside window
@@ -113,16 +120,16 @@ GenerateCellPositivity = function(sim_object, k = NA,
       message("x and y range inside window boundary")
     }
     #produce kernel parameter list for k clusters in each simulated pattern
-    if(cell == 1 | random == TRUE){
-      sim_object@Cells[[cell]]@`Simulated Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
+    if((cell == 1 | random) & !no_kernel){
+      cl@`Simulated Kernels` = lapply(seq(sim_object@Sims), function(hld){
         do.call(gaussian_kernel, utils::head(params, -1))
       })
-    } else {
+    } else if(!no_kernel){
       #shift kernel from initial if wanted otherwise random make new ones?
       if(shift == 0){
-        sim_object@Cells[[cell]]@`Simulated Kernels` <<- sim_object@Cells[[1]]@`Simulated Kernels`
+        cl@`Simulated Kernels` = sim_object@Cells[[1]]@`Simulated Kernels`
       } else {
-        sim_object@Cells[[cell]]@`Simulated Kernels` <<- lapply(seq(sim_object@Sims), function(hld){
+        cl@`Simulated Kernels` = lapply(seq(sim_object@Sims), function(hld){
           kern = sim_object@Cells[[1]]@`Simulated Kernels`[[hld]]
           #if there are less than 3 centers, just return the kernel
           #will invert below
@@ -142,13 +149,13 @@ GenerateCellPositivity = function(sim_object, k = NA,
     if(density_heatmap){
       if(cell == 1 | shift != 0 | random == TRUE){
         message(paste0("Computing density heatmap for Cell ", cell))
-        sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[cell]]@`Simulated Kernels`, function(gauss_tab){
+        cl@`Density Grids` = pbmcapply::pbmclapply(cl@`Simulated Kernels`, function(gauss_tab){
           cbind(grid,
                 prob = CalculateGrid(grid, gauss_tab, cores = cores))
         }, mc.cores = 1)
       } else {
         message(paste0("Copying density heatmap for Cell ", cell))
-        sim_object@Cells[[cell]]@`Density Grids` <<- pbmcapply::pbmclapply(sim_object@Cells[[1]]@`Density Grids`, function(grid_tab){
+        cl@`Density Grids` = pbmcapply::pbmclapply(sim_object@Cells[[1]]@`Density Grids`, function(grid_tab){
           return(grid_tab)
         }, mc.cores = 1)
       }
@@ -157,33 +164,41 @@ GenerateCellPositivity = function(sim_object, k = NA,
     }
 
     if(is.empty(sim_object, "Spatial Files")){
-      sim_object@`Spatial Files` <<- lapply(sim_object@Patterns, data.frame)
+      sim_object@`Spatial Files` = lapply(sim_object@Patterns, data.frame)
     }
 
     message(paste0("Computing probability for Cell ", cell))
-    sim_object@`Spatial Files` <<- pbmcapply::pbmclapply(seq(sim_object@`Spatial Files`), function(spat_num){
-      vec = CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
-                                                      sim_object@Cells[[cell]]@`Simulated Kernels`[[spat_num]], cores = cores)
-      #if the cell is other than the first, adjust it based on first cell and correlation
-      # if(cell != 1){
-      #   if(correlation == 0){
-      #     vec = stats::runif(length(vec), min = 0, max = 1)
-      #   } else if(correlation < 0){
-      #     vec = vec * correlation + 1
-      #   } else {
-      #     vec = vec * correlation
-      #   }
-      # }
-      #make table with probabilities and positive/negative
-      df = data.frame(col1 = scale_probs(vec * 0.9, params$probs))
-      df$col2 = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$col1) == 1, "Positive", "Negative")
+    sim_object@`Spatial Files` = pbmcapply::pbmclapply(seq(sim_object@`Spatial Files`), function(spat_num){
+      #if no_kernel if FALSE, use kernel
+      if(!no_kernel){
+        vec = CalculateGrid(sim_object@`Spatial Files`[[spat_num]],
+                            cl@`Simulated Kernels`[[spat_num]], cores = cores)
+        #if the cell is other than the first, adjust it based on first cell and correlation
+        # if(cell != 1){
+        #   if(correlation == 0){
+        #     vec = stats::runif(length(vec), min = 0, max = 1)
+        #   } else if(correlation < 0){
+        #     vec = vec * correlation + 1
+        #   } else {
+        #     vec = vec * correlation
+        #   }
+        # }
+        #make table with probabilities and positive/negative
+        df = data.frame(col1 = scale_probs(vec * 0.9, params$probs))
+        df$col2 = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$col1) == 1, "Positive", "Negative")
+      } else {
+        df = data.frame(col1 = rep(params$probs[2], nrow(sim_object@`Spatial Files`[[spat_num]])))
+        df$col2 = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$col1) == 1, "Positive", "Negative")
+      }
 
       names(df) = c(paste("Cell", cell, "Probability"), paste("Cell", cell, "Assignment"))
 
       return(cbind(sim_object@`Spatial Files`[[spat_num]],
                    df))
     }, mc.cores = 1)
-  })
+
+    sim_object@Cells[[cell]] = cl
+  }
 
   return(sim_object)
 }
