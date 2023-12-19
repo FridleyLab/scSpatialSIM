@@ -47,7 +47,7 @@ GenerateDistributions = function(spatial_data,
   if(dat_class == "list"){
     spat_list = pbmcapply::pbmclapply(spatial_data, function(spat){
       make_dis(spat, positive_mean, negative_mean, positive_sd, negative_sd)
-    })
+    }, mc.cores = 1)
     return(spat_list)
   } else {
     #if data frame, perform once

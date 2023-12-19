@@ -42,7 +42,7 @@ CalculateDensity = function(sim_object, steps = NULL, which = "all", step_size =
   names(step_adj) = step_adj
 
   #run grids
-  out = parallel::mclapply(step_adj, function(step){
+  for(step in step_adj){
     #if not working with the cell kernels
     if(step != "Cells"){
       message(step)
@@ -57,22 +57,21 @@ CalculateDensity = function(sim_object, steps = NULL, which = "all", step_size =
       if(length(s@`Simulated Kernels`) == 0 ){
         #let user know that these haven't been used for any simulation step yet
         message(paste0("\t", step, " has not yet been simulated"))
-        NA
+        next
       }
       #make new
       cl@Parameters = s@Parameters
       cl@`Simulated Kernels` = s@`Simulated Kernels`
       cl@`Density Grids` = lapply(which, function(w){
-        cat(w, "\n")
         cbind(grid,
               prob = CalculateGrid(grid, s@`Simulated Kernels`[[w]], cores = cores))
       })
 
       #assign slot back to bid data
       if(step == "Tissue"){
-        sim_object@Tissue <<- cl
+        sim_object@Tissue = cl
       } else {
-        sim_object@Holes <<- cl
+        sim_object@Holes = cl
       }
     }
 
@@ -82,19 +81,25 @@ CalculateDensity = function(sim_object, steps = NULL, which = "all", step_size =
         #make new cell class object
         cl = methods::new("Cell")
         s = methods::slot(sim_object, step)[[cell]]
+
+        if(length(s@`Simulated Kernels`) == 0 ){
+          #let user know that these haven't been used for any simulation step yet
+          message(paste0("\t", step, " has not yet been simulated"))
+          next
+        }
         #fill in with existing parameters
         cl@Parameters = s@Parameters
         cl@`Simulated Kernels` = s@`Simulated Kernels`
         cl@`Density Grids` = lapply(which, function(w){
-          cat(w, "\n")
           cbind(grid,
                 prob = CalculateGrid(grid, s@`Simulated Kernels`[[w]], cores = cores))
         })
 
-        sim_object@Cells[[cell]] <<- cl
+        sim_object@Cells[[cell]] = cl
       }
     }
-  })
+  }
+
 
   return(sim_object)
 }

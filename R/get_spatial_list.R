@@ -41,7 +41,7 @@ CreateSpatialList =  function(sim_object, single_df = FALSE, multihit_action = "
       unlist()
     #return data
     return(tmp_dat)
-  })
+  }, mc.cores = 1)
   #give each spatial data frame a psuedo sample name
   names(spatial_files) = paste("Spatial Data", seq_along(spatial_files))
 

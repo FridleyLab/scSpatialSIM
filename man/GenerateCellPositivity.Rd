@@ -21,7 +21,8 @@ GenerateCellPositivity(
   shift = 0,
   random = FALSE,
   overwrite = FALSE,
-  use_window = FALSE
+  use_window = FALSE,
+  no_kernel = FALSE
 )
 }
 \arguments{
@@ -59,6 +60,8 @@ is the low and high probabilities for the cell type. If data frame, number of ro
 \item{overwrite}{boolean whether to overwrite existing cell kernels and assignments if present}
 
 \item{use_window}{boolean whether to use the simulation window to set x and y limits}
+
+\item{no_kernel}{boolean whether to create kernels or to randomly assign points positive based on \code{probs}}
 }
 \value{
 Returns the original \code{scSpatialSIM} object with additional generated data added to each cell object.

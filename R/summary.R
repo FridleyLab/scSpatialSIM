@@ -4,6 +4,7 @@
 #' @param ... nothing else to pass to summary if object is a SpatSimObj
 #'
 #' @method summary SpatSimObj
+#' @returns summary of the SpatSimObj to the terminal
 #'
 #' @export
 summary.SpatSimObj <- function(object, ...){
@@ -30,7 +31,7 @@ summary.SpatSimObj <- function(object, ...){
 #' `which` pattern to plot, and `what` which currently only works with "Processes" but may be updated in the future
 #'
 #' @method plot SpatSimObj
-#'
+#' @returns basic x-y ggplot object
 #'
 #' @export
 plot.SpatSimObj <- function(x, ...){ #

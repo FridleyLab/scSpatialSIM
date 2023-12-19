@@ -11,6 +11,9 @@
 
 \item{...}{nothing else to pass to summary if object is a SpatSimObj}
 }
+\value{
+summary of the SpatSimObj to the terminal
+}
 \description{
 summary function for SpatSimObj
 }

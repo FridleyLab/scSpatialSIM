@@ -125,7 +125,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
     sim_object@Holes@`Density Grids` = pbmcapply::pbmclapply(sim_object@Holes@`Simulated Kernels`, function(gauss_tab){
       cbind(grid,
             prob = CalculateGrid(grid, gauss_tab, cores = cores))
-    })
+    }, mc.cores = 1)
   }
 
   if(is.empty(sim_object, "Spatial Files")){
@@ -147,7 +147,7 @@ GenerateHoles = function(sim_object, xmin = NA, xmax = NA, ymin = NA, ymax = NA,
     #                               "Drop", "Keep")
     df$`Hole Assignment` = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$`Hole Probability Scaled`) == 1, "Drop", "Keep")
     return(df)
-  })
+  }, mc.cores = 1)
 
   return(sim_object)
 }

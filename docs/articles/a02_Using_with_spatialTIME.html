@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scSpatialSIM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,6 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a>
     <a class="dropdown-item" href="../articles/a02_Using_with_spatialTIME.html">Using with spatialTIME</a>
-    <a class="dropdown-item" href="../articles/a03_CellAttributes.html">Adding Cell Attributes</a>
   </div>
 </li>
       </ul>
@@ -53,7 +52,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/FridleyLab/mIFsim/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/FridleyLab/scSpatialSIM/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -73,7 +72,7 @@
       <img src="" class="logo" alt=""><h1>Using with spatialTIME</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/mIFsim/blob/HEAD/vignettes/a02_Using_with_spatialTIME.Rmd" class="external-link"><code>vignettes/a02_Using_with_spatialTIME.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/scSpatialSIM/blob/HEAD/vignettes/a02_Using_with_spatialTIME.Rmd" class="external-link"><code>vignettes/a02_Using_with_spatialTIME.Rmd</code></a></small>
       <div class="d-none name"><code>a02_Using_with_spatialTIME.Rmd</code></div>
     </div>
 
@@ -83,8 +82,8 @@
 <h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
 <p>More than likely, you are going to want to use another package to
-analyze the simulated data produced by <a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a>.
-Here, we will show how the output from <a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a> works
+analyze the simulated data produced by <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a>.
+Here, we will show how the output from <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> works
 seemlessly with the spatial analysis package,
 <a href="https://github.com/FridleyLab/spatialTIME" class="external-link">spatialTIME</a></p>
 <div class="section level3">
@@ -98,17 +97,18 @@ use this data with <a href="https://github.com/FridleyLab/spatialTIME" class="ex
 statistics like Ripley’s <em>K</em>. See the spatialTIME package for
 more information about everything the package can do.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/mIFsim" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; scSpatialSIM Version:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.2.0</span></span></span>
-<span><span class="co">#&gt;             _____             _   _       _  _____ _____ __  __</span></span>
-<span><span class="co">#&gt;            / ____|           | | (_)     | |/ ____|_   _|  \/  |</span></span>
-<span><span class="co">#&gt;   ___  ___| (___  _ __   __ _| |_ _  __ _| | (___   | | | \  / |</span></span>
-<span><span class="co">#&gt;  / __|/ __|\___ \| '_ \ / _` | __| |/ _` | |\___ \  | | | |\/| |</span></span>
-<span><span class="co">#&gt;  \__ \ (__ ____) | |_) | (_| | |_| | (_| | |____) |_| |_| |  | |</span></span>
-<span><span class="co">#&gt;  |___/\___|_____/| .__/ \__,_|\__|_|\__,_|_|_____/|_____|_|  |_|</span></span>
-<span><span class="co">#&gt;                  | |</span></span>
-<span><span class="co">#&gt;                  |_|</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.3.2</span></span></span>
+<span><span class="co">#&gt;   .-')               .-')     _ (`-.    ('-.     .-') _             ('-.                .-')            _   .-')</span></span>
+<span><span class="co">#&gt;  ( OO ).            ( OO ).  ( (OO  )  ( OO ).-.(  OO) )           ( OO ).-.           ( OO ).         ( '.( OO )_</span></span>
+<span><span class="co">#&gt; (_)---\_)   .-----.(_)---\_)_.`     \  / . --. //     '._ ,-.-')   / . --. / ,--.     (_)---\_)  ,-.-') ,--.   ,--.)</span></span>
+<span><span class="co">#&gt; /    _ |   '  .--.//    _ |(__...--''  | \-.  \ |'--...__)|  |OO)  | \-.  \  |  |.-') /    _ |   |  |OO)|   `.'   |</span></span>
+<span><span class="co">#&gt; \  :` `.   |  |('-.\  :` `. |  /  | |.-'-'  |  |'--.  .--'|  |  \.-'-'  |  | |  | OO )\  :` `.   |  |  \|         |</span></span>
+<span><span class="co">#&gt;  '..`''.) /_) |OO  )'..`''.)|  |_.' | \| |_.'  |   |  |   |  |(_/ \| |_.'  | |  |`-' | '..`''.)  |  |(_/|  |'.'|  |</span></span>
+<span><span class="co">#&gt; .-._)   \ ||  |`-'|.-._)   \|  .___.'  |  .-.  |   |  |  ,|  |_.'  |  .-.  |(|  '---.'.-._)   \ ,|  |_.'|  |   |  |</span></span>
+<span><span class="co">#&gt; \       /(_'  '--'\\       /|  |       |  | |  |   |  | (_|  |     |  | |  | |      | \       /(_|  |   |  |   |  |</span></span>
+<span><span class="co">#&gt;  `-----'    `-----' `-----' `--'       `--' `--'   `--'   `--'     `--' `--' `------'  `-----'   `--'   `--'   `--'</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fridley Lab <span style="color: #BBBBBB;">Enjoy</span></span></span></code></pre></div>
 <p>In this vignette, we will stick with a single cell type and look at
@@ -144,11 +144,11 @@ be split into a spatial list as well as a summary using
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Cells` `Cell 1 Assignment` `% Cell 1 Assignment`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 533                  21.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 636                  26.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 614                  24.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 739                  29.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 622                  25.0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1          <span style="text-decoration: underline;">2</span>495                 673                  27.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2          <span style="text-decoration: underline;">2</span>450                 475                  19.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3          <span style="text-decoration: underline;">2</span>500                 582                  23.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4          <span style="text-decoration: underline;">2</span>514                 525                  20.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5          <span style="text-decoration: underline;">2</span>486                 450                  18.1</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="using-with-spatialtime">Using with <code>spatialTIME</code><a class="anchor" aria-label="anchor" href="#using-with-spatialtime"></a>
@@ -268,10 +268,10 @@ cores.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
 <span><span class="co">#&gt;   `Sample Tag`   `Total Fraction`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1            0.935</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2            0.387</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3            0.645</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4            0.774</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Spatial Data 1            0.355</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Spatial Data 2            0.645</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Spatial Data 3            0.968</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Spatial Data 4            0.968</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Spatial Data 5            0.968</span></span></code></pre></div>
 </div>
 </div>
@@ -283,7 +283,7 @@ cores.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Alex Soupir, Christopher Wilson, Jordan Creed, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+<p>Developed by Alex Soupir, Christopher Wilson, Jordan Creed, Julia Wrobel, Oscar Ospina, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">

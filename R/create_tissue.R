@@ -134,7 +134,7 @@ GenerateTissue = function(sim_object, k = NA,
     sim_object@Tissue@`Density Grids` = pbmcapply::pbmclapply(sim_object@Tissue@`Simulated Kernels`, function(gauss_tab){
       cbind(grid,
             prob = CalculateGrid(grid, gauss_tab, cores = cores))
-    })
+    }, mc.cores = 1)
   }
 
   if(is.empty(sim_object, "Spatial Files")){
@@ -148,7 +148,7 @@ GenerateTissue = function(sim_object, k = NA,
                                sim_object@Tissue@`Simulated Kernels`[[spat_num]], cores = cores) * 0.9)
     df$`Tissue Assignment` = ifelse(stats::rbinom(nrow(df), size = 1, prob = df$`Tissue Probability`) == 1, "Tissue 1", "Tissue 2")
     return(df)
-  })
+  }, mc.cores = 1)
 
   return(sim_object)
 }
