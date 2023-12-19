@@ -10,7 +10,7 @@ To install `scSpatialSIM`, it is required to have `devtools` or `remotes` instal
 if (!require("devtools", quietly = TRUE))
   install.packages("devtools")
 
-devtools::install_github("FridleyLab/mIFsim@v0.1.3.1")
+devtools::install_github("FridleyLab/mIFsim@v0.1.3.3")
 ```
 
 # Vignettes

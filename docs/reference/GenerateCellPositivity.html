@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scSpatialSIM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,8 @@
 <span>  shift <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  random <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  use_window <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  use_window <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  no_kernel <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -145,6 +146,10 @@ is the low and high probabilities for the cell type. If data frame, number of ro
 
 <dt>use_window</dt>
 <dd><p>boolean whether to use the simulation window to set x and y limits</p></dd>
+
+
+<dt>no_kernel</dt>
+<dd><p>boolean whether to create kernels or to randomly assign points positive based on <code>probs</code></p></dd>
 
 </dl></div>
     <div class="section level2">

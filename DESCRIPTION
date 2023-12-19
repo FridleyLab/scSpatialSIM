@@ -31,7 +31,7 @@ Authors@R:
       person(given = "Brooke", 
              family = "Fridley", 
              email = "brooke.fridley.moffitt.org", 
-             role = c("cph"), 
+             role = c("aut", "cph"), 
              comment = c(ORCID = "")),
       person(given = "Fridley",
              family = "Lab", 
