@@ -6,3 +6,4 @@
 man/hello.Rd
 ^LICENSE\.md$
 ^data-raw$
+^\.github$
