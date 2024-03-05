@@ -62,12 +62,8 @@ GenerateSpatialPattern = function(sim_object, lambda = 25, ..., overwrite = FALS
 
     #make the list of spatial dataframes like spatstat
     spatial_dfs = lapply(seq(sims), function(hld){
-      sp_df = list(window = window,
-           n = nrow(new_raw_df),
-           x = new_raw_df$x + min(window$xrange),
-           y = new_raw_df$y + min(window$yrange),
-           markformat = 'none')
-      class(sp_df) = 'ppp'
+      sp_df = data.frame(x = new_raw_df$x + min(window$xrange),
+                         y = new_raw_df$y + min(window$yrange))
       return(sp_df)
     })
   } else {
