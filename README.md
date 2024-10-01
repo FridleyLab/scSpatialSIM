@@ -1,6 +1,6 @@
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/FridleyLab/mIFsim/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FridleyLab/mIFsim/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/FridleyLab/scSpatialSIM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FridleyLab/scSpatialSIM/actions/workflows/R-CMD-check.yaml)
 [![](https://cranlogs.r-pkg.org/badges/scSpatialSIM)](https://cran.rstudio.com/web/packages/scSpatialSIM/index.html)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/scSpatialSIM)](https://cran.rstudio.com/web/packages/scSpatialSIM/index.html)
 [![](https://www.r-pkg.org/badges/version-ago/scSpatialSIM)](https://cran.rstudio.com/web/packages/scSpatialSIM/index.html)
