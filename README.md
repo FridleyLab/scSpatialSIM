@@ -1,6 +1,6 @@
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/FridleyLab/mIFsim/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FridleyLab/mIFsim/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/FridleyLab/scSpatialSIM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FridleyLab/scSpatialSIM/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # scSpatialSIM
