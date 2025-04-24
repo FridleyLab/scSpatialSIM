@@ -1,6 +1,6 @@
 Package: scSpatialSIM
 Title: A Point Pattern Simulator for Spatial Cellular Data
-Version: 0.1.3.4
+Version: 0.1.3.5
 Authors@R: 
     c(
       person(given = "Alex",
@@ -62,7 +62,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    spatialTIME
+    spatialTIME,
+    spdep
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Config/testthat/edition: 3

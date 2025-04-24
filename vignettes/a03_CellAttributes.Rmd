@@ -1,0 +1,143 @@
+---
+title: "Adding Cell Attributes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Adding Cell Attributes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(ggpubr)
+library(dplyr)
+```
+
+## Background
+
+Spatial data that we use can be as shown in the previous vignettes, where points or cells are either positive or negative for a particular feature. Often in single-cell spatial data this might be cell types (T cell, B cell, malignant cell, etc) or a compartment from which the cell originated (lymph node, tumor, stroma, etc). However, when we make measurements, they are continuous (pixel intensity, protein abundance, gene expression, etc) that get collapsed down to a class. These continuous measures are still important and provide granular understanding of the data. In this vignette, we will demonstrate a usecase of `{scSpatialSIM}` to simulate this continuous data and than apply an autocorrelation method, Moran's I from the `{spdep}` package.
+
+### Simulating Data
+
+We will demonstrate the simulation of a protein (CD3) expressed in cells of a TMA. The way that `{scSpatialSIM}` does this is by first simulating samples with cell types, or a marked point pattern, and then using the positive/negative assignment of cells to simulate a multimodal distribution of values. For this vignette with CD3 protein expression, that means simulating points that are positive and negative, then simulating high (positive) and low (negative) CD3 expression. The procedure is similar process can be performed as seen in `vignette("Using with SpatialTIME)` for creating a simulation object with a single cell type. Here, we will create 2 simulation objects with different cell clustering levels to compare the autocorrelation values of the different samples. For each simulation object, we will stick with a single cell type.
+
+```{r}
+library(scSpatialSIM)
+set.seed(333)
+#create simulation object for tight clusters
+sim_object_tight = CreateSimulationObject(sims = 5, cell_types = 1) %>%
+  #simulate point pattern
+  GenerateSpatialPattern()
+#create simulation object for no clusters
+sim_object_null = CreateSimulationObject(sims = 5, cell_types = 1) %>%
+  #simulate point pattern
+  GenerateSpatialPattern()
+```
+
+When using `GenerateCellPositivity()`, need to scale the `probs` parameter for the null case due to all cells having the same probability of being positive which results in much greater abundances of positive cells.
+
+```{r}
+sim_object_tight = GenerateCellPositivity(sim_object_tight, 
+                                          k = 4,
+                                          sdmin = 1, sdmax = 3,
+                                          density_heatmap = F,
+                                          probs = c(0.0, 0.9))
+
+sim_object_null = GenerateCellPositivity(sim_object_null, 
+                                          probs = c(0.0, 0.2),
+                                          no_kernel = TRUE)
+```
+
+Good quality control is to always look at the data. For a simulation study, thousands of samples would be simulated resulting in better distribution estimates for the abundance of T cells in both the clustered and null scenarios. In these simulation objects we have 5 simulated samples so distributions are rough. Even so, visualizing the abundance will give us an general idea.
+
+```{r}
+library(ggplot2)
+#calculate abundance for clustered samples
+cluster_abundance = sapply(sim_object_tight@`Spatial Files`, function(x){
+  sum(x$`Cell 1 Assignment` == "Positive")/nrow(x)
+})
+#calculate abundance for null/negative control samples
+null_abundance = sapply(sim_object_null@`Spatial Files`, function(x){
+  sum(x$`Cell 1 Assignment` == "Positive")/nrow(x)
+})
+#create histogram of abundances
+data.frame(abundance = c(cluster_abundance, null_abundance),
+           simulation = c(rep("clustered", 5), rep("null", 5))) %>%
+  ggplot() + 
+  geom_histogram(aes(x = abundance, fill = simulation))
+```
+
+For the 5 samples in the null/negative control and clustered scenarios, they are pretty similar as an average, maybe slightly higher T cell abundance in the clustered samples. If running a larger study, tuning the abundance to be more similar is important. My recommendation is running the clustered scenarios at an abundance and cluster size that is satisfactory (changing `sdmin`, `sdmax`, and `probs`), then setting the high `probs` for the `no_kernel = TRUE` scenario at the mean/median of the clustered abundance. Due to the implementation of `no_kernel = TRUE`, the cell abundance of each sample in the scenario will be similar (very little variation). If variability is desired, abundance can be assigned outside `{scSpatialSIM}` by using `rnorm` with the mean and standard deviation of the cell abundance from clustering scenarios, then applying that to each null scenario sample with `lapply` and `rbinom` to slightly adjust the `prob` of each.
+
+With each scenarios having T cells simulated, we can extract the samples from the simulation objects using `CreateSpatialList()`. This creates either a `list` or a `data.frame` depending on the `single_df` - here we will keep it `FALSE`. Because we want our T cells in both simulation scenarios to have the same CD3 protein distribution we will combine then into a single list, give the list elements appropriate names. Then we will use `GenerateDistributions()` to produce our protein abundance. 
+
+```{r}
+#extract simulated samples to make lists
+cluster_list = CreateSpatialList(sim_object_tight, single_df = FALSE)
+null_list = CreateSpatialList(sim_object_null, single_df = FALSE)
+#combine lists to make a single list
+spatial_list = c(cluster_list, null_list)
+names(spatial_list) = c(paste0("Clustered Sample ", 1:5),
+                        paste0("Null Sample ", 1:5))
+```
+
+For demonstration purposes, we will use arbitrary values for positive and negative protein abundances. This can also be derived from real world data such as multiplex immunofluorescence for protein or spatial transcriptomics for gene expression. 
+
+```{r}
+spat_data_distribution = GenerateDistributions(spatial_list, 
+                                               positive_mean = 15,
+                                               negative_mean = 5,
+                                               positive_sd = 3,
+                                               negative_sd = 1)
+```
+
+## Spatial Autocorrelation with Moran's I
+
+Spatial autocorrelation is a measure similar to the common Pearson correlation but extended to look at spatial relationships. How I like to think of Moran's I is how similar a value (in our case the expression of a protein) in an anchor cell is to the aggregated value of it's neighbors. So how similar is CD3 expression in cells to the CD3 expression in surrounding cells? Similar to Pearson correlation, a row-standardized weight calculation for Moran's I will have a range from -1 to 1, where greater positive values indicate strong similarity in a value with the cells/points neighboring cells/points values, negative indicates strong dissimilarity in a value with neighboring cells values, and 0 indicates no spatial relationship.
+
+To assess Moran's I on in our simulated samples, we will use the `{spdep}` package. There are a couple steps to get to using the `spdep::moran.test()` function like calculating neighbors and creating a weight list. The number of neighbors used can also influence results of Moran's I, but that is beyond the scope of this tutorial. Here, we will use each cells 10 nearest neighbors to assess the autocorrelation. Row-standardized weight means that the weights for the neighbors sum to 1. What we expect is that the CD3 expression will show greater spatial autocorrelation in samples where the cells were simulated as clustered than in the samples that were our null or no clustering cases.
+
+
+```{r}
+#identify neighbors
+#create weight list
+#calculate moran's i
+library(dplyr)
+library(spdep)
+results = lapply(spat_data_distribution, function(dat){
+  #convert data frame to an sf object compatable with other spdep functions
+  sf_dat = st_as_sf(dat, coords = c("x", "y"))
+  #calculate the 10 nearest neighbors
+  knn = knearneigh(sf_dat, k = 10)
+  #convert knn to neighbor list
+  knn_nb = knn2nb(knn)
+  #convert neighbor list to weight list
+  knn_nb_listw = nb2listw(knn_nb,
+                          style = "W")
+  #calculate moran's I on the simulated protein expression "Cell 1 Var"
+  res = moran.test(sf_dat$`Cell 1 Var`,
+                   listw = knn_nb_listw)
+  #convert results to a data frame
+  data.frame(as.list(res$estimate), check.names = FALSE)
+}) %>%
+  #convert list results to a data frame
+  bind_rows(.id = "Sample ID")
+#look at the results
+head(results)
+```
+
+The results in data frame format thanks to `{dplyr}`s `bind_rows()` function allow us to then visualize the Moran's I autocorrelation. We can use ggplot and plot simple boxplots to show the distribution of calculated Moran's I. For the null cases, we expect values around 0 which indicate no spatial relationship to the simulated protein expression.
+
+```{r}
+results2 = results %>%
+    mutate(Group = rep(c("Clustered", "Null"), each = 5))
+results2 %>%
+  ggplot() +
+  geom_boxplot(aes(x = Group, y = `Moran I statistic`)) +
+  theme_classic()
+```
+
+

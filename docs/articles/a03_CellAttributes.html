@@ -5,63 +5,49 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="scSpatialSIM">
 <title>Adding Cell Attributes • scSpatialSIM</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Adding Cell Attributes">
-<meta property="og:description" content="scSpatialSIM">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Adding Cell Attributes">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">scSpatialSIM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.5</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a>
-    <a class="dropdown-item" href="../articles/a02_Using_with_spatialTIME.html">Using with spatialTIME</a>
-    <a class="dropdown-item" href="../articles/a03_CellAttributes.html">Adding Cell Attributes</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/a01_Introduction.html">Introduction</a></li>
+    <li><a class="dropdown-item" href="../articles/a02_Using_with_spatialTIME.html">Using with spatialTIME</a></li>
+    <li><a class="dropdown-item" href="../articles/a03_CellAttributes.html">Adding Cell Attributes</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/FridleyLab/mIFsim/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/FridleyLab/scSpatialSIM/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -70,37 +56,257 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Adding Cell Attributes</h1>
+
+      <h1>Adding Cell Attributes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/mIFsim/blob/HEAD/vignettes/a03_CellAttributes.Rmd" class="external-link"><code>vignettes/a03_CellAttributes.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/FridleyLab/scSpatialSIM/blob/HEAD/vignettes/a03_CellAttributes.Rmd" class="external-link"><code>vignettes/a03_CellAttributes.Rmd</code></a></small>
       <div class="d-none name"><code>a03_CellAttributes.Rmd</code></div>
     </div>
 
     
     
-
-  </main>
+<div class="section level2">
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h2>
+<p>Spatial data that we use can be as shown in the previous vignettes,
+where points or cells are either positive or negative for a particular
+feature. Often in single-cell spatial data this might be cell types (T
+cell, B cell, malignant cell, etc) or a compartment from which the cell
+originated (lymph node, tumor, stroma, etc). However, when we make
+measurements, they are continuous (pixel intensity, protein abundance,
+gene expression, etc) that get collapsed down to a class. These
+continuous measures are still important and provide granular
+understanding of the data. In this vignette, we will demonstrate a
+usecase of <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> to simulate this continuous data
+and than apply an autocorrelation method, Moran’s I from the
+<a href="https://github.com/r-spatial/spdep/" class="external-link">spdep</a> package.</p>
+<div class="section level3">
+<h3 id="simulating-data">Simulating Data<a class="anchor" aria-label="anchor" href="#simulating-data"></a>
+</h3>
+<p>We will demonstrate the simulation of a protein (CD3) expressed in
+cells of a TMA. The way that <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> does this is by
+first simulating samples with cell types, or a marked point pattern, and
+then using the positive/negative assignment of cells to simulate a
+multimodal distribution of values. For this vignette with CD3 protein
+expression, that means simulating points that are positive and negative,
+then simulating high (positive) and low (negative) CD3 expression. The
+procedure is similar process can be performed as seen in
+<code>vignette("Using with SpatialTIME)</code> for creating a simulation
+object with a single cell type. Here, we will create 2 simulation
+objects with different cell clustering levels to compare the
+autocorrelation values of the different samples. For each simulation
+object, we will stick with a single cell type.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; scSpatialSIM Version:</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.3.5</span></span></span>
+<span><span class="co">#&gt;             _____             _   _       _  _____ _____ __  __</span></span>
+<span><span class="co">#&gt;            / ____|           | | (_)     | |/ ____|_   _|  \/  |</span></span>
+<span><span class="co">#&gt;   ___  ___| (___  _ __   __ _| |_ _  __ _| | (___   | | | \  / |</span></span>
+<span><span class="co">#&gt;  / __|/ __|\___ \| '_ \ / _` | __| |/ _` | |\___ \  | | | |\/| |</span></span>
+<span><span class="co">#&gt;  \__ \ (__ ____) | |_) | (_| | |_| | (_| | |____) |_| |_| |  | |</span></span>
+<span><span class="co">#&gt;  |___/\___|_____/| .__/ \__,_|\__|_|\__,_|_|_____/|_____|_|  |_|</span></span>
+<span><span class="co">#&gt;                  | |</span></span>
+<span><span class="co">#&gt;                  |_|</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Fridley Lab <span style="color: #BBBBBB;">Enjoy</span></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">333</span><span class="op">)</span></span>
+<span><span class="co">#create simulation object for tight clusters</span></span>
+<span><span class="va">sim_object_tight</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSimulationObject.html">CreateSimulationObject</a></span><span class="op">(</span>sims <span class="op">=</span> <span class="fl">5</span>, cell_types <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co">#simulate point pattern</span></span>
+<span>  <span class="fu"><a href="../reference/GenerateSpatialPattern.html">GenerateSpatialPattern</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; No `window` specified - defaulting to x (0, 10); y (0, 10)</span></span>
+<span><span class="co">#create simulation object for no clusters</span></span>
+<span><span class="va">sim_object_null</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSimulationObject.html">CreateSimulationObject</a></span><span class="op">(</span>sims <span class="op">=</span> <span class="fl">5</span>, cell_types <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co">#simulate point pattern</span></span>
+<span>  <span class="fu"><a href="../reference/GenerateSpatialPattern.html">GenerateSpatialPattern</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; No `window` specified - defaulting to x (0, 10); y (0, 10)</span></span></code></pre></div>
+<p>When using <code><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity()</a></code>, need to scale the
+<code>probs</code> parameter for the null case due to all cells having
+the same probability of being positive which results in much greater
+abundances of positive cells.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_object_tight</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity</a></span><span class="op">(</span><span class="va">sim_object_tight</span>, </span>
+<span>                                          k <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                                          sdmin <span class="op">=</span> <span class="fl">1</span>, sdmax <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                                          density_heatmap <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>                                          probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Computing probability for Cell 1</span></span>
+<span></span>
+<span><span class="va">sim_object_null</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity</a></span><span class="op">(</span><span class="va">sim_object_null</span>, </span>
+<span>                                          probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.0</span>, <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>                                          no_kernel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; random cell assignments without kernels</span></span>
+<span><span class="co">#&gt; Computing probability for Cell 1</span></span></code></pre></div>
+<p>Good quality control is to always look at the data. For a simulation
+study, thousands of samples would be simulated resulting in better
+distribution estimates for the abundance of T cells in both the
+clustered and null scenarios. In these simulation objects we have 5
+simulated samples so distributions are rough. Even so, visualizing the
+abundance will give us an general idea.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="co">#calculate abundance for clustered samples</span></span>
+<span><span class="va">cluster_abundance</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">sim_object_tight</span><span class="op">@</span><span class="va">`Spatial Files`</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">`Cell 1 Assignment`</span> <span class="op">==</span> <span class="st">"Positive"</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#calculate abundance for null/negative control samples</span></span>
+<span><span class="va">null_abundance</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">sim_object_null</span><span class="op">@</span><span class="va">`Spatial Files`</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">`Cell 1 Assignment`</span> <span class="op">==</span> <span class="st">"Positive"</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#create histogram of abundances</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>abundance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cluster_abundance</span>, <span class="va">null_abundance</span><span class="op">)</span>,</span>
+<span>           simulation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"clustered"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"null"</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">abundance</span>, fill <span class="op">=</span> <span class="va">simulation</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<p><img src="a03_CellAttributes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>For the 5 samples in the null/negative control and clustered
+scenarios, they are pretty similar as an average, maybe slightly higher
+T cell abundance in the clustered samples. If running a larger study,
+tuning the abundance to be more similar is important. My recommendation
+is running the clustered scenarios at an abundance and cluster size that
+is satisfactory (changing <code>sdmin</code>, <code>sdmax</code>, and
+<code>probs</code>), then setting the high <code>probs</code> for the
+<code>no_kernel = TRUE</code> scenario at the mean/median of the
+clustered abundance. Due to the implementation of
+<code>no_kernel = TRUE</code>, the cell abundance of each sample in the
+scenario will be similar (very little variation). If variability is
+desired, abundance can be assigned outside <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a>
+by using <code>rnorm</code> with the mean and standard deviation of the
+cell abundance from clustering scenarios, then applying that to each
+null scenario sample with <code>lapply</code> and <code>rbinom</code> to
+slightly adjust the <code>prob</code> of each.</p>
+<p>With each scenarios having T cells simulated, we can extract the
+samples from the simulation objects using
+<code><a href="../reference/CreateSpatialList.html">CreateSpatialList()</a></code>. This creates either a
+<code>list</code> or a <code>data.frame</code> depending on the
+<code>single_df</code> - here we will keep it <code>FALSE</code>.
+Because we want our T cells in both simulation scenarios to have the
+same CD3 protein distribution we will combine then into a single list,
+give the list elements appropriate names. Then we will use
+<code><a href="../reference/GenerateDistributions.html">GenerateDistributions()</a></code> to produce our protein
+abundance.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#extract simulated samples to make lists</span></span>
+<span><span class="va">cluster_list</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSpatialList.html">CreateSpatialList</a></span><span class="op">(</span><span class="va">sim_object_tight</span>, single_df <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">null_list</span> <span class="op">=</span> <span class="fu"><a href="../reference/CreateSpatialList.html">CreateSpatialList</a></span><span class="op">(</span><span class="va">sim_object_null</span>, single_df <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#combine lists to make a single list</span></span>
+<span><span class="va">spatial_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cluster_list</span>, <span class="va">null_list</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">spatial_list</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Clustered Sample "</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Null Sample "</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>For demonstration purposes, we will use arbitrary values for positive
+and negative protein abundances. This can also be derived from real
+world data such as multiplex immunofluorescence for protein or spatial
+transcriptomics for gene expression.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spat_data_distribution</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateDistributions.html">GenerateDistributions</a></span><span class="op">(</span><span class="va">spatial_list</span>, </span>
+<span>                                               positive_mean <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>                                               negative_mean <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>                                               positive_sd <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                                               negative_sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="spatial-autocorrelation-with-morans-i">Spatial Autocorrelation with Moran’s I<a class="anchor" aria-label="anchor" href="#spatial-autocorrelation-with-morans-i"></a>
+</h2>
+<p>Spatial autocorrelation is a measure similar to the common Pearson
+correlation but extended to look at spatial relationships. How I like to
+think of Moran’s I is how similar a value (in our case the expression of
+a protein) in an anchor cell is to the aggregated value of it’s
+neighbors. So how similar is CD3 expression in cells to the CD3
+expression in surrounding cells? Similar to Pearson correlation, a
+row-standardized weight calculation for Moran’s I will have a range from
+-1 to 1, where greater positive values indicate strong similarity in a
+value with the cells/points neighboring cells/points values, negative
+indicates strong dissimilarity in a value with neighboring cells values,
+and 0 indicates no spatial relationship.</p>
+<p>To assess Moran’s I on in our simulated samples, we will use the
+<a href="https://github.com/r-spatial/spdep/" class="external-link">spdep</a> package. There are a couple steps to get to using
+the <code><a href="https://r-spatial.github.io/spdep/reference/moran.test.html" class="external-link">spdep::moran.test()</a></code> function like calculating neighbors
+and creating a weight list. The number of neighbors used can also
+influence results of Moran’s I, but that is beyond the scope of this
+tutorial. Here, we will use each cells 10 nearest neighbors to assess
+the autocorrelation. Row-standardized weight means that the weights for
+the neighbors sum to 1. What we expect is that the CD3 expression will
+show greater spatial autocorrelation in samples where the cells were
+simulated as clustered than in the samples that were our null or no
+clustering cases.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#identify neighbors</span></span>
+<span><span class="co">#create weight list</span></span>
+<span><span class="co">#calculate moran's i</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-spatial/spdep/" class="external-link">spdep</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: spData</span></span>
+<span><span class="co">#&gt; To access larger datasets in this package, install the spDataLarge</span></span>
+<span><span class="co">#&gt; package with: `install.packages('spDataLarge',</span></span>
+<span><span class="co">#&gt; repos='https://nowosad.github.io/drat/', type='source')`</span></span>
+<span><span class="co">#&gt; Loading required package: sf</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</span></span>
+<span><span class="va">results</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">spat_data_distribution</span>, <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="co">#convert data frame to an sf object compatable with other spdep functions</span></span>
+<span>  <span class="va">sf_dat</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">dat</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co">#calculate the 10 nearest neighbors</span></span>
+<span>  <span class="va">knn</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/spdep/reference/knearneigh.html" class="external-link">knearneigh</a></span><span class="op">(</span><span class="va">sf_dat</span>, k <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="co">#convert knn to neighbor list</span></span>
+<span>  <span class="va">knn_nb</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/spdep/reference/knn2nb.html" class="external-link">knn2nb</a></span><span class="op">(</span><span class="va">knn</span><span class="op">)</span></span>
+<span>  <span class="co">#convert neighbor list to weight list</span></span>
+<span>  <span class="va">knn_nb_listw</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/spdep/reference/nb2listw.html" class="external-link">nb2listw</a></span><span class="op">(</span><span class="va">knn_nb</span>,</span>
+<span>                          style <span class="op">=</span> <span class="st">"W"</span><span class="op">)</span></span>
+<span>  <span class="co">#calculate moran's I on the simulated protein expression "Cell 1 Var"</span></span>
+<span>  <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/spdep/reference/moran.test.html" class="external-link">moran.test</a></span><span class="op">(</span><span class="va">sf_dat</span><span class="op">$</span><span class="va">`Cell 1 Var`</span>,</span>
+<span>                   listw <span class="op">=</span> <span class="va">knn_nb_listw</span><span class="op">)</span></span>
+<span>  <span class="co">#convert results to a data frame</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">estimate</span><span class="op">)</span>, check.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co">#convert list results to a data frame</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"Sample ID"</span><span class="op">)</span></span>
+<span><span class="co">#look at the results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            Sample ID Moran I statistic   Expectation     Variance</span></span>
+<span><span class="co">#&gt; 1 Clustered Sample 1         0.3758399 -0.0004009623 7.410341e-05</span></span>
+<span><span class="co">#&gt; 2 Clustered Sample 2         0.3402620 -0.0004083299 7.533573e-05</span></span>
+<span><span class="co">#&gt; 3 Clustered Sample 3         0.3052300 -0.0004001601 7.395509e-05</span></span>
+<span><span class="co">#&gt; 4 Clustered Sample 4         0.3792493 -0.0003979308 7.338008e-05</span></span>
+<span><span class="co">#&gt; 5 Clustered Sample 5         0.2748225 -0.0004024145 7.445675e-05</span></span>
+<span><span class="co">#&gt; 6      Null Sample 1        -0.0101181 -0.0003974563 7.353824e-05</span></span></code></pre></div>
+<p>The results in data frame format thanks to <a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a>s
+<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows()</a></code> function allow us to then visualize the Moran’s
+I autocorrelation. We can use ggplot and plot simple boxplots to show
+the distribution of calculated Moran’s I. For the null cases, we expect
+values around 0 which indicate no spatial relationship to the simulated
+protein expression.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results2</span> <span class="op">=</span> <span class="va">results</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Clustered"</span>, <span class="st">"Null"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">results2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Group</span>, y <span class="op">=</span> <span class="va">`Moran I statistic`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="a03_CellAttributes_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Alex Soupir, Christopher Wilson, Jordan Creed, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
+  <p>Developed by Alex Soupir, Christopher Wilson, Jordan Creed, Julia Wrobel, Oscar Ospina, Brooke Fridley, Fridley Lab.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

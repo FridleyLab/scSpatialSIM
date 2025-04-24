@@ -1,78 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a01_Introduction.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a02_Using_with_spatialTIME.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a03_CellAttributes.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CreateSimulationObject.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CreateSpatialList.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ExtractParameters.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GenerateCellPositivity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GenerateDistributions.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GenerateHoles.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GenerateSpatialPattern.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GenerateTissue.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PlotSimulation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/SummariseSpatial.html</loc>
-  </url>
-  <url>
-    <loc>/reference/UpdateSimulationWindow.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.SpatSimObj.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.SpatSimObj.html</loc>
-  </url>
-  <url>
-    <loc>/reference/wm.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/a01_Introduction.html</loc></url>
+<url><loc>/articles/a02_Using_with_spatialTIME.html</loc></url>
+<url><loc>/articles/a03_CellAttributes.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/CalculateDensity.html</loc></url>
+<url><loc>/reference/CreateSimulationObject.html</loc></url>
+<url><loc>/reference/CreateSpatialList.html</loc></url>
+<url><loc>/reference/ExtractParameters.html</loc></url>
+<url><loc>/reference/GenerateCellPositivity.html</loc></url>
+<url><loc>/reference/GenerateDistributions.html</loc></url>
+<url><loc>/reference/GenerateHoles.html</loc></url>
+<url><loc>/reference/GenerateSpatialPattern.html</loc></url>
+<url><loc>/reference/GenerateTissue.html</loc></url>
+<url><loc>/reference/PlotSimulation.html</loc></url>
+<url><loc>/reference/SummariseSpatial.html</loc></url>
+<url><loc>/reference/UpdateSimulationWindow.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/pipe.html</loc></url>
+<url><loc>/reference/plot.SpatSimObj.html</loc></url>
+<url><loc>/reference/summary.SpatSimObj.html</loc></url>
+<url><loc>/reference/wm.html</loc></url>
 </urlset>
+
