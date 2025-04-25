@@ -69,38 +69,46 @@
 <div class="section level2">
 <h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
-<p>Spatial data that we use can be as shown in the previous vignettes,
-where points or cells are either positive or negative for a particular
-feature. Often in single-cell spatial data this might be cell types (T
-cell, B cell, malignant cell, etc) or a compartment from which the cell
-originated (lymph node, tumor, stroma, etc). However, when we make
-measurements, they are continuous (pixel intensity, protein abundance,
-gene expression, etc) that get collapsed down to a class. These
-continuous measures are still important and provide granular
-understanding of the data. In this vignette, we will demonstrate a
-usecase of <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> to simulate this continuous data
-and than apply an autocorrelation method, Moran’s I from the
-<a href="https://github.com/r-spatial/spdep/" class="external-link">spdep</a> package.</p>
-<div class="section level3">
-<h3 id="simulating-data">Simulating Data<a class="anchor" aria-label="anchor" href="#simulating-data"></a>
-</h3>
+<p>Spatial data used in our analyses typically include information about
+whether cells are positive or negative for specific features. In
+single-cell spatial datasets, these features often correspond to cell
+types (e.g., T cell, B cell, malignant cell) or compartments of origin
+(e.g., lymph node, tumor, stroma). While such data are often simplified
+to categorical labels, the original measurements are usually
+continuous—such as pixel intensity, protein abundance, or gene
+expression. These continuous variables hold important biological meaning
+and offer a more granular understanding of the system under study.</p>
+<p>In this vignette, we demonstrate how to use
+<a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> to simulate continuous cellular attributes
+and apply a spatial autocorrelation method—specifically, Moran’s I from
+the <a href="https://github.com/r-spatial/spdep/" class="external-link">spdep</a> package. Spatial autocorrelation refers to the
+degree to which a variable is similar based on geographic or spatial
+proximity—meaning, whether nearby cells tend to have similar or
+dissimilar values.</p>
+</div>
+<div class="section level2">
+<h2 id="simulating-data">Simulating Data<a class="anchor" aria-label="anchor" href="#simulating-data"></a>
+</h2>
 <p>We will demonstrate the simulation of a protein (CD3) expressed in
-cells of a TMA. The way that <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> does this is by
-first simulating samples with cell types, or a marked point pattern, and
-then using the positive/negative assignment of cells to simulate a
-multimodal distribution of values. For this vignette with CD3 protein
-expression, that means simulating points that are positive and negative,
-then simulating high (positive) and low (negative) CD3 expression. The
-procedure is similar process can be performed as seen in
-<code>vignette("Using with SpatialTIME)</code> for creating a simulation
-object with a single cell type. Here, we will create 2 simulation
-objects with different cell clustering levels to compare the
-autocorrelation values of the different samples. For each simulation
-object, we will stick with a single cell type.</p>
+cells of tissue microarray (TMA) cores. The way that
+<a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> does this is by first simulating samples
+with cell types, or a marked point pattern, and then using the
+positive/negative assignment of cells to simulate a multimodal
+distribution of values. In this case, we simulate cells labeled as
+either CD3-positive or CD3-negative, and assign corresponding high or
+low levels of CD3 expression.</p>
+<p>The same simulation process is shown in
+<code>vignette("Using with SpatialTIME")</code>, which demonstrates
+creating a simulation object with a single cell type. In this vignette,
+we go further by creating two simulation objects with different spatial
+clustering levels. These serve as positive and negative controls—one
+with intentional spatial clustering and one with a more random
+(non-clustered) distribution—to compare the resulting spatial
+autocorrelation metrics.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; scSpatialSIM Version:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.3.5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBBBB;">0.1.3.4</span></span></span>
 <span><span class="co">#&gt;             _____             _   _       _  _____ _____ __  __</span></span>
 <span><span class="co">#&gt;            / ____|           | | (_)     | |/ ____|_   _|  \/  |</span></span>
 <span><span class="co">#&gt;   ___  ___| (___  _ __   __ _| |_ _  __ _| | (___   | | | \  / |</span></span>
@@ -122,10 +130,11 @@ object, we will stick with a single cell type.</p>
 <span>  <span class="co">#simulate point pattern</span></span>
 <span>  <span class="fu"><a href="../reference/GenerateSpatialPattern.html">GenerateSpatialPattern</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; No `window` specified - defaulting to x (0, 10); y (0, 10)</span></span></code></pre></div>
-<p>When using <code><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity()</a></code>, need to scale the
-<code>probs</code> parameter for the null case due to all cells having
-the same probability of being positive which results in much greater
-abundances of positive cells.</p>
+<p>When using <code><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity()</a></code>, the
+<code>probs</code> parameter needs to be scaled back for the null case
+due to all cells having the same probability of being positive resulting
+in much greater abundances of positive cells at a given high abundance
+theshold</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim_object_tight</span> <span class="op">=</span> <span class="fu"><a href="../reference/GenerateCellPositivity.html">GenerateCellPositivity</a></span><span class="op">(</span><span class="va">sim_object_tight</span>, </span>
 <span>                                          k <span class="op">=</span> <span class="fl">4</span>,</span>
@@ -207,16 +216,15 @@ transcriptomics for gene expression.</p>
 <span>                                               positive_sd <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>                                               negative_sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 </div>
-</div>
 <div class="section level2">
-<h2 id="spatial-autocorrelation-with-morans-i">Spatial Autocorrelation with Moran’s I<a class="anchor" aria-label="anchor" href="#spatial-autocorrelation-with-morans-i"></a>
+<h2 id="calculating-morans-i">Calculating Moran’s I<a class="anchor" aria-label="anchor" href="#calculating-morans-i"></a>
 </h2>
 <p>Spatial autocorrelation is a measure similar to the common Pearson
-correlation but extended to look at spatial relationships. How I like to
-think of Moran’s I is how similar a value (in our case the expression of
-a protein) in an anchor cell is to the aggregated value of it’s
-neighbors. So how similar is CD3 expression in cells to the CD3
-expression in surrounding cells? Similar to Pearson correlation, a
+correlation, but extended to look at spatial relationships. How I like
+to think of Moran’s I is how similar a value (in our case the expression
+of the protein CD3) in an anchor cell is to the aggregated value of it’s
+neighbors. So “how similar is CD3 expression in cells to the CD3
+expression in surrounding cells?” Similar to Pearson correlation, a
 row-standardized weight calculation for Moran’s I will have a range from
 -1 to 1, where greater positive values indicate strong similarity in a
 value with the cells/points neighboring cells/points values, negative
@@ -227,12 +235,12 @@ and 0 indicates no spatial relationship.</p>
 the <code><a href="https://r-spatial.github.io/spdep/reference/moran.test.html" class="external-link">spdep::moran.test()</a></code> function like calculating neighbors
 and creating a weight list. The number of neighbors used can also
 influence results of Moran’s I, but that is beyond the scope of this
-tutorial. Here, we will use each cells 10 nearest neighbors to assess
-the autocorrelation. Row-standardized weight means that the weights for
-the neighbors sum to 1. What we expect is that the CD3 expression will
-show greater spatial autocorrelation in samples where the cells were
-simulated as clustered than in the samples that were our null or no
-clustering cases.</p>
+vignette Here, we will use each cells 10 nearest neighbors to assess the
+autocorrelation. Row-standardized weight means that the weights for the
+neighbors sum to 1. <strong>What we expect is that the CD3 expression
+will show greater spatial autocorrelation in samples where the cells
+were simulated as clustered than in the samples that were our null or no
+clustering cases.</strong></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#identify neighbors</span></span>
 <span><span class="co">#create weight list</span></span>
@@ -272,9 +280,9 @@ clustering cases.</p>
 <span><span class="co">#&gt; 4 Clustered Sample 4         0.3792493 -0.0003979308 7.338008e-05</span></span>
 <span><span class="co">#&gt; 5 Clustered Sample 5         0.2748225 -0.0004024145 7.445675e-05</span></span>
 <span><span class="co">#&gt; 6      Null Sample 1        -0.0101181 -0.0003974563 7.353824e-05</span></span></code></pre></div>
-<p>The results in data frame format thanks to <a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a>s
-<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows()</a></code> function allow us to then visualize the Moran’s
-I autocorrelation. We can use ggplot and plot simple boxplots to show
+<p>The results in data frame format, thanks to <a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a>s
+<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows()</a></code> function, allow us to then visualize the
+Moran’s I autocorrelation. We will use ggplot and plot boxplots to show
 the distribution of calculated Moran’s I. For the null cases, we expect
 values around 0 which indicate no spatial relationship to the simulated
 protein expression.</p>
@@ -286,6 +294,29 @@ protein expression.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Group</span>, y <span class="op">=</span> <span class="va">`Moran I statistic`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a03_CellAttributes_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
+<p>In this vignette, we demonstrated the simulation of
+spatially-resolved continuous cell attributes and demonstrated how to
+assess spatial structure using a well-established spatial statistic,
+Moran’s I. We used <a href="https://github.com/FridleyLab/scSpatialSIM" class="external-link">scSpatialSIM</a> to simulate protein
+expression (CD3) in TMA cores by assigning continuous values to cells
+based on their classification and positive or negative. These
+simulations included two scenarios: one with spatial clustering
+(positive control) and one without (negative control) allowing us to
+explore how spatial patterns influence downstream analyses. After
+simulating the data, we applied Moran’s I to quantify spatial
+autocorrelation - that is, the degree to which similar CD3 protein
+expression values cluster in space.</p>
+<p>Spatial patterns in molecular data can reveal critical biological
+insights that are lost when reducing data to binary or categorical
+labels. Simulating and analyzing continuous attributes in a spatial
+context allows for better benchmarking of methods and more nuanced
+interpretation of cell behavior within tissues. The approach outlined
+here is broadly applicable to real datasets and can be extended using a
+variety of spatial analysis tools.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
