@@ -20,7 +20,7 @@ More than likely, you are going to want to use another package to analyze the si
 
 ### Simulating Data
 
-First thing we need to do is simulate data. The `vignette("Introduction)` showed us how we can do this in a univariate way where only a single cells positivity was simulated and bivaraiate way where we get positivity for multiple cell types. We can use this data with `{spatialTIME}` to derive spatial statistics like Ripley's *K*. See the spatialTIME package for more information about everything the package can do.
+First thing we need to do is simulate data. The `vignette("Introduction")` showed us how we can do this in a univariate way where only a single cells positivity was simulated and bivaraiate way where we get positivity for multiple cell types. We can use this data with `{spatialTIME}` to derive spatial statistics like Ripley's *K*. See the spatialTIME package for more information about everything the package can do.
 
 ```{r}
 library(scSpatialSIM)
