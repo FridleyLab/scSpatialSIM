@@ -1,8 +1,8 @@
 ---
-title: "Adding Cell Attributes"
+title: "Adding Continuous Cell Attributes"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Adding Cell Attributes}
+  %\VignetteIndexEntry{Adding Continuous Cell Attributes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
