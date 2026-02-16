@@ -120,12 +120,14 @@ PlotSimulation = function(sim_object, nrow = 1, ncol = 1, which = 1, what = "tis
           dplyr::mutate(Multi_Hit = ifelse(rowSums(.[cell_cols]) > 1, 1, 0)) %>%
           dplyr::mutate_at(cell_cols, ~ ifelse(Multi_Hit == 1, 0, .x)) %>%
           dplyr::mutate(Background = ifelse(rowSums(.[c(cell_cols, "Multi_Hit")]) > 0, 0, 1)) %>%
-          dplyr::filter(dplyr::if_any(dplyr::matches("Hole Assignment"), ~.x == "Keep")) %>% #{if("Hole Assignment" %in% names(.)) `Hole Assignment` else NULL} == "Keep"
+          dplyr::filter(dplyr::if_any(dplyr::matches("Hole Assignment"), ~.x == "Keep") |
+                          dplyr::if_all(dplyr::matches("Hole Assignment"), ~ FALSE)) %>% #{if("Hole Assignment" %in% names(.)) `Hole Assignment` else NULL} == "Keep"
           dplyr::select(x, y, `Tissue Assignment`, !!cell_cols, Multi_Hit, Background)
       } else {
         df = df %>%
           dplyr::mutate(Background = ifelse(rowSums(.[c(cell_cols)]) > 0, 0, 1)) %>%
-          dplyr::filter(dplyr::if_any(dplyr::matches("Hole Assignment"), ~.x == "Keep")) %>%
+          dplyr::filter(dplyr::if_any(dplyr::matches("Hole Assignment"), ~.x == "Keep") |
+                          dplyr::if_all(dplyr::matches("Hole Assignment"), ~ FALSE)) %>%
           dplyr::select(x, y, `Tissue Assignment`, !!cell_cols, Background)
       }
       df = df %>%

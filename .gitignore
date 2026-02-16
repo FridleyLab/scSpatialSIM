@@ -4,3 +4,5 @@
 .Ruserdata
 man/hello.Rd
 inst/doc
+renv
+.Rprofile
